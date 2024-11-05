@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
+import { Provider } from "../src/components/ui/provider.tsx";
 import App from './App.tsx';
 import Home from './pages/Home.tsx';
 import LandingPage from './pages/Landing.tsx';
@@ -8,6 +9,7 @@ import Login from './pages/Login.tsx';
 import SavedEvents from './pages/SavedEvents.tsx';
 import SignUp from './pages/SignUp.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
+import React from 'react';
 
 const router = createBrowserRouter([
   {
@@ -20,26 +22,33 @@ const router = createBrowserRouter([
         element: <LandingPage />
       }, 
       {
-        path: '/home',
+        path: '/Home',
         element: <Home />
       },
       {
-        path: '/sign-up',
+        path: '/SignUp',
         element: <SignUp />
       },
       {
-        path: '/login',
+        path: '/Login',
         element: <Login />
-      }
+      },
       {
-        path: '/saved-events',
+        path: '/SavedEvents',
         element: <SavedEvents />
       }
     ]
   }
 ])
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
+
 if (rootElement) {
-  ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+    <Provider> 
+    <RouterProvider router={router} />
+  </Provider>
+  </React.StrictMode>,
+  );  
 }

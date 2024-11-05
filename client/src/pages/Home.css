@@ -1,0 +1,16 @@
+.cards-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    text-align: center;
+    font-size: 40px;
+}
+
+.card {
+    margin: 20px;
+}
