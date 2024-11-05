@@ -1,10 +1,12 @@
 import { Button, Fieldset, Input, Stack } from "@chakra-ui/react"
 import { Field } from "../components/ui/field"
 import { Link } from 'react-router-dom'
+import "./Login.css"
 
 const Login = () => {
     return (
       <>
+      <div className="form-container">
       <form>
       <Fieldset.Root size="lg" maxW="md">
     <Stack>
@@ -28,6 +30,7 @@ const Login = () => {
     </Link>
   </Fieldset.Root>
       </form>
+      </div>
       </>
     );
 };

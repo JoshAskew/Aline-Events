@@ -1,10 +1,12 @@
 import { Button, Fieldset, Input, Stack } from "@chakra-ui/react"
 import { Field } from "../components/ui/field"
+import './SignUp.css'
 
 const SignUp = () => {
     return (
       <> 
         <h1>Sign Up and Never Miss Out</h1>
+        <div className="form-container">
         <form>
         <Fieldset.Root size="lg" maxW="md">
       <Stack>
@@ -38,6 +40,7 @@ const SignUp = () => {
       </Button>
     </Fieldset.Root>
         </form>
+        </div>
       </>
  
   
