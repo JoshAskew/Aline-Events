@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
-import { Provider } from "../../src/components/ui/provider.tsx";
+import { Provider } from "../src/components/ui/provider.tsx";
 import App from './App.tsx';
 import Home from './pages/Home.tsx';
 import LandingPage from './pages/Landing.tsx';
@@ -22,19 +22,19 @@ const router = createBrowserRouter([
         element: <LandingPage />
       }, 
       {
-        path: '/home',
+        path: '/Home',
         element: <Home />
       },
       {
-        path: '/sign-up',
+        path: '/SignUp',
         element: <SignUp />
       },
       {
-        path: '/login',
+        path: '/Login',
         element: <Login />
       },
       {
-        path: '/saved-events',
+        path: '/SavedEvents',
         element: <SavedEvents />
       }
     ]
