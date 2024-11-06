@@ -39,6 +39,8 @@ const SignUp = () => {
       });
 
       if (!response.ok) {
+        const errorData = await response.json(); // Get the error response body
+        console.error("Signup error response:", errorData);
         throw new Error("Failed to sign up");
       }
 
@@ -47,7 +49,7 @@ const SignUp = () => {
       navigate('/home');
       
     } catch (error) {
-      console.error("Error: User faield to signed up");
+      console.error("Error: User failed to signed up");
     }
   };
 
@@ -59,7 +61,7 @@ const SignUp = () => {
     console.log(event.target.value);
 
     //if we are setting passwordConfirm then setPasswordConfirm with the value of passwordConfirm string else set the objects individually
-    if(event.target.name === 'passwordConfirm'){
+    if(event.target.name === 'confirmPassword'){
       setPasswordConfirm(event.target.value)
     }else{
       setUser({...user, [event.target.name]:event.target.value})
@@ -95,7 +97,7 @@ const SignUp = () => {
         </Field>
 
         <Field label="Confirm Password" >
-          <Input name="confirmPassword" onChange={handleInputChange} value={passwordConfirm} type="confirmPassword" />
+          <Input name="confirmPassword" onChange={handleInputChange} value={passwordConfirm} type="password" />
         </Field>
       
       </Fieldset.Content>
