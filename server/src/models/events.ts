@@ -1,4 +1,5 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
+import { User } from './user';
 
 interface EventAttributes {
     id: number;
@@ -75,6 +76,8 @@ export function EventFactory(sequelize: Sequelize): typeof Event {
             sequelize,
         }
     );
+    Event.belongsToMany(User, { through: 'UserEvent' });
+    User.belongsToMany(Event, { through: 'UserEvent' });
 
     return Event;
     

@@ -1,16 +1,52 @@
 import { Request, Response } from 'express';
-import { Event } from '../models/events.js';
-import { User } from '../models/user.js';
+import { User } from '../models/user';
+import { Event } from '../models/events';
+import { UserEvent } from '../models/userEvent';
+import { searchTicketMaster } from '../api/TicketMasterAPI';
 
-// Get/Events/:id
-// get all saved events for a user based on their id in the database
-export const getEventsByUserId = async (req: Request, res: Response) => {
-  const { id } = req.params;
+//Get events based on API call from ticketmaster using user zipcode
+export const getEvents = async (req: Request, res: Response) => {
   try {
-    const user = await User.findByPk(id);
+    const events = await searchTicketMaster();
+    res.status(200).json(events);
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred while fetching events:', err });
+  }
+};
+
+//Save event to users profile
+export const saveEvent = async (req: Request, res: Response) => {
+  try {
+    const { userId, eventId } = req.body;
+    const user = await User.findByPk(userId);
+    const event = await Event.findByPk(eventId);
+    if (!user || !event) {
+      res.status(404).json({ error: 'User or event not found' });
+      return;
+    }
+    await UserEvent.create({ userId, eventId });
+    res.status(201).json({ message: 'Event saved to user profile' });
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred while saving event:', err });
+  }
+}
+
+//Get all events saved to user profile
+export const getSavedEvents = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findByPk(userId, {
+      include: [
+        {
+          model: Event,
+          through: { attributes: [] },
+        },
+      ],
+    });
+
     if (user) {
-      const events = await Event.findAll({ where: { userId: id } });
-      res.json(events);
+      res.json(user.get('Events'));
     } else {
       res.status(404).json({ message: 'User not found' });
     }
