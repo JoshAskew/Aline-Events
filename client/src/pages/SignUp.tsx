@@ -22,7 +22,7 @@ const SignUp = () => {
         throw new Error('Please fill out all values, values cannot be blank');
     }
 
-    if (user.password  === passwordConfirm) {
+    if (user.password  !== passwordConfirm) {
       throw new Error('Passwords much match');
     }
 
@@ -42,11 +42,11 @@ const SignUp = () => {
 
       const result = await response.json();
       console.log("User successfully signed up:", result);
+      return result;
     } catch (error) {
       console.error("Error: User faield to signed up");
     }
   };
-
 
   //this will handle all the inputs and store them into user state change and return back values, event click or change, target is element interacted with
   // runs every time the type 
@@ -91,13 +91,13 @@ const SignUp = () => {
           <Input name="password" type="password" onChange={handleInputChange} value={user.password} />
         </Field>
 
-        <Field label="Confirm Password">
-          <Input name="confirmPassword" type="password" />
+        <Field label="Confirm Password" >
+          <Input name="confirmPassword" onChange={handleInputChange} value={passwordConfirm} type="confirmPassword" />
         </Field>
       
       </Fieldset.Content>
 
-      <Button onChange={handleSearchFormSubmit} name="submit" type="submit" alignSelf="flex-start">
+      <Button onClick={handleSearchFormSubmit} name="submit" type="submit" alignSelf="flex-start">
         Sign Up
       </Button>
     </Fieldset.Root>
