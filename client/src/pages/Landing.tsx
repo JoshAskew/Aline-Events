@@ -1,9 +1,11 @@
 import { Box, Heading, Text, Button, VStack, HStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { RiArrowRightLine } from "react-icons/ri";
+import "./Landing.css";
 
 const LandingPage = () => {
     return (
+        <div className="landing-wrapper">
         <Box 
             display="flex" 
             flexDirection="column" 
@@ -14,7 +16,7 @@ const LandingPage = () => {
             p={4}
         >
             <VStack textAlign="center">
-                <Heading as="h1" size="2xl" color="teal.600">
+                <Heading className="landing-header" as="h1" size="2xl" color="teal.600">
                     Welcome to Aline
                 </Heading>
                 <Text fontSize="xl" color="gray.600" maxWidth="600px">
@@ -42,6 +44,7 @@ const LandingPage = () => {
                 </HStack>
             </VStack>
         </Box>
+        </div>
     );
 };
 

@@ -4,11 +4,13 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    font-family: "Source Sans 3", serif;
 }
 
 .header {
     text-align: center;
     font-size: 40px;
+    font-family: "Source Sans 3", serif;
 }
 
 .card {

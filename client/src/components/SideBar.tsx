@@ -30,7 +30,7 @@ const WeatherSidebar = () => {
       </DrawerTrigger>
       <DrawerContent width="300px" maxWidth="100%">
         <DrawerHeader>
-          <DrawerTitle>Weather Information</DrawerTitle>
+          <DrawerTitle fontFamily= "">Weather Information</DrawerTitle>
         </DrawerHeader>
         <DrawerBody>
           <Box

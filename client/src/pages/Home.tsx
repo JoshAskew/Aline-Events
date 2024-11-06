@@ -1,4 +1,4 @@
-import { Button, Card, Image, Text, useDisclosure } from "@chakra-ui/react"
+import { Button, Card, Image, Text } from "@chakra-ui/react"
 import './Home.css'
 import Aline from "../images/aline.webp"
 import { Link } from "react-router-dom";
