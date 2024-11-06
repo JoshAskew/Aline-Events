@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />
-      }
+      },
       {
         path: '/saved-events',
         element: <SavedEvents />

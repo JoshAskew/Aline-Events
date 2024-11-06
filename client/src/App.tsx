@@ -3,11 +3,12 @@ import { Provider } from "@/components/ui/provider"
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 
+
 function App() {
 
   return (
     <div className='container'>
-      <Navbar />
+        <Navbar />
       <main>
         <Outlet />
       </main>
