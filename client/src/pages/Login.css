@@ -1,4 +1,14 @@
-.form-container {
+.login-form-container {
     display: flex;
     justify-content: center;
+    margin-top: 100px;
+}
+
+.header {
+    text-align: center;
+    font-size: 40px;
+}
+
+.css-thj57f {
+    width: 100vh;
 }

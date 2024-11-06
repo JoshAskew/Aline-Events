@@ -14,3 +14,25 @@
 .card {
     margin: 20px;
 }
+
+.cancel {
+    background-color: rgba(11, 198, 11, 0.619);
+}
+
+.logout {
+    background-color: rgba(255, 0, 0, 0.715);
+    margin: 10px;
+}
+
+.logout:hover {
+    background-color: rgba(165, 0, 0, 0.715);
+}
+
+.saved-button {
+    background-color: teal;
+    color: white;
+}
+
+.saved-button:hover {
+    background-color: rgb(0, 89, 89);
+}

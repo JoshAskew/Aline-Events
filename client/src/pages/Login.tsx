@@ -1,8 +1,7 @@
-
-import { Button, Fieldset, Input, Stack } from "@chakra-ui/react"
-import { Field } from "../components/ui/field"
-import { Link } from 'react-router-dom'
-import "./Login.css"
+import { Box, Button, Input, Stack, Heading, Text } from "@chakra-ui/react";
+import { Field } from "../components/ui/field";
+import { Link } from "react-router-dom";
+import "./Login.css";
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { login } from '../api/authAPI';
@@ -32,39 +31,49 @@ const Login = () => {
       console.error('Failed to login', err);
     }
   };
-    return (
-      <>
-      <div className="form-container">
-      <form onSubmit={handleSubmit}>
-      <Fieldset.Root size="lg" maxW="md">
-    <Stack>
-      <Fieldset.Legend>Login</Fieldset.Legend>
-    </Stack>
+ 
+  return (
+    <>
+      <h1 className="header">Aline</h1>
+      <div className="login-form-container">
+      <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" p={6} boxShadow="md">
+        <Box mb={4}>
+          <Heading size="md">Login</Heading>
+          <Text fontSize="sm" color="gray.600">
+            Fill in the form below to login
+          </Text>
+        </Box>
 
-    <Fieldset.Content>
-      <Field label="User Name">
-      </Field>
+        <Box>
+        <form onSubmit={handleSubmit}>
+            <Stack >
+              <Field label="User Name">
+                <Input name="username" type="text" onChange={handleChange}/>
+              </Field>
 
-      <Field label="Zip Code">
-        <Input name="zipCode" onChange={handleChange} />
-      </Field>
-      
-      <Field label="Password">
-        <Input name="password" type="password" onChange={handleChange} />
-      </Field>
-    
-    </Fieldset.Content>
-    <Link to="/Home">
-    <Button type="submit" alignSelf="flex-start">
-      Login
-    </Button>
-    </Link>
-  </Fieldset.Root>
-      </form>
+              <Field label="Password">
+              <Input name="password" type="password" onChange={handleChange} />
+              </Field>
+            </Stack>
+          </form>
+        </Box>
+
+        <Box display="flex" justifyContent="center" mt={4}>
+          <Link to="/">
+            <Button variant="outline" mr={3}>
+              Cancel
+            </Button>
+          </Link>
+          <Link to="/home">
+          <Button type="submit">
+            Sign in
+          </Button>
+          </Link>
+        </Box>
+      </Box>
       </div>
-      </>
-    );
-
+    </>
+  );
 };
 
 export default Login;
