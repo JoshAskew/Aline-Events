@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Button, VStack, HStack, Icon } from "@chakra-ui/react";
+import { Box, Heading, Text, Button, VStack, HStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { RiArrowRightLine } from "react-icons/ri";
 

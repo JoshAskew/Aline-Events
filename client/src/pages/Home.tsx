@@ -1,10 +1,12 @@
 import { Button, Card, Image, Text } from "@chakra-ui/react"
 import './Home.css'
 import Aline from "../images/aline.webp"
+import WeatherSidebar from "../components/SideBar";
 
 const Home = () => {
     return (
         <>
+        <WeatherSidebar />
                 <h1 className="header">Aline</h1>
             <div className="cards-container">
                 <Card.Root className="card" maxW="sm" overflow="hidden">
