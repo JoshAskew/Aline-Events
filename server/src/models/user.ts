@@ -1,6 +1,6 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 import bcrypt from 'bcrypt';
-import { Event } from './events';
+import { Event } from "./events.js";
 
 interface UserAttributes {
   id: number;

@@ -1,16 +1,16 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-import { User } from './user';
+import { User } from './user.js';
 
 interface EventAttributes {
     id: number;
     name: string;
     url: string;
     type: string;
-    images: string;
-    dates: string;
-    priceRanges: string;
+    images: { url: string }[];
+    dates: { start: { localDate: string } };
+    priceRanges: { min: string; max: string }[];
     info: string;
-    venue: string;    
+    venue: { name: string };    
 }
 
 interface EventCreationAttributes extends Optional<EventAttributes, 'id'> {}
@@ -20,11 +20,11 @@ export class Event extends Model<EventAttributes, EventCreationAttributes> imple
     public name!: string;
     public url!: string;
     public type!: string;
-    public images!: string;
-    public dates!: string;
-    public priceRanges!: string;
+    public images!: { url: string }[];
+    public dates!: { start: { localDate: string } };
+    public priceRanges!: { min: string; max: string }[];
     public info!: string;
-    public venue!: string;
+    public venue!: { name: string };
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -51,15 +51,15 @@ export function EventFactory(sequelize: Sequelize): typeof Event {
                 allowNull: false,
             },
             images: {
-                type: DataTypes.STRING,
+                type: DataTypes.JSON,
                 allowNull: false,
             },
             dates: {
-                type: DataTypes.STRING,
+                type: DataTypes.JSON,
                 allowNull: false,
             },
             priceRanges: {
-                type: DataTypes.STRING,
+                type: DataTypes.JSON,
                 allowNull: false,
             },
             info: {
@@ -67,7 +67,7 @@ export function EventFactory(sequelize: Sequelize): typeof Event {
                 allowNull: false,
             },
             venue: {
-                type: DataTypes.STRING,
+                type: DataTypes.JSON,
                 allowNull: false,
             },
         },
