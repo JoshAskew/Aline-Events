@@ -2,7 +2,7 @@ import { Event } from '../models/events.js';
 
 export const seedEvents= async () => {
   await Event.bulkCreate([
-    { id: 'Z7r9jZ1A7C3_O', 
+    {  
         name: 'Minnesota Timberwolves vs. Pheonix Suns', 
         url: 'https://www.ticketmaster.com/event/Z7r9jZ1A7C3_O', 
         type: 'event', 
@@ -15,10 +15,10 @@ export const seedEvents= async () => {
         max: '1600'
       }], 
       info: 'info may be the wrong type', 
-      venue: [{name: 'Target Center',}]
+      venue: {name: 'Target Center',}
     },
 
-    { id: 'vv17bZb7GkM5-Un1', 
+    {  
         name: 'Minnesota Vikings vs. Green Bay Packers', 
         url: 'https://www.ticketmaster.com/minnesota-vikings-vs-green-bay-packers-minneapolis-minnesota-12-29-2024/event/0600604DCB876A8A', 
         type: 'event', 
@@ -31,10 +31,10 @@ export const seedEvents= async () => {
         max: '1600'
       }], 
       info: 'info may be the wrong type', 
-      venue: [{name: 'U.S. BANK STADIUM',}]
+      venue: {name: 'U.S. BANK STADIUM',}
     },
     
-    { id: 'vv17bZb7GkM5-Un1', 
+    {  
         name: 'Minnesota Vikings vs. Green Bay Packers', 
         url: 'https://www.ticketmaster.com/minnesota-vikings-vs-green-bay-packers-minneapolis-minnesota-12-29-2024/event/0600604DCB876A8A', 
         type: 'event', 
@@ -47,10 +47,10 @@ export const seedEvents= async () => {
         max: '1600'
       }], 
       info: 'info may be the wrong type', 
-      venue: [{name: 'U.S. BANK STADIUM',}]
+      venue: {name: 'U.S. BANK STADIUM',}
     },
 
-    { id: 'vv17bZb7GkM5-Un1', 
+    {  
         name: 'Minnesota Vikings vs. Green Bay Packers', 
         url: 'https://www.ticketmaster.com/minnesota-vikings-vs-green-bay-packers-minneapolis-minnesota-12-29-2024/event/0600604DCB876A8A', 
         type: 'event', 
@@ -63,10 +63,10 @@ export const seedEvents= async () => {
         max: '1600'
       }], 
       info: 'info may be the wrong type', 
-      venue: [{name: 'U.S. BANK STADIUM',}]
+      venue: {name: 'U.S. BANK STADIUM',}
     },
 
-    { id: 'vv17bZb7GkM5-Un1', 
+    {  
         name: 'Minnesota Vikings vs. Green Bay Packers', 
         url: 'https://www.ticketmaster.com/minnesota-vikings-vs-green-bay-packers-minneapolis-minnesota-12-29-2024/event/0600604DCB876A8A', 
         type: 'event', 
@@ -79,7 +79,7 @@ export const seedEvents= async () => {
         max: '1600'
       }], 
       info: 'info may be the wrong type', 
-      venue: [{name: 'U.S. BANK STADIUM',}]
+      venue: {name: 'U.S. BANK STADIUM',}
     }
 
   ]);

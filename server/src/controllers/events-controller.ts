@@ -5,7 +5,7 @@ import { UserEvent } from '../models/userEvent';
 import { searchTicketMaster } from '../api/TicketMasterAPI';
 
 //Get events based on API call from ticketmaster using user zipcode
-export const getEvents = async (req: Request, res: Response) => {
+export const getEvents = async (_req: Request, res: Response) => {
   try {
     const events = await searchTicketMaster();
     res.status(200).json(events);

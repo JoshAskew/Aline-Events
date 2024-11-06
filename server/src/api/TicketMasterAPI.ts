@@ -1,4 +1,4 @@
-import { Event } from '../interfaces/Event.interface';
+//import { Event } from '../interfaces/Event.interface';
 import dotenv from 'dotenv';
 dotenv.config();
 
