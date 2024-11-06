@@ -1,18 +1,21 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 import bcrypt from 'bcrypt';
+import { Event } from './events';
 
 interface UserAttributes {
   id: number;
-  username: string;
+  userName: string;
   password: string;
+  zipCode: string;
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
-  public username!: string;
+  public userName!: string;
   public password!: string;
+  public zipCode!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -32,11 +35,15 @@ export function UserFactory(sequelize: Sequelize): typeof User {
         autoIncrement: true,
         primaryKey: true,
       },
-      username: {
+      userName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      zipCode: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -54,6 +61,9 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       }
     }
   );
+  
+  User.belongsToMany(Event, { through: 'UserEvent' });
+  Event.belongsToMany(User, { through: 'UserEvent' });
 
   return User;
 }

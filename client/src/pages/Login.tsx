@@ -1,7 +1,11 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { Box, Button, Input, Stack, Heading, Text } from "@chakra-ui/react";
+import { Field } from "../components/ui/field";
+import { Link } from "react-router-dom";
+import "./Login.css";
 
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { login } from '../api/authAPI';
 import Auth from '../utils/auth';
-import { login } from "../api/authAPI";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -27,38 +31,49 @@ const Login = () => {
       console.error('Failed to login', err);
     }
   };
-
+ 
   return (
-    <div className='container'>
-      <form className='form' onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        <label >Username</label>
-        <input 
-          type='text'
-          name='username'
-          value={loginData.username || ''}
-          onChange={handleChange}
-        />
-      <label>Password</label>
-        <input 
-          type='password'
-          name='password'
-          value={loginData.password || ''}
-          onChange={handleChange}
-        />
-      <label>Zip Code</label>
-        <input 
-          type='text'
-          name='zipCode'
-          value={loginData.zipCode || ''}
-          onChange={handleChange}
-        />
-        
-        <button type='submit'>Submit Form</button>
-      </form>
-    </div>
-    
-  )
+    <>
+      <h1 className="header">Aline</h1>
+      <div className="login-form-container">
+      <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" p={6} boxShadow="md">
+        <Box mb={4}>
+          <Heading size="md">Login</Heading>
+          <Text fontSize="sm" color="gray.600">
+            Fill in the form below to login
+          </Text>
+        </Box>
+
+        <Box>
+        <form onSubmit={handleSubmit}>
+            <Stack >
+              <Field label="User Name">
+                <Input name="username" type="text" onChange={handleChange}/>
+              </Field>
+
+              <Field label="Password">
+              <Input name="password" type="password" onChange={handleChange} />
+              </Field>
+            </Stack>
+          </form>
+        </Box>
+
+        <Box display="flex" justifyContent="center" mt={4}>
+          <Link to="/">
+            <Button variant="outline" mr={3}>
+              Cancel
+            </Button>
+          </Link>
+          <Link to="/home">
+          <Button type="submit">
+            Sign in
+          </Button>
+          </Link>
+        </Box>
+      </Box>
+      </div>
+    </>
+  );
 };
 
 export default Login;
