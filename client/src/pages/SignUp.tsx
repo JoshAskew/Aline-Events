@@ -66,7 +66,7 @@ const SignUp = () => {
 
     return (
       <> 
-        <h1>Sign Up and Never Miss Out</h1>
+        <h1 className="signup-header">Sign Up and Never Miss Out</h1>
         <div className="form-container">
         <form>
         <Fieldset.Root size="lg" maxW="md">

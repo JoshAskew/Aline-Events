@@ -1,10 +1,46 @@
 import { Button, Card, Image, Text } from "@chakra-ui/react"
 import './Home.css'
 import Aline from "../images/aline.webp"
+import { Link } from "react-router-dom";
+import WeatherSidebar from "../components/SideBar";
+import {
+    PopoverArrow,
+    PopoverBody,
+    PopoverContent,
+    PopoverRoot,
+    PopoverTitle,
+    PopoverTrigger,
+  } from "../components/ui/popover"
 
 const Home = () => {
     return (
         <>
+
+<WeatherSidebar />
+<Link to="/SavedEvents">
+<Button className="saved-button" size="sm" variant="outline">Saved Events</Button>
+</Link>
+            <PopoverRoot>
+                <PopoverTrigger asChild>
+                    <Button className="logout" size="sm" variant="outline" >
+                        Logout
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverBody>
+                        <PopoverTitle fontWeight="bold">Are you sure you want to logout?</PopoverTitle>
+                        <Text my="4">
+                            These prices are not guaranteed to persist.
+                        </Text>
+                        <Link to="../Login">
+                            <Button className="logout" size="sm" variant="outline">
+                                Yes, Log Me Out
+                            </Button>
+                        </Link>
+                    </PopoverBody>
+                </PopoverContent>
+            </PopoverRoot>
                 <h1 className="header">Aline</h1>
             <div className="cards-container">
                 <Card.Root className="card" maxW="sm" overflow="hidden">
