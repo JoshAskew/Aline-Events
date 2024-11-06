@@ -82,5 +82,5 @@ export const seedEvents= async () => {
       venue: {name: 'U.S. BANK STADIUM',}
     }
 
-  ]);
-};
+   ]);
+ };
