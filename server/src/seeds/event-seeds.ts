@@ -2,7 +2,7 @@ import { Event } from '../models/events.js';
 
 export const seedEvents= async () => {
   await Event.bulkCreate([
-    { id: 'Z7r9jZ1A7C3_O', 
+    { id: 1, 
         name: 'Minnesota Timberwolves vs. Pheonix Suns', 
         url: 'https://www.ticketmaster.com/event/Z7r9jZ1A7C3_O', 
         type: 'event', 
@@ -18,7 +18,7 @@ export const seedEvents= async () => {
       venue: [{name: 'Target Center',}]
     },
 
-    { id: 'vv17bZb7GkM5-Un1', 
+    { id: 2, 
         name: 'Minnesota Vikings vs. Green Bay Packers', 
         url: 'https://www.ticketmaster.com/minnesota-vikings-vs-green-bay-packers-minneapolis-minnesota-12-29-2024/event/0600604DCB876A8A', 
         type: 'event', 
@@ -34,7 +34,7 @@ export const seedEvents= async () => {
       venue: [{name: 'U.S. BANK STADIUM',}]
     },
     
-    { id: 'vv17bZb7GkM5-Un1', 
+    { id: 3, 
         name: 'Minnesota Vikings vs. Green Bay Packers', 
         url: 'https://www.ticketmaster.com/minnesota-vikings-vs-green-bay-packers-minneapolis-minnesota-12-29-2024/event/0600604DCB876A8A', 
         type: 'event', 
@@ -50,7 +50,7 @@ export const seedEvents= async () => {
       venue: [{name: 'U.S. BANK STADIUM',}]
     },
 
-    { id: 'vv17bZb7GkM5-Un1', 
+    { id: 4, 
         name: 'Minnesota Vikings vs. Green Bay Packers', 
         url: 'https://www.ticketmaster.com/minnesota-vikings-vs-green-bay-packers-minneapolis-minnesota-12-29-2024/event/0600604DCB876A8A', 
         type: 'event', 
@@ -66,7 +66,7 @@ export const seedEvents= async () => {
       venue: [{name: 'U.S. BANK STADIUM',}]
     },
 
-    { id: 'vv17bZb7GkM5-Un1', 
+    { id: 5, 
         name: 'Minnesota Vikings vs. Green Bay Packers', 
         url: 'https://www.ticketmaster.com/minnesota-vikings-vs-green-bay-packers-minneapolis-minnesota-12-29-2024/event/0600604DCB876A8A', 
         type: 'event', 
