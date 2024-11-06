@@ -14,7 +14,7 @@ const SignUp = () => {
 
   const [passwordConfirm, setPasswordConfirm] = useState(''); 
 
-  const handleSearchFormSubmit =  async (event: any): Promise<void> => {
+  const handleSearchFormSubmit = async (event: any): Promise<void> => {
 
     event.preventDefault();
 
@@ -28,7 +28,7 @@ const SignUp = () => {
 
     //fetch to api routes, hit the routes that updates the database to the user
     try {
-      const response = await fetch("/", {
+      const response = await fetch("/api/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
