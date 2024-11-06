@@ -1,25 +1,35 @@
 import React from 'react';
+import { Card, Image, Text, Button } from '';
 
 interface EventCardProps {
   title: string;
-  date: number;
+  date: string;
   location: string;
   description: string;
   imageUrl: string;
+  price: string;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ title, date, location, description, imageUrl }) => {
+const EventCard: React.FC<EventCardProps> = ({ title, date, location, description, imageUrl, price }) => {
   return (
-    <div className="event-card">
-      <img src={imageUrl} alt={title} className="event-card-image" />
-      <div className="event-card-content">
-        <h2>{title}</h2>
-        <p>{date}</p>
-        <p>{location}</p>
-        <p>{description}</p>
-      </div>
-    </div>
+    <Card.Root className="card" maxW="sm" overflow="hidden">
+      <Image src={imageUrl} alt={title} />
+      <Card.Body gap="2">
+        <Card.Title>{title}</Card.Title>
+        <Card.Description>{description}</Card.Description>
+        <Card.Description>{date}</Card.Description>
+        <Card.Description>{location}</Card.Description>
+        <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
+          {price}
+        </Text>
+      </Card.Body>
+      <Card.Footer gap="2">
+        <Button variant="solid">Save Event</Button>
+        <Button variant="ghost">Skip Event</Button>
+      </Card.Footer>
+    </Card.Root>
   );
 };
 
 export default EventCard;
+

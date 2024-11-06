@@ -5,18 +5,18 @@ import bcrypt from 'bcrypt';
 
 
 export const login = async (req: Request, res: Response) => {
-  const { username, password } = req.body; // Get username and password from request body
+  const { userName, password } = req.body; // Get username and password from request body
   console.log('Login attempt:', req.body);
 
   try {
-    const user = await User.findOne({ where: { username } });
+    const user = await User.findOne({ where: { userName } });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
     const SECRET_KEY = process.env.JWT_SECRET_KEY;
     // Generate and return a JWT token
-    const token = jwt.sign({ username: user.username }, SECRET_KEY as string, { expiresIn: '1h' });
+    const token = jwt.sign({ userName: user.userName }, SECRET_KEY as string, { expiresIn: '1h' });
     return res.json({ token }); // Return the token as JSON
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
