@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
 import pkg from 'pg';
-
 const { Pool } = pkg;
 
 const pool = new Pool({
@@ -61,6 +60,7 @@ export const createUser = async (req: Request, res: Response) => {
     );
 
     return res.status(201).json({ message: 'User created successfully', userId: result.rows[0].id });
+    
   } catch (error: any) {
     console.error(error);
     return res.status(500).json({ message: 'Server error' });
