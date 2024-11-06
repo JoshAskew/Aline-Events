@@ -5,6 +5,7 @@ interface UserAttributes {
   id: number;
   username: string;
   password: string;
+  zipCode: string;
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
@@ -13,6 +14,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   public id!: number;
   public username!: string;
   public password!: string;
+  public zipCode!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -37,6 +39,10 @@ export function UserFactory(sequelize: Sequelize): typeof User {
         allowNull: false,
       },
       password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      zipCode: {
         type: DataTypes.STRING,
         allowNull: false,
       },
