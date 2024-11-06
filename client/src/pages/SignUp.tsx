@@ -4,11 +4,6 @@ import './SignUp.css'
 import { useState } from 'react';
 
 
-const searchInput: HTMLInputElement = document.getElementById(
-  'search-input'
-) as HTMLInputElement;
-
-
 const SignUp = () => {
 
   const [user, setUser] = useState({
@@ -19,8 +14,7 @@ const SignUp = () => {
 
   const [passwordConfirm, setPasswordConfirm] = useState(''); 
 
-  
-  const handleSearchFormSubmit = (event: any): void => {
+  const handleSearchFormSubmit =  async (event: any): Promise<void> => {
 
     event.preventDefault();
 
@@ -33,13 +27,30 @@ const SignUp = () => {
     }
 
     //fetch to api routes, hit the routes that updates the database to the user
-    //fetch()
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to sign up");
+      }
+
+      const result = await response.json();
+      console.log("User successfully signed up:", result);
+    } catch (error) {
+      console.error("Error: User faield to signed up");
+    }
   };
 
 
   //this will handle all the inputs and store them into user state change and return back values, event click or change, target is element interacted with
   // runs every time the type 
-  const handleInputChange = (event: any): void =>{
+  const handleInputChange = async (event: any): Promise<void> =>{
     
     //consoles in readtime inputs being updated
     console.log(event.target.value);
@@ -86,7 +97,7 @@ const SignUp = () => {
       
       </Fieldset.Content>
 
-      <Button type="submit" alignSelf="flex-start">
+      <Button onChange={handleSearchFormSubmit} name="submit" type="submit" alignSelf="flex-start">
         Sign Up
       </Button>
     </Fieldset.Root>
