@@ -68,12 +68,13 @@ export const createUser = async (req: Request, res: Response) => {
 // PUT /Users/:id
 export const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { username, password } = req.body;
+  const { username, password, zipCode } = req.body;
   try {
     const user = await User.findByPk(id);
     if (user) {
       user.userName = username;
       user.password = password;
+      user.zipCode = zipCode;
       await user.save();
       res.json(user);
     } else {

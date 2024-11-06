@@ -1,5 +1,6 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 import bcrypt from 'bcrypt';
+import { Event } from './events';
 
 interface UserAttributes {
   id: number;
@@ -60,6 +61,9 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       }
     }
   );
+  
+  User.belongsToMany(Event, { through: 'UserEvent' });
+  Event.belongsToMany(User, { through: 'UserEvent' });
 
   return User;
 }
