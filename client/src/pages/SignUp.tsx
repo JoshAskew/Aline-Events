@@ -2,9 +2,11 @@ import { Button, Fieldset, Input, Stack } from "@chakra-ui/react"
 import { Field } from "../components/ui/field"
 import './SignUp.css'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const SignUp = () => {
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({
     userName: '',
@@ -42,7 +44,8 @@ const SignUp = () => {
 
       const result = await response.json();
       console.log("User successfully signed up:", result);
-      return result;
+      navigate('/home');
+      
     } catch (error) {
       console.error("Error: User faield to signed up");
     }
