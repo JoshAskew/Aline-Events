@@ -12,6 +12,7 @@ import {
     PopoverTrigger,
 } from "../components/ui/popover"
 import "./SavedEvents.css"
+import EventCard from "../components/EventCard";
 
 const SavedEvents = () => {
     return (
@@ -67,6 +68,7 @@ const SavedEvents = () => {
                         <Button variant="ghost">Skip Event</Button>
                     </Card.Footer>
                 </Card.Root>
+              <EventCard />
             </div>
         </>
     );
