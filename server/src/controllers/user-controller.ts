@@ -1,16 +1,8 @@
 import { Request, Response } from 'express';
-import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
 import pkg from 'pg';
-const { Pool } = pkg;
-
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: parseInt(process.env.DB_PORT || '5432', 10),
-});
+import jwt  from 'jsonwebtoken';
+import {User} from '../models/user.js';
 
 // GET /Users
 export const getAllUsers = async (_req: Request, res: Response) => {
@@ -50,16 +42,11 @@ export const createUser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+   //User.create calls model/user -> before create hook and User creates entry into database 
+    const user = await User.create(req.body);
+    const token = jwt.sign({ userName: user.userName, zipCode: user.zipCode }, process.env.JWT_SECRET_KEY as string, { expiresIn: '1h' });
 
-    const result = await pool.query(
-      `INSERT INTO users (userName, zipCode, password) 
-       VALUES ($1, $2, $3) 
-       RETURNING id`,
-      [userName, zipCode, hashedPassword]
-    );
-
-    return res.status(201).json({ message: 'User created successfully', userId: result.rows[0].id });
+    return res.status(201).json({ message: 'User created successfully', token });
     
   } catch (error: any) {
     console.error(error);

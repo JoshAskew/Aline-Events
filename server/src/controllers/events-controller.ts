@@ -2,17 +2,7 @@ import { Request, Response } from 'express';
 import { User } from '../models/user';
 import { Event } from '../models/events';
 import { UserEvent } from '../models/userEvent';
-import { searchTicketMaster } from '../api/TicketMasterAPI';
 
-//Get events based on API call from ticketmaster using user zipcode
-export const getEvents = async (_req: Request, res: Response) => {
-  try {
-    const events = await searchTicketMaster();
-    res.status(200).json(events);
-  } catch (err) {
-    res.status(500).json({ error: 'An error occurred while fetching events:', err });
-  }
-};
 
 //Save event to users profile
 export const saveEvent = async (req: Request, res: Response) => {

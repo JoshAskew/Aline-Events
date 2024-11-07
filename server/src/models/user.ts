@@ -62,8 +62,8 @@ export function UserFactory(sequelize: Sequelize): typeof User {
     }
   );
   
-  User.belongsToMany(Event, { through: 'UserEvent' });
-  Event.belongsToMany(User, { through: 'UserEvent' });
+  // User.belongsToMany(Event, { through: 'UserEvent' });
+  // Event.belongsToMany(User, { through: 'UserEvent' });
 
   return User;
 }
