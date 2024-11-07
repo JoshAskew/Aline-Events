@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
     <footer className="footer">
       <p>&copy; {new Date().getFullYear()} Aline All rights reserved.</p>
       <nav>
-        <a href="https://github.com/JoshAskew/Aline-Events">Contact Us</a>
+        
       </nav>
     </footer>
   );
