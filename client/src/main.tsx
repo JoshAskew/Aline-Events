@@ -10,6 +10,7 @@ import SavedEvents from './pages/SavedEvents.tsx';
 import SignUp from './pages/SignUp.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
 import React from 'react';
+import AboutAline from './pages/AboutAline.tsx'
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: '/SavedEvents',
         element: <SavedEvents />
+      },
+      {
+        path: '/AboutAline',
+        element: <AboutAline />
       }
     ]
   }

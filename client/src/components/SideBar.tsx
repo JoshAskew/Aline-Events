@@ -21,7 +21,7 @@ const WeatherSidebar = () => {
         <Button  variant="outline" size="sm"
         position="absolute"
         right={0}
-        top={0}
+        top={20}
         margin="20px"
         cursor="pointer"
         >

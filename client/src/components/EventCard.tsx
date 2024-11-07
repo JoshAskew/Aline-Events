@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image, Text, Button } from '';
+import { Card, Image, Text, Button } from "@chakra-ui/react";
 
 interface EventCardProps {
   title: string;
