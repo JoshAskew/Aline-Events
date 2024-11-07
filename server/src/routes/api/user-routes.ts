@@ -50,7 +50,7 @@ router.get('/', getAllUsers);
 router.get('/:id', getUserById);
 
 // POST /users - Create a new user
-router.post('/', createUser);
+router.post('/signup', createUser);
 
 // PUT /users/:id - Update a user by id
 router.put('/:id', updateUser);
