@@ -15,6 +15,7 @@ const SignUp = () => {
   }); 
 
   const [passwordConfirm, setPasswordConfirm] = useState(''); 
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSearchFormSubmit = async (event: any): Promise<void> => {
 
@@ -25,8 +26,11 @@ const SignUp = () => {
     }
 
     if (user.password  !== passwordConfirm) {
-      throw new Error('Passwords much match');
+      setErrorMessage('Passwords do not match');
+      return;
     }
+
+    setErrorMessage(''); //reset error message if matching
 
     //fetch to api routes, hit the routes that updates the database to the user
     try {
@@ -96,7 +100,8 @@ const SignUp = () => {
         </Field>
 
         <Field label="Confirm Password" >
-          <Input name="passwordConfirm" onChange={handleInputChange} value={passwordConfirm} type="password" />
+          <Input name="confirmPassword" onChange={handleInputChange} value={passwordConfirm} type="password" />
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </Field>
       
       </Fieldset.Content>

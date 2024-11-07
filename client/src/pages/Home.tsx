@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Event } from '../interfaces/Events';
-import { searchTicketMaster } from '../api/API';
-import EventCard from '../components/EventCard';
+// import React, { useState, useEffect } from 'react';
+// import { Event } from '../interfaces/Events';
+// import { searchTicketMaster } from '../api/API';
+//import EventCard from '../components/EventCard';
 
 import { Button, Card, Image, Text } from "@chakra-ui/react"
 import './Home.css'
@@ -21,66 +21,66 @@ import {
 
 const Home: React.FC = () => {
 
-    const [events, setEvents] = useState<Event[]>([]); // Initialize empty array
-    const [error, setError] = useState<string | null>(null);
-    const [eventsIndex, setEventsIndex] = useState<number>(0); // Initialize empty array
+    // const [events, setEvents] = useState<Event[]>([]); // Initialize empty array
+    // const [error, setError] = useState<string | null>(null);
+    // const [eventsIndex, setEventsIndex] = useState<number>(0); // Initialize empty array
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const allEvents = await searchTicketMaster(); // Fetch events using the initial API function
+    // useEffect(() => {
+    //     const fetchEvents = async () => {
+    //         try {
+    //             const allEvents = await searchTicketMaster(); // Fetch events using the initial API function
 
-                const detailedEvents = await Promise.all(
-                    allEvents.map(async (_allEvents) => {
-                      // Fetch detailed data for each candidate by username
-                      //const detailedData = await searchGithubUser(allCandidates.login);
+    //             const detailedEvents = await Promise.all(
+    //                 allEvents.map(async (_allEvents) => {
+    //                   // Fetch detailed data for each candidate by username
+    //                   //const detailedData = await searchGithubUser(allCandidates.login);
 
-                   //   return detailedData;
+    //                //   return detailedData;
 
-                   return [][0];
-                    })
-                  );
+    //                return [][0];
+    //                 })
+    //               );
           
-                  // Set candidates with detailed data
-                  setEvents(detailedEvents);
+    //               // Set candidates with detailed data
+    //               setEvents(detailedEvents);
 
-            } catch (err) {
-                console.error('Failed to fetch events:', err);
-                setError('Failed to fetch events');
-            }
-        };
+    //         } catch (err) {
+    //             console.error('Failed to fetch events:', err);
+    //             setError('Failed to fetch events');
+    //         }
+    //     };
 
-        fetchEvents();
-    }, []);
+    //     fetchEvents();
+    // }, []);
 
-    const addToEventList = (): void => {
+    // const addToEventList = (): void => {
 
-        let eventName: Event[] = [];
+    //     let eventName: Event[] = [];
 
-        let getData: string | null = localStorage.getItem('event') || null;
+    //     let getData: string | null = localStorage.getItem('event') || null;
 
-        if (getData !== null) {
-            eventName = JSON.parse(getData);
-        }
+    //     if (getData !== null) {
+    //         eventName = JSON.parse(getData);
+    //     }
 
-        eventName.push(events[eventsIndex]);
-        localStorage.setItem('user', JSON.stringify(eventName));
+    //     eventName.push(events[eventsIndex]);
+    //     localStorage.setItem('user', JSON.stringify(eventName));
 
-        if (events.length - 1 !== eventsIndex) {
-            setEventsIndex(eventsIndex + 1);
-        }
+    //     if (events.length - 1 !== eventsIndex) {
+    //         setEventsIndex(eventsIndex + 1);
+    //     }
 
-    }
+    // }
 
-    const removeFromEvents = (): void => {
-        if (events.length - 1 !== eventsIndex) {
-            setEventsIndex(eventsIndex + 1);
-        }
-    }
+    // const removeFromEvents = (): void => {
+    //     if (events.length - 1 !== eventsIndex) {
+    //         setEventsIndex(eventsIndex + 1);
+    //     }
+    // }
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    // if (error) {
+    //     return <div>Error: {error}</div>;
+    // }
 
 
     return (
@@ -112,116 +112,8 @@ const Home: React.FC = () => {
             </PopoverRoot>
             <h1 className="header">Aline</h1>
             <div className="cards-container">
-                <Card.Root className="card" maxW="sm" overflow="hidden">
-                    <Image
-                        src={Aline}
-                    />
-                    <Card.Body gap="2">
-                        <Card.Title>Event Title</Card.Title>
-                        <Card.Description>
-                            This is the type of the event.
-                        </Card.Description>
-                        <Card.Description>
-                            Start Date-End Date
-                        </Card.Description>
-                        <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                            $450-$1000
-                        </Text>
-                    </Card.Body>
-                    <Card.Footer gap="2">
-                        <Button variant="solid">Save Event</Button>
-                        <Button variant="ghost">Skip Event</Button>
-                    </Card.Footer>
-                </Card.Root>
-
-                <Card.Root className="card" maxW="sm" overflow="hidden">
-                    <Image
-                        src={Aline}
-                    />
-                    <Card.Body gap="2">
-                        <Card.Title>Event Title</Card.Title>
-                        <Card.Description>
-                            This is the type of the event.
-                        </Card.Description>
-                        <Card.Description>
-                            Start Date-End Date
-                        </Card.Description>
-                        <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                            $450-$1000
-                        </Text>
-                    </Card.Body>
-                    <Card.Footer gap="2">
-                        <Button variant="solid">Save Event</Button>
-                        <Button variant="ghost">Skip Event</Button>
-                    </Card.Footer>
-                </Card.Root>
-
-                <Card.Root className="card" maxW="sm" overflow="hidden">
-                    <Image
-                        src={Aline}
-                    />
-                    <Card.Body gap="2">
-                        <Card.Title>Event Title</Card.Title>
-                        <Card.Description>
-                            This is the type of the event.
-                        </Card.Description>
-                        <Card.Description>
-                            Start Date-End Date
-                        </Card.Description>
-                        <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                            $450-$1000
-                        </Text>
-                    </Card.Body>
-                    <Card.Footer gap="2">
-                        <Button variant="solid">Save Event</Button>
-                        <Button variant="ghost">Skip Event</Button>
-                    </Card.Footer>
-                </Card.Root>
-
-                <Card.Root className="card" maxW="sm" overflow="hidden">
-                    <Image
-                        src={Aline}
-                    />
-                    <Card.Body gap="2">
-                        <Card.Title>Event Title</Card.Title>
-                        <Card.Description>
-                            This is the type of the event.
-                        </Card.Description>
-                        <Card.Description>
-                            Start Date-End Date
-                        </Card.Description>
-                        <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                            $450-$1000
-                        </Text>
-                    </Card.Body>
-                    <Card.Footer gap="2">
-                        <Button variant="solid">Save Event</Button>
-                        <Button variant="ghost">Skip Event</Button>
-                    </Card.Footer>
-                </Card.Root>
-
-                <Card.Root className="card" maxW="sm" overflow="hidden">
-                    <Image
-                        src={Aline}
-                    />
-                    <Card.Body gap="2">
-                        <Card.Title>Event Title</Card.Title>
-                        <Card.Description>
-                            This is the type of the event.
-                        </Card.Description>
-                        <Card.Description>
-                            Start Date-End Date
-                        </Card.Description>
-                        <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                            $450-$1000
-                        </Text>
-                    </Card.Body>
-                    <Card.Footer gap="2">
-                        <Button variant="solid">Save Event</Button>
-                        <Button variant="ghost">Skip Event</Button>
-                    </Card.Footer>
-                </Card.Root>
-
+                
+                
                 <Card.Root className="card" maxW="sm" overflow="hidden">
                     <Image
                         src={Aline}
