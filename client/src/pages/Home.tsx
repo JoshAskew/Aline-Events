@@ -1,3 +1,8 @@
+import React, { useState, useEffect } from 'react';
+import { Event } from '../interfaces/Events';
+import { searchTicketMaster } from '../api/API';
+import EventCard from '../components/EventCard';
+
 import { Button, Card, Image, Text } from "@chakra-ui/react"
 import './Home.css'
 import Aline from "../images/aline.webp"
@@ -12,9 +17,74 @@ import {
     PopoverTrigger,
 } from "../components/ui/popover"
 
-const Home = () => {
+
+
+const Home: React.FC = () => {
+
+    const [events, setEvents] = useState<Event[]>([]); // Initialize empty array
+    const [error, setError] = useState<string | null>(null);
+    const [eventsIndex, setEventsIndex] = useState<number>(0); // Initialize empty array
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const allEvents = await searchTicketMaster(); // Fetch events using the initial API function
+
+                // Set events 
+                setEvents(allEvents);
+
+            } catch (err) {
+                console.error('Failed to fetch events:', err);
+                setError('Failed to fetch events');
+            }
+        };
+
+        fetchEvents();
+    }, []);
+
+    const addToEventList = (): void => {
+
+        let eventName: Event[] = [];
+
+        let getData: string | null = localStorage.getItem('event') || null;
+
+        if (getData !== null) {
+            eventName = JSON.parse(getData);
+        }
+
+        eventName.push(events[eventsIndex]);
+        localStorage.setItem('user', JSON.stringify(eventName));
+
+        if (events.length - 1 !== eventsIndex) {
+            setEventsIndex(eventsIndex + 1);
+        }
+
+    }
+
+    const removeFromEvents = (): void => {
+        if (events.length - 1 !== eventsIndex) {
+            setEventsIndex(eventsIndex + 1);
+        }
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+
     return (
         <>
+
+            <div>
+                <div className="event-list">
+                    {(events.length > 0 && events.length - 1 !== eventsIndex) ? (
+                        <EventCard event={events[eventsIndex]} addToEventList={addToEventList} removeFromEvents={removeFromEvents}></EventCard>
+                    ) : (
+                        <p>No Events found.</p>
+                    )}
+                </div>
+            </div >
+
 
             <WeatherSidebar />
             <Link to="/SavedEvents">
