@@ -10,16 +10,16 @@ import {
     PopoverRoot,
     PopoverTitle,
     PopoverTrigger,
-  } from "../components/ui/popover"
+} from "../components/ui/popover"
 
 const Home = () => {
     return (
         <>
 
-<WeatherSidebar />
-<Link to="/SavedEvents">
-<Button className="saved-button" size="sm" variant="outline">Saved Events</Button>
-</Link>
+            <WeatherSidebar />
+            <Link to="/SavedEvents">
+                <Button className="saved-button" size="sm" variant="outline">Saved Events</Button>
+            </Link>
             <PopoverRoot>
                 <PopoverTrigger asChild>
                     <Button className="logout" size="sm" variant="outline" >
@@ -41,11 +41,11 @@ const Home = () => {
                     </PopoverBody>
                 </PopoverContent>
             </PopoverRoot>
-                <h1 className="header">Aline</h1>
+            <h1 className="header">Aline</h1>
             <div className="cards-container">
                 <Card.Root className="card" maxW="sm" overflow="hidden">
                     <Image
-                        src= {Aline}
+                        src={Aline}
                     />
                     <Card.Body gap="2">
                         <Card.Title>Event Title</Card.Title>
