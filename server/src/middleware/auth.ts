@@ -4,15 +4,10 @@ import jwt from 'jsonwebtoken';
 
 interface JwtPayload {
   userName: string;
+  id: number;
 }
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: JwtPayload; // Extend Request to include a user property
-    }
-  }
-}
+
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction): void => {
   const token = req.headers['authorization']; // Get token from the Authorization header

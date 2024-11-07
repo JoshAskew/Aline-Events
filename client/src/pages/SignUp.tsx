@@ -4,7 +4,6 @@ import './SignUp.css'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 const SignUp = () => {
   const navigate = useNavigate();
 
@@ -42,15 +41,22 @@ const SignUp = () => {
         body: JSON.stringify(user),
       });
 
+
+
       if (!response.ok) {
         const errorData = await response.json(); // Get the error response body
-        console.error("Signup error response:", errorData);
+        console.error("Failed to sign up", errorData);
         throw new Error("Failed to sign up");
       }
 
       const result = await response.json();
       console.log("User successfully signed up:", result);
+
+      localStorage.setItem("token", result.token);
+
       navigate('/home');
+
+
       
     } catch (error) {
       console.error("Error: User failed to signed up");
@@ -69,6 +75,7 @@ const SignUp = () => {
       setPasswordConfirm(event.target.value)
     }else{
       setUser({...user, [event.target.name]:event.target.value})
+      //setUser((prevUser) => ({ ...prevUser, [name]: value }));
     }
   }
 

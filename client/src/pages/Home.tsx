@@ -1,4 +1,4 @@
-// import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 // import { Event } from '../interfaces/Events';
 // import { searchTicketMaster } from '../api/API';
 //import EventCard from '../components/EventCard';
@@ -8,6 +8,8 @@ import './Home.css'
 import Aline from "../images/aline.webp"
 import { Link } from "react-router-dom";
 import WeatherSidebar from "../components/SideBar";
+import AuthService from "../utils/auth";
+
 import {
     PopoverArrow,
     PopoverBody,
@@ -18,8 +20,38 @@ import {
 } from "../components/ui/popover"
 
 
-
 const Home: React.FC = () => {
+
+    //take their zipcode that is stored in a database postgres db
+        useEffect(() => {
+        const fetchEvents = async () => {
+            const response = await fetch("/api/ticketData", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(AuthService.getToken()),
+              });
+        
+              if (!response.ok) {
+                const errorData = await response.json(); // Get the error response body
+                console.error("Failed to sign up", errorData);
+                throw new Error("Failed to sign up");
+              }
+        
+              const useState = await response.json();
+              console.log("User successfully signed up:", useState);
+        };
+
+        fetchEvents();
+    }, []);
+
+
+
+
+
+
+
 
     // const [events, setEvents] = useState<Event[]>([]); // Initialize empty array
     // const [error, setError] = useState<string | null>(null);

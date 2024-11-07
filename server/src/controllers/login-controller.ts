@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 export const login = async (req: Request, res: Response) => {
-  const { userName, password } = req.body; // Get username and password from request body
+  const { userName, password, zipCode } = req.body; // Get username and password from request body
   console.log('Login attempt:', req.body);
 
   try {
