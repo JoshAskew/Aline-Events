@@ -68,7 +68,6 @@ const SavedEvents = () => {
                         <Button variant="ghost">Skip Event</Button>
                     </Card.Footer>
                 </Card.Root>
-              <EventCard />
             </div>
         </>
     );

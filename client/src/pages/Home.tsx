@@ -16,7 +16,6 @@ import {
     PopoverTitle,
     PopoverTrigger,
 } from "../components/ui/popover"
-import EventCard from "../components/EventCard";
 
 
 
@@ -113,12 +112,7 @@ const Home: React.FC = () => {
             </PopoverRoot>
             <h1 className="header">Aline</h1>
             <div className="cards-container">
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
+                
                 
                 <Card.Root className="card" maxW="sm" overflow="hidden">
                     <Image
