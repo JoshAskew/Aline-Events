@@ -3,6 +3,7 @@ import "./Navbar.css"
 import  User from "../images/user.png"
 import Home from "../images/home.png"
 
+
 const Navbar = () => {
   return (
     <nav>
