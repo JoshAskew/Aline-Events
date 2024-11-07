@@ -27,7 +27,7 @@ const AboutAline = () => {
 
         <h2>Meet Our Team</h2>
          <div className="team-member">
-         <h3>[Avery Jacobson]</h3> <p>[Back-end Engineer]</p> <p>[Brief bio]</p> </div>
+         <h3>[Avery Jacobson]</h3> <p>[Front-end and Back-end Engineer]</p> <p>[Brief bio]</p> </div>
 
          <div className="team-member">
          <h3>[Chris Groth]</h3> <p>[Front-end and Back-end Engineer]</p> <p>[Brief bio]</p> </div>
