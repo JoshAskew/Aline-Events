@@ -12,7 +12,7 @@ import {
     PopoverTrigger,
 } from "../components/ui/popover"
 import "./SavedEvents.css"
-import EventCard from "../components/EventCard";
+//import EventCard from "../components/EventCard";
 
 const SavedEvents = () => {
     return (
