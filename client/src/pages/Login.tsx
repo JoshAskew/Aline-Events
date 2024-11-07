@@ -8,13 +8,15 @@ import { login } from '../api/authAPI';
 import Auth from '../utils/auth';
 
 const Login = () => {
+  const [errorMessage, setErrorMessage] = useState('');
   const [loginData, setLoginData] = useState({
-    username: '',
+    userName: '',
     password: '',
     zipCode: ''
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setErrorMessage('');
     const { name, value } = e.target;
     setLoginData({
       ...loginData,
@@ -27,8 +29,11 @@ const Login = () => {
     try {
       const data = await login(loginData);
       Auth.login(data.token);
+      console.log(data.token);
+      console.log(token);
     } catch (err) {
       console.error('Failed to login', err);
+      setErrorMessage('Failed to login');
     }
   };
  
@@ -48,28 +53,29 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
             <Stack >
               <Field label="User Name">
-                <Input name="username" type="text" onChange={handleChange}/>
+                <Input name="userName" type="text" onChange={handleChange}/>
               </Field>
 
               <Field label="Password">
               <Input name="password" type="password" onChange={handleChange} />
+              {errorMessage && <p className= 'error-message'>{errorMessage}</p>}
               </Field>
             </Stack>
-          </form>
-        </Box>
-
         <Box display="flex" justifyContent="center" mt={4}>
           <Link to="/">
             <Button variant="outline" mr={3}>
               Cancel
             </Button>
           </Link>
-          <Link to="/home">
+
           <Button type="submit">
             Sign in
           </Button>
-          </Link>
+
         </Box>
+          </form>
+        </Box>
+
       </Box>
       </div>
     </>
