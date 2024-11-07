@@ -6,7 +6,7 @@ interface Coordinates {
   longitude: number;
 }
 
-class Weather {
+export class Weather {
   temperature: number;
   humidity: number;
   windSpeed: number;
