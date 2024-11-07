@@ -3,6 +3,7 @@ import { User } from './user.js';
 
 interface EventAttributes {
     id: number;
+    userId: number;
     name: string;
     url: string;
     type: string;
@@ -17,6 +18,7 @@ interface EventCreationAttributes extends Optional<EventAttributes, 'id'> {}
 
 export class Event extends Model<EventAttributes, EventCreationAttributes> implements EventAttributes {
     public id!: number;
+    public userId!: number;
     public name!: string;
     public url!: string;
     public type!: string;
@@ -37,6 +39,10 @@ export function EventFactory(sequelize: Sequelize): typeof Event {
                 type: DataTypes.INTEGER,
                 autoIncrement: true,
                 primaryKey: true,
+            },
+            userId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
             },
             name: {
                 type: DataTypes.STRING,
@@ -76,8 +82,6 @@ export function EventFactory(sequelize: Sequelize): typeof Event {
             sequelize,
         }
     );
-    Event.belongsToMany(User, { through: 'UserEvent' });
-    User.belongsToMany(Event, { through: 'UserEvent' });
 
     return Event;
     
