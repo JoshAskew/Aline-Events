@@ -33,7 +33,7 @@ const searchTicketMaster = async (): Promise<Event[]> => {
   }
 };
 
-const searchGithubUser = async (username: string) => {
+const searchGithubUser = async (userName: string) => {
   try {
 
     const response = await fetch(`https://api.github.com/users/${username}`, {

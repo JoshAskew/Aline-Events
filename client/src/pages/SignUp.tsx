@@ -33,7 +33,7 @@ const SignUp = () => {
 
     //fetch to api routes, hit the routes that updates the database to the user
     try {
-      const response = await fetch("/api/signup", {
+      const response = await fetch("/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
