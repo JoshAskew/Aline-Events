@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
 import pkg from 'pg';
+
 const { Pool } = pkg;
 
 const pool = new Pool({
