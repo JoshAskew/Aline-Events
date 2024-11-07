@@ -68,7 +68,6 @@ const SignUp = () => {
     }
   }
 
-
     return (
       <> 
         <h1 className="signup-header">Sign Up and Never Miss Out</h1>
