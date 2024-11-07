@@ -30,8 +30,19 @@ const Home: React.FC = () => {
             try {
                 const allEvents = await searchTicketMaster(); // Fetch events using the initial API function
 
-                // Set events 
-                setEvents(allEvents);
+                const detailedEvents = await Promise.all(
+                    allEvents.map(async (_allEvents) => {
+                      // Fetch detailed data for each candidate by username
+                      //const detailedData = await searchGithubUser(allCandidates.login);
+
+                   //   return detailedData;
+
+                   return [][0];
+                    })
+                  );
+          
+                  // Set candidates with detailed data
+                  setEvents(detailedEvents);
 
             } catch (err) {
                 console.error('Failed to fetch events:', err);
