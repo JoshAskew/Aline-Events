@@ -3,14 +3,14 @@ import { Request, Response } from 'express';
 import {User} from '../models/user.js';
 
 interface JwtPayload {
-    username: string;
+    userName: string;
     id: number;
   }
 
 const getTicketData = async (req: Request, res: Response): Promise<any | null> => {
 
 
-    const  {id}  = req.user as JwtPayload;
+    const  {id} = req.user as JwtPayload;
 
     const user = await User.findByPk(id);
 
