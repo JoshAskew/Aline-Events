@@ -47,3 +47,19 @@ p {
     color: #fafafa;
 }
       
+
+.back-button2 {
+    margin: 20px;
+    padding: 8px;
+    border: 1px;
+    border: 1px dotted rgba(0, 128, 128, 0.378);
+    border-radius: 5px;
+    font-family: "Source Sans 3", serif;
+    font-size: small;
+    cursor: pointer;
+    background-color: teal;
+}
+
+.back-button2:hover {
+    background-color: rgb(0, 88, 88);
+}

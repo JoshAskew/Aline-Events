@@ -42,6 +42,9 @@ const LandingPage = () => {
                         </Button>
                     </Link>
                 </HStack>
+                    <Link to="/AboutAline">
+                <Button className="saved-button" size="sm" variant="outline">About Aline</Button>
+            </Link>
             </VStack>
         </Box>
         </div>

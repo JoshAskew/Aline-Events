@@ -1,19 +1,31 @@
 import './AboutAline.css'
 import {} from "@chakra-ui/react"
+import { useNavigate } from 'react-router-dom';
+
 
 const AboutAline = () => {
+
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        navigate(-1);  
+    };
+
     return (
-      <section>
-        <h1 className='header'>About Aline</h1>
-        <p className='p1'>Welcome to Aline - Your One-Stop Solution for local events weather you're taking it solo or with friends!</p> 
+      <section className="about-aline">
+        <button className="back-button2" onClick={handleBack}>Back</button>
+        <h1 className="header">About Aline</h1>
+        <p className="intro">
+          Welcome to Aline - Your One-Stop Solution for local events whether you're taking it solo or with friends!
+        </p> 
 
         <h2>Welcome to Aline!</h2> 
-          <p className='p1'>Discover the pulse of your local scene with Aline, your ultimate guide to finding and exploring exciting events around you.
-            Whether it's a community festival, a vibrant market, or an exclusive concert,
-            Aline makes it easy to uncover what's happening and stay in the know about event details and prices.
-            Created by a dedicated group of collaborators,
-            Aline reflects the passion and expertise of a diverse team committed to enhancing your event-finding experience.
-            Join us in creating memorable experiences and making the most of every opportunity right in your community.</p> 
+        <p>Discover the pulse of your local scene with Aline, your ultimate guide to finding and exploring exciting events around you.
+          Whether it's a community festival, a vibrant market, or an exclusive concert,
+          Aline makes it easy to uncover what's happening and stay in the know about event details and prices.
+          Created by a dedicated group of collaborators,
+          Aline reflects the passion and expertise of a diverse team committed to enhancing your event-finding experience.
+          Join us in creating memorable experiences and making the most of every opportunity right in your community.</p> 
 
         <h2>Our Story</h2> 
         <p className='p1'>Aline emerged from a group project that turned into a mission-driven venture.
@@ -62,5 +74,4 @@ const AboutAline = () => {
   );
 };
   
-  export default AboutAline;
-  
+export default AboutAline;
