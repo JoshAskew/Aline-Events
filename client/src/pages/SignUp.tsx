@@ -97,7 +97,7 @@ const SignUp = () => {
         </Field>
 
         <Field label="Confirm Password" >
-          <Input name="confirmPassword" onChange={handleInputChange} value={passwordConfirm} type="password" />
+          <Input name="passwordConfirm" onChange={handleInputChange} value={passwordConfirm} type="password" />
         </Field>
       
       </Fieldset.Content>
