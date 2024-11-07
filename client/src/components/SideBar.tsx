@@ -1,3 +1,4 @@
+
 import { Button } from "../components/ui/button";
 import {
   DrawerActionTrigger,
@@ -33,6 +34,7 @@ const WeatherSidebar = () => {
           <DrawerTitle>Weather Information</DrawerTitle>
         </DrawerHeader>
         <DrawerBody>
+          
           <Box
             bg="gray.800"
             color="white"
