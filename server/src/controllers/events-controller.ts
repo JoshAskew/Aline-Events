@@ -24,7 +24,7 @@ export const saveEvent = async (req: Request, res: Response) => {
       res.status(404).json({ error: 'User or event not found' });
       return;
     }
-    await UserEvent.create({ userId, eventId });
+    await Event.create({ userId, eventId });
     res.status(201).json({ message: 'Event saved to user profile' });
   } catch (err) {
     res.status(500).json({ error: 'An error occurred while saving event:', err });
