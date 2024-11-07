@@ -14,19 +14,6 @@ import {
 } from "../components/ui/drawer";
 import { Box, Text, VStack, Heading } from "@chakra-ui/react";
 
-const getWeather = async () => {
-  try {
-    const response = await fetch('/api/weather')
-    const weather = await response.json();
-    console.log('Weather:', weather)
-    return weather;
-  } catch (err) {
-    console.log('Error:', err);
-    return err;
-  }
-};
-getWeather();
-
 const WeatherSidebar = () => {
   return (
     <DrawerRoot>
