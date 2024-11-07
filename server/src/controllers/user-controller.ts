@@ -1,6 +1,4 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
-import pkg from 'pg';
 import jwt  from 'jsonwebtoken';
 import {User} from '../models/user.js';
 
@@ -37,7 +35,6 @@ export const getUserById = async (req: Request, res: Response) => {
 export const createUser = async (req: Request, res: Response) => {
   const { userName, password, zipCode } = req.body;
   try {
-
     if (!userName || !zipCode || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
@@ -49,19 +46,43 @@ export const createUser = async (req: Request, res: Response) => {
     return res.status(201).json({ message: 'User created successfully', token });
     
   } catch (error: any) {
-    console.error(error);
-    return res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: error.message });
   }
 };
+
+// export const createUser = async (req: Request, res: Response) => {
+//   const { userName, password, zipCode } = req.body;
+//   try {
+    
+//     if (!userName || !zipCode || !password) {
+//       return res.status(400).json({ message: 'All fields are required' });
+//     }
+    
+//     const hashedPassword = await bcrypt.hash(password, 10);
+    
+//     const result = await pool.query(
+//       `INSERT INTO users (userName, zipCode, password) 
+//       VALUES ($1, $2, $3) 
+//       RETURNING id`,
+//       [userName, zipCode, hashedPassword]
+//     );
+    
+//     return res.status(201).json({ message: 'User created successfully', userId: result.rows[0].id });
+    
+//   } catch (error: any) {
+//     console.error(error);
+//     return res.status(500).json({ message: 'Server error' });
+//   }
+// };
 
 // PUT /Users/:id
 export const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { username, password, zipCode } = req.body;
+  const { userName, password, zipCode } = req.body;
   try {
     const user = await User.findByPk(id);
     if (user) {
-      user.userName = username;
+      user.userName = userName;
       user.password = password;
       user.zipCode = zipCode;
       await user.save();
@@ -89,3 +110,15 @@ export const deleteUser = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// import pkg from 'pg';
+
+// const { Pool } = pkg;
+
+// const pool = new Pool({
+//   user: process.env.DB_USER,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASSWORD,
+//   port: parseInt(process.env.DB_PORT || '5432', 10),
+// });
