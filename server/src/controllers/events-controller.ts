@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { User } from '../models/user';
 import { Event } from '../models/events';
-import { UserEvent } from '../models/userEvent';
 import { searchTicketMaster } from '../api/TicketMasterAPI';
+// import { UserEvent } from '../models/userEvent';
 
 //Get events based on API call from ticketmaster using user zipcode
 export const getEvents = async (_req: Request, res: Response) => {
