@@ -16,5 +16,9 @@ const sequelize = process.env.DB_URL
     });
 
 const User = UserFactory(sequelize);
+const Event = EventFactory(sequelize);
 
-export { sequelize, User };
+User.hasMany(Event, { foreignKey: 'userId' });
+Event.belongsTo(User, { foreignKey: 'userId' });
+
+export { sequelize, User, Event };

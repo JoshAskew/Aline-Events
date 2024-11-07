@@ -1,16 +1,16 @@
 import express from 'express';
 import {
-//  saveEvent,
+  saveEvent,
   getSavedEvents,
-  //deleteEvent,
+  deleteEvent,
 } from '../../controllers/events-controller';
 
 const router = express.Router();
 
-//router.post('/save', saveEvent);
+router.post('/save', saveEvent);
 
 router.get('/saved/:userId', getSavedEvents);
 
-//router.delete('/delete', deleteEvent);
+router.delete('/delete', deleteEvent);
 
 export { router as eventRouter };
