@@ -3,6 +3,7 @@ import './Home.css'
 import Aline from "../images/aline.webp"
 import { Link } from "react-router-dom";
 import WeatherSidebar from "../components/SideBar";
+import { getSavedEvents, deleteEvent } from "../api/eventAPI";
 import {
     PopoverArrow,
     PopoverBody,
@@ -13,7 +14,6 @@ import {
 } from "../components/ui/popover"
 import "./SavedEvents.css"
 import {useEffect, useState} from "react"; 
-import { getsavedEvents, deleteEvent } from "../api/eventAPI";
 import Auth from "../utils/auth";
 import ErrorPage from "./ErrorPage";
 //import EventCard from "../components/EventCard";

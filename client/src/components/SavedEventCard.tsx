@@ -55,8 +55,7 @@ const SavedEventCard = ({ event, deleteEvent}: EventCardProps) => {
                 </Text>
             </Card.Body>
             <Card.Footer gap="2">
-                <Button variant="solid">Save Event</Button>
-                <Button variant="ghost">Skip Event</Button>
+                <Button variant="solid" >Remove</Button>
             </Card.Footer>
         </Card.Root>
     </div>
