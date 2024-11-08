@@ -8,6 +8,5 @@ const router = Router();
 router.use('/auth', authRoutes);
 
 //authenticateToken not working correctly 
-//router.use('/api',authenticateToken, apiIndexRoutes);
-router.use('/api', apiIndexRoutes);
+router.use('/api',authenticateToken, apiIndexRoutes);
 export default router;

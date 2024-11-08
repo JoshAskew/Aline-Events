@@ -6,7 +6,7 @@ interface Coordinates {
   longitude: number;
 }
 
-export class Weather {
+export class Weather  {
   temperature: number;
   humidity: number;
   windSpeed: number;
@@ -33,13 +33,13 @@ class WeatherService {
   //[5-day weather forecast API](https://openweathermap.org/forecast5) 
   //[Full-Stack Blog on how to use API keys](https://coding-boot-camp.github.io/full-stack/apis/how-to-use-api-keys).
 
-  private baseURL: string;
+ 
   private apiKey?: string;
   cityName: string = "";
 
   constructor(cityName: string = "") {
-    this.baseURL = process.env.API_BASE_URL || "Your_Base_URL";
-    this.apiKey = process.env.API_KEY || "YOUR_API_KEY";
+  
+    this.apiKey = process.env.WEATHER_API_KEY || "YOUR_API_KEY";
     this.cityName = cityName;
   }
 
@@ -78,13 +78,14 @@ class WeatherService {
   }
  
   private buildForecastWeatherQuery(coordinates: Coordinates): string {
-    const query = `${this.baseURL}/data/2.5/forecast?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=${this.apiKey}`;
+    const query = `https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=${this.apiKey}`;
+
 
     return query;
   }
 
 
-  private async fetchForecastWeatherData() {
+  async fetchForecastWeatherData() {
     const response = await fetch(
       this.buildForecastWeatherQuery(
         await this.fetchAndDestructureLocationData()
@@ -119,7 +120,7 @@ class WeatherService {
     return dailyData;
   }
 
-  private parseForecastDay(dayData: any, coordinates: Coordinates, cityName: string): Weather {
+   parseForecastDay(dayData: any, coordinates: Coordinates, cityName: string): Weather {
     const temperature = dayData.main.temp;
     const humidity = dayData.main.humidity;
     const windSpeed = dayData.wind.speed;

@@ -16,7 +16,7 @@ const Login = () => {
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setErrorMessage('');
+    
     const { name, value } = e.target;
     setLoginData({
       ...loginData,
@@ -28,6 +28,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = await login(loginData);
+      setErrorMessage('');
       Auth.login(data.token);
       console.log(data.token);
       //console.log(token);

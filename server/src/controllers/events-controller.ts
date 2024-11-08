@@ -26,24 +26,29 @@ export const getSavedEvents = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   try {
-    const user = await User.findByPk(userId, {
-      include: [
-        {
-          model: Event,
-          through: { attributes: [] },
-        },
-      ],
-    });
-
-    if (user) {
-      res.json(user.get('Events'));
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
+    const events = await Event.findAll({ where: { userId } });
+    res.json(events);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+// // delete an event from the events table
+// export const deleteEvent = async (req: Request, res: Response) => {
+//   const { id } = req.params;
+//   try {
+//     const event = await Event.findByPk(id);
+//     if (event) {
+//       await event.destroy();
+//       res.json({ message: 'Event deleted' });
+//     } else {
+//       res.status(404).json({ message: 'Error deleting event' });
+//     }
+//   } catch (error: any) {
+//     res.status(500).json({ message: error.message });
+//   };
+// };
 
 // //Delete event from user profile
 export const deleteEvent = async (req: Request, res: Response) => {
