@@ -12,3 +12,12 @@
 .css-thj57f {
     width: 100vh;
 }
+
+.cancel-button {
+    margin-left: 3px;
+    background-color: rgb(209, 0, 0);
+}
+
+.cancel-button:hover {
+    background-color: rgb(143, 0, 0);
+}

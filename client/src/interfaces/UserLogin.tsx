@@ -1,5 +1,5 @@
 export interface UserLogin {
-  username: string | null;
+  userName: string | null;
   password: string | null;
   zipCode: string | null;
 }

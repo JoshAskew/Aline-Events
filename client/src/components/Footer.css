@@ -1,0 +1,35 @@
+ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+li {
+    margin: 20px;
+    padding: 5px;
+    border: 1px;
+    border: 1px dotted rgba(0, 128, 128, 0.378);
+    border-radius: 5px;
+    font-family: "Source Sans 3", serif;
+    font-size: small;
+}
+
+li:hover {
+    box-shadow: 0 4px 8px 0 teal;;
+    background-color: rgba(155, 155, 155, 0.141);
+}
+
+footer {
+
+    bottom: 0;
+    margin-top: 20px;
+}
+
+.copy {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: rgb(17, 17, 17);
+}
+

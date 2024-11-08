@@ -38,6 +38,8 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       userName: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
+
       },
       password: {
         type: DataTypes.STRING,
@@ -62,8 +64,8 @@ export function UserFactory(sequelize: Sequelize): typeof User {
     }
   );
   
-  User.belongsToMany(Event, { through: 'UserEvent' });
-  Event.belongsToMany(User, { through: 'UserEvent' });
+  // User.belongsToMany(Event, { through: 'UserEvent' });
+  // Event.belongsToMany(User, { through: 'UserEvent' });
 
   return User;
 }

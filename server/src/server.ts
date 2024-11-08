@@ -6,19 +6,64 @@ dotenv.config();
 import express from 'express';
 import routes from './routes/index.js';
 import { sequelize } from './models/index.js';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+
 const app = express();
 const PORT = process.env.PORT || 3001;
-// Serves static files in the entire client's dist folder
+
 app.use(express.static('../client/dist'));
+
+//parse out body of the request from the front end and parses it to req.body
 app.use(express.json());
 app.use(routes);
-app.get('*', (__req, res) => {
-res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
-sequelize.sync({force: forceDatabaseRefresh}).then(() => {
+
+// sequalize is the connection to the libaray, sync synconize the models with the tables, forceDatabaseRefresh = will not overwrite tables 
+//waiting for database to turn on, then express server turns on the port to start server
+sequelize.sync({ force: forceDatabaseRefresh }).then(() => {
   app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
   });
 });
+
+
+// const forceDatabaseRefresh = false;
+// import path from 'path';
+// import { fileURLToPath } from 'url';
+// import dotenv from 'dotenv';
+// dotenv.config();
+// import express from 'express';
+// import routes from './routes/index.js';
+// import { sequelize } from './models/index.js';
+
+// //import route from './api/routes/authAPI.js';
+
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// const app = express();
+// const PORT = process.env.PORT || 3001;
+
+// app.use(express.json());
+
+// app.use(express.static(path.join(__dirname, '../../client/dist')));
+
+// app.use(routes);
+
+// app.get('*', (_req, res) => {
+//   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+// });
+
+// sequelize.sync({force: forceDatabaseRefresh}).then(() => {
+//   app.listen(PORT, () => {
+//     console.log(`Server is listening on port ${PORT}`);
+//   });
+// });
+
+
+
+// app.use(express.static('../client/dist'));
+// app.get('*', (__req, res) => {
+// res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+// });
