@@ -11,9 +11,8 @@
     "seed": "node dist/seeds/index.js"
   },
   "nodemonConfig": {
-    "watch": [
-      "src"
-    ],
+    "watch": ["src"],
+    "delay": "1000",
     "ext": "ts,json,js",
     "exec": "npx tsc && node dist/server.js"
   },

@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 
 export const login = async (req: Request, res: Response) => {
   const { userName, password, zipCode } = req.body; // Get username and password from request body
-  console.log('Login attempt:', req.body);
 
   try {
     const user = await User.findOne({ where: { userName } });
@@ -21,7 +20,7 @@ export const login = async (req: Request, res: Response) => {
 
     const SECRET_KEY = process.env.JWT_SECRET_KEY;
     // Generate and return a JWT token
-    const token = jwt.sign({ userName: user.userName }, SECRET_KEY as string, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id, userName: user.userName, zipCode: user.zipCode }, process.env.JWT_SECRET_KEY as string, { expiresIn: '1h' });
     return res.json({ token }); // Return the token as JSON
   } catch (error: any) {
     return res.status(500).json({ message: 'Server error' + error.message });
