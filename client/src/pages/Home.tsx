@@ -8,7 +8,7 @@ import './Home.css'
 import { Link } from "react-router-dom";
 import WeatherSidebar from "../components/SideBar";
 import AuthService from "../utils/auth";
-import aline from "../images/alinetextteal.webp"
+import AlineTeal from "../images/alineteal.webp"
 import {
     PopoverArrow,
     PopoverBody,
@@ -85,7 +85,7 @@ const Home: React.FC = () => {
                     </PopoverBody>
                 </PopoverContent>
             </PopoverRoot>
-            <img src={aline} alt="Aline Header" style={{ height: '100px', display: 'block', margin: '0 auto' }} />
+            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img>
 
             <div className="cards-container">
                 {ticketData && ticketData.map((event, index) => (

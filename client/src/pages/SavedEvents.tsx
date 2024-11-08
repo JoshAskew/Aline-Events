@@ -16,6 +16,7 @@ import "./SavedEvents.css"
 import {useEffect, useState} from "react"; 
 import Auth from "../utils/auth";
 import ErrorPage from "./ErrorPage";
+import AlineTeal from "../images/alineteal.webp"
 //import EventCard from "../components/EventCard";
 
 const SavedEvents = () => {
@@ -82,7 +83,7 @@ const SavedEvents = () => {
                     </PopoverBody>
                 </PopoverContent>
             </PopoverRoot>
-            <h1 className="header">Aline</h1>
+            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img>
             <div className="cards-container">
                 <Card.Root className="card" maxW="sm" overflow="hidden">
                     <Image
