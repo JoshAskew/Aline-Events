@@ -11,8 +11,6 @@ import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-
-
 app.use(express.static('../client/dist'));
 
 //parse out body of the request from the front end and parses it to req.body
