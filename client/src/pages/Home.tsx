@@ -21,7 +21,7 @@ import {
 
 const Home: React.FC = () => {
 
-    const [ticketData, setTicketData] = useState(null);
+    const [ticketData, setTicketData] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     //take their zipcode that is stored in a database postgres db
@@ -88,14 +88,9 @@ const Home: React.FC = () => {
             <img src={aline} alt="Aline Header" style={{ height: '100px', display: 'block', margin: '0 auto' }} />
 
             <div className="cards-container">
-                
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                <EventCard />
-                
+                {ticketData && ticketData.map((event, index) => (
+                    <EventCard key={index} event={event} events={ticketData} setEvents={setTicketData}/>
+                ))}         
             </div>
         </>
     );
