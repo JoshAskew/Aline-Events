@@ -31,7 +31,7 @@ const Login = () => {
       setErrorMessage('');
       Auth.login(data.token);
       console.log(data.token);
-      
+      //console.log(token);
     } catch (err) {
       console.error('Failed to login', err);
       setErrorMessage('Failed to login');

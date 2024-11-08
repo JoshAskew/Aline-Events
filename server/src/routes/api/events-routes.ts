@@ -8,9 +8,7 @@ import {
 const router = express.Router();
 
 router.post('/save', saveEvent);
-
 router.get('/saved/:userId', getSavedEvents);
-
 router.delete('/delete', deleteEvent);
 
-export { router as eventRouter };
+export default router;
