@@ -1,32 +1,38 @@
-
 import { Button } from "../components/ui/button";
 import {
   DrawerActionTrigger,
+  DrawerRoot,
   DrawerBackdrop,
   DrawerBody,
   DrawerCloseTrigger,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerRoot,
   DrawerTitle,
   DrawerTrigger,
 } from "../components/ui/drawer";
-import { Box, Text, VStack, Heading } from "@chakra-ui/react";
+import { Box, Text, VStack, Heading, useBreakpointValue } from "@chakra-ui/react";
+import "./SideBar.css";
 
 const WeatherSidebar = () => {
+  // Use Chakra's useBreakpointValue to switch button style based on screen size
+  const buttonVariant = useBreakpointValue({ base: "dropdown", md: "outline" });
+
   return (
     <DrawerRoot>
       <DrawerBackdrop />
       <DrawerTrigger asChild>
-        <Button  variant="outline" size="sm"
-        position="absolute"
-        right={0}
-        top={20}
-        margin="20px"
-        cursor="pointer"
+        <Button
+          className="check-weather"
+         
+          size="sm"
+          position="absolute"
+          right={0}
+          top={20}
+          margin="20px"
+          cursor="pointer"
         >
-          Check Weather☀️
+          {buttonVariant === "dropdown" ? "☀️" : "Check Weather☀️"}
         </Button>
       </DrawerTrigger>
       <DrawerContent width="300px" maxWidth="100%">
@@ -34,7 +40,6 @@ const WeatherSidebar = () => {
           <DrawerTitle>Weather Information</DrawerTitle>
         </DrawerHeader>
         <DrawerBody>
-          
           <Box
             bg="gray.800"
             color="white"
@@ -88,7 +93,6 @@ const WeatherSidebar = () => {
               </Text>
             </VStack>
           </Box>
-
         </DrawerBody>
         <DrawerFooter>
           <DrawerActionTrigger asChild>
