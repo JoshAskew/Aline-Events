@@ -26,11 +26,11 @@ const Home: React.FC = () => {
         useEffect(() => {
         const fetchEvents = async () => {
             const response = await fetch("/api/ticketData", {
-                method: "POST",
+                method: "GET",
                 headers: {
                   "Content-Type": "application/json",
+                  "Authorization": `Bearer ${AuthService.getToken()}`
                 },
-                body: JSON.stringify(AuthService.getToken()),
               });
         
               if (!response.ok) {

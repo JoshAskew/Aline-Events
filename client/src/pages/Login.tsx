@@ -30,7 +30,7 @@ const Login = () => {
       const data = await login(loginData);
       Auth.login(data.token);
       console.log(data.token);
-      console.log(token);
+      //console.log(token);
     } catch (err) {
       console.error('Failed to login', err);
       setErrorMessage('Failed to login');

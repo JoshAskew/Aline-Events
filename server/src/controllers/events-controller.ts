@@ -5,21 +5,21 @@ import { Event } from '../models/events';
 
 
 //Save event to users profile
-// export const saveEvent = async (req: Request, res: Response) => {
-//   try {
-//     const { userId, eventId } = req.body;
-//     const user = await User.findByPk(userId);
-//     const event = await Event.findByPk(eventId);
-//     if (!user || !event) {
-//       res.status(404).json({ error: 'User or event not found' });
-//       return;
-//     }
-//     await UserEvent.create({ userId, eventId });
-//     res.status(201).json({ message: 'Event saved to user profile' });
-//   } catch (err) {
-//     res.status(500).json({ error: 'An error occurred while saving event:', err });
-//   }
-// }
+export const saveEvent = async (req: Request, res: Response) => {
+  try {
+    const { userId, eventId } = req.body;
+    const user = await User.findByPk(userId);
+    const event = await Event.findByPk(eventId);
+    if (!user || !event) {
+      res.status(404).json({ error: 'User or event not found' });
+      return;
+    }
+    //await UserEvent.create({ userId, eventId });
+    res.status(201).json({ message: 'Event saved to user profile' });
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred while saving event:', err });
+  }
+}
 
 //Get all events saved to user profile
 export const getSavedEvents = async (req: Request, res: Response) => {
@@ -46,21 +46,21 @@ export const getSavedEvents = async (req: Request, res: Response) => {
 };
 
 // //Delete event from user profile
-// export const deleteEvent = async (req: Request, res: Response) => {
-//   const { userId, eventId } = req.body;
+export const deleteEvent = async (req: Request, res: Response) => {
+  const { userId, eventId } = req.body;
 
-//   try {
-//     const user = await User.findByPk(userId);
-//     const event = await Event.findByPk(eventId);
+  try {
+    const user = await User.findByPk(userId);
+    const event = await Event.findByPk(eventId);
 
-//     if (!user || !event) {
-//       res.status(404).json({ message: 'User or event not found' });
-//       return;
-//     }
+    if (!user || !event) {
+      res.status(404).json({ message: 'User or event not found' });
+      return;
+    }
 
-//     await UserEvent.destroy({ where: { userId, eventId } });
-//     res.json({ message: 'Event deleted from user profile' });
-//   } catch (error: any) {
-//     res.status(500).json({ message: error.message });
-//   }
-// }
+    //await UserEvent.destroy({ where: { userId, eventId } });
+    res.json({ message: 'Event deleted from user profile' });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
