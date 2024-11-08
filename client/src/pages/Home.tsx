@@ -17,16 +17,19 @@ import {
     PopoverTitle,
     PopoverTrigger,
 } from "../components/ui/popover"
+import { Spinner, VStack } from "@chakra-ui/react"
 
 
 const Home: React.FC = () => {
 
     const [ticketData, setTicketData] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     //take their zipcode that is stored in a database postgres db
         useEffect(() => {
         const fetchEvents = async () => {
+            setLoading(true);
 
             try {
             const response = await fetch("/api/ticketData", {
@@ -52,6 +55,8 @@ const Home: React.FC = () => {
             } catch (error) {
                 console.error("An error occurred while fetching events:", error);
                 setError("An error occurred while fetching events.");
+            }  finally {
+                setLoading(false);
             }
         };
 
@@ -88,9 +93,16 @@ const Home: React.FC = () => {
             <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img>
 
             <div className="cards-container">
-                {ticketData && ticketData.map((event, index) => (
-                    <EventCard key={index} event={event} events={ticketData} setEvents={setTicketData}/>
-                ))}         
+                {loading ? (
+                    <VStack colorPalette="teal" marginTop="20px">
+                        <Spinner color="colorPalette.600" />
+                        <Text color="colorPalette.600">Loading...</Text>
+                    </VStack>
+                ) : (
+                    ticketData && ticketData.slice(0, 6).map((event, index) => (
+                        <EventCard key={index} event={event} events={ticketData} setEvents={setTicketData} />
+                    ))
+                )}
             </div>
         </>
     );

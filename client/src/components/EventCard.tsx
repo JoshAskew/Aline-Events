@@ -35,11 +35,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, events, setEvents }) => {
   };
 
   const nextEvent = () => {
-    if (events.length > 1) {
-      setEvents(events.slice(1));
-    } else {
-      setEvents([]);
-    }
+    setEvents(events.filter((e) => e.id !== event.id));
   };
 
   return (
