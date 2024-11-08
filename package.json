@@ -20,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/pg": "^8.11.10",
     "@types/react": "^18.3.12",
     "concurrently": "^8.2.2",
@@ -30,6 +31,7 @@
     "@chakra-ui/react": "^3.1.0",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "cors": "^2.8.5",
     "express": "^4.21.1",
     "framer-motion": "^11.11.11",
     "next-themes": "^0.4.3",

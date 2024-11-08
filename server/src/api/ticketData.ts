@@ -9,7 +9,7 @@ interface JwtPayload {
 
 const getTicketData = async (req: Request, res: Response): Promise<any | null> => {
 
-
+    console.log("got to getTicketData");
     const  {id} = req.user as JwtPayload;
 
     const user = await User.findByPk(id);

@@ -6,14 +6,18 @@ dotenv.config();
 import express from 'express';
 import routes from './routes/index.js';
 import { sequelize } from './models/index.js';
+import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+
 
 app.use(express.static('../client/dist'));
 
 //parse out body of the request from the front end and parses it to req.body
 app.use(express.json());
+app.use(cors());
 app.use(routes);
 
 app.get('*', (_req, res) => {

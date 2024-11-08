@@ -6,6 +6,7 @@ import { authenticateToken } from '../../middleware/auth.js';
 
 const router = Router();
 
+//authenticateToken not working 
 router.get('/ticketData', authenticateToken, getTicketData);
 router.use('/users', userRouter);
 router.use('/events', eventsRouter);
