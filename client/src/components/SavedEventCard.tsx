@@ -1,7 +1,6 @@
+import React, { MouseEventHandler} from "react";
 import { Event } from "../interfaces/Events";
 import { ApiMessage } from "../interfaces/ApiMessage";
-import { mouseEventHandler} from "react";
-
 import { Button, Card, Image, Text } from "@chakra-ui/react"
 import './Home.css'
 import Aline from "../images/aline.webp"
@@ -19,20 +18,27 @@ import "./SavedEvents.css"
 
 interface EventCardProps {
     event: Event;
-    deleteEvent: (id: number) => Promise<ApiMessage>
+    deleteEvent: (id: number) => Promise<ApiMessage>;
+    setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
 }
 
-const SavedEventCard = ({ event, deleteEvent}: EventCardProps) => {
-    const handleDelete: mouseEventHandler<HTMLButtonElement> = async () => {
-        const id = Number(event.currentTarget.value);
-        if (!isNaN(id)) {
+const SavedEventCard: React.FC<EventCardProps> = ({ event, deleteEvent, setEvents }) => {
+    const handleDelete: MouseEventHandler<HTMLButtonElement> = async () => {
             try {
-                const data = await deleteEvent(id);
-                return data;
-            } catch (err) {
-                console.error('failed to delete event:', err);
+                //delete event from database
+                const data = await deleteEvent(Number(event.id));
+                console.log('Deleted event:', data);
+                
+                //delete event from local storage
+                const savedEvents = JSON.parse(localStorage.getItem('savedEvents') || '[]');
+                const updatedEvents = savedEvents.filter((e: Event) => e.id !== event.id);
+                localStorage.setItem('savedEvents', JSON.stringify(updatedEvents));
+
+                //update state
+                setEvents(prevEvents => prevEvents.filter((e: Event) => e.id !== event.id));
+            } catch (error) {
+                console.error('Failed to delete event:', error);
             }
-         }
     };
 
     return (
@@ -47,15 +53,15 @@ const SavedEventCard = ({ event, deleteEvent}: EventCardProps) => {
                     {event.info}
                 </Card.Description>
                 <Card.Description>
-                    {event.date.start.localDate}
-                    {event.date.end?.localDate}
+                    {/* {event.date.start.localDate}
+                    {event.date.end?.localDate} */}
                 </Card.Description>
                 <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
                     {event.priceRanges[0].currency} {event.priceRanges[0].min}
                 </Text>
             </Card.Body>
             <Card.Footer gap="2">
-                <Button variant="solid" >Remove</Button>
+                <Button variant="solid" onClick={handleDelete}>Remove</Button>
             </Card.Footer>
         </Card.Root>
     </div>
