@@ -1,11 +1,13 @@
 .logout {
-    background-color: rgba(255, 0, 0, 0.715);
+    background-color: rgba(255, 255, 255, 0.715);
     margin-top: 25px;
     margin-left: 15px;
+    color: rgba(0, 0, 0, 0.631)
 }
 
 .logout:hover {
-    background-color: rgba(165, 0, 0, 0.715);
+    background-color: rgba(167, 0, 0, 0.715);
+    color: rgba(255, 255, 255, 0.715);
 }
 
 .back-button {
