@@ -45,7 +45,7 @@ export const createUser = async (req: Request, res: Response) => {
 
    //User.create calls model/user -> before create hook and User creates entry into database 
     const user = await User.create(req.body);
-    const token = jwt.sign({ userName: user.userName, zipCode: user.zipCode }, process.env.JWT_SECRET_KEY as string, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id, userName: user.userName, zipCode: user.zipCode }, process.env.JWT_SECRET_KEY as string, { expiresIn: '1h' });
 
     return res.status(201).json({ message: 'User created successfully', token });
     
