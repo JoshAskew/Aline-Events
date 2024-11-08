@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Image, Text, Button } from "@chakra-ui/react";
 import { Event } from '../interfaces/Events.tsx';
 import {saveEvent} from '../api/eventAPI.tsx';
-import Aline from '../assets/aline.jpg';
+import Aline from '../images/aline.webp';
 
 interface EventCardProps {
   event: Event;
@@ -48,7 +48,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, events, setEvents }) => {
         src={Aline}
     />
     <Card.Body gap="2">
-        <Card.Title>Event Title</Card.Title>
+        <Card.Title>{event.name}</Card.Title>
         <Card.Description>
             This is the type of the event.
         </Card.Description>
