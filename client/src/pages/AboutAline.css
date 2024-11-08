@@ -1,3 +1,19 @@
+.back-button2 {
+    margin: 20px;
+    padding: 8px;
+    border: 1px;
+    border: 1px dotted rgba(0, 128, 128, 0.378);
+    border-radius: 5px;
+    font-family: "Source Sans 3", serif;
+    font-size: small;
+    cursor: pointer;
+    background-color: teal;
+}
+
+.back-button2:hover {
+    background-color: rgb(0, 88, 88);
+}
+
 section {
     padding: 10px;
 }
@@ -7,7 +23,7 @@ section {
     font-family: "Source Sans 3", serif;
     color: teal;
 }
-.p1{
+.p1 {
     text-align: center;
 }
 h2 {
@@ -21,7 +37,7 @@ h2 {
     flex-wrap: wrap;
     gap: 3px;
     padding: 3px;
-    font-family: Arial, sans-serif;
+    font-family: "Source Sans 3", serif;
 }
 .h2 {
     width: 100%;
@@ -42,24 +58,17 @@ h3 {
     font-size: 20px;
     font-family: "Source Sans 3", serif;
 }
+h3 :hover {
+    background-color: rgb(0, 88, 88);
+}
       
 p {
     color: #fafafa;
-}
-      
-
-.back-button2 {
-    margin: 20px;
-    padding: 8px;
-    border: 1px;
-    border: 1px dotted rgba(0, 128, 128, 0.378);
-    border-radius: 5px;
     font-family: "Source Sans 3", serif;
-    font-size: small;
-    cursor: pointer;
-    background-color: teal;
 }
-
-.back-button2:hover {
+.contact {
+    color: rgb(120, 120, 231)
+}
+.contact :hover {
     background-color: rgb(0, 88, 88);
 }
