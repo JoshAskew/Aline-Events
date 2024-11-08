@@ -3,6 +3,7 @@ import { Field } from "../components/ui/field"
 import './SignUp.css'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import aline from "../images/alinetextteal.webp"
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ const SignUp = () => {
 
   return (
     <>
+    <img src={aline} alt="Aline Header" style={{ height: '100px', display: 'block', margin: '0 auto' }} />
       <h1 className="signup-header">Sign Up and Never Miss Out</h1>
       <div className="form-container">
         <form>
@@ -122,7 +124,7 @@ const SignUp = () => {
                 Sign Up
               </Button>
               <Button className="back-button3" onClick={handleBack}>
-                Back
+                Cancel
               </Button>
             </Stack>
           </Fieldset.Root>

@@ -6,6 +6,7 @@ import "./Login.css";
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { login } from '../api/authAPI';
 import Auth from '../utils/auth';
+import aline from "../images/alinetextteal.webp"
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
@@ -40,7 +41,7 @@ const Login = () => {
  
   return (
     <>
-      <h1 className="header">Aline</h1>
+       <img src={aline} alt="Aline Header" style={{ height: '100px', display: 'block', margin: '0 auto' }} />
       <div className="login-form-container">
       <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" p={6} boxShadow="md">
         <Box mb={4}>
@@ -63,15 +64,15 @@ const Login = () => {
               </Field>
             </Stack>
         <Box display="flex" justifyContent="center" mt={4}>
-          <Link to="/">
-            <Button variant="outline" mr={3}>
-              Cancel
-            </Button>
-          </Link>
 
           <Button type="submit">
             Sign in
           </Button>
+          <Link to="/">
+            <Button variant="outline" ml={3} className="cancel-button">
+              Cancel
+            </Button>
+          </Link>
 
         </Box>
           </form>

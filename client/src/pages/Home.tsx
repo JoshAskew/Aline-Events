@@ -9,7 +9,7 @@ import Aline from "../images/aline.webp"
 import { Link } from "react-router-dom";
 import WeatherSidebar from "../components/SideBar";
 import AuthService from "../utils/auth";
-
+import aline from "../images/alinetextteal.webp"
 import {
     PopoverArrow,
     PopoverBody,
@@ -142,7 +142,8 @@ const Home: React.FC = () => {
                     </PopoverBody>
                 </PopoverContent>
             </PopoverRoot>
-            <h1 className="header">Aline</h1>
+            <img src={aline} alt="Aline Header" style={{ height: '100px', display: 'block', margin: '0 auto' }} />
+
             <div className="cards-container">
                 
                 
