@@ -28,6 +28,19 @@ interface IGeoData {
   importance: number
 }
 
+export class WeatherData {
+  temperature: number;
+  humidity: number;
+  date: string;
+
+
+  constructor(temp: number, hum: number, date: string) {
+    this.temperature = temp;
+    this.humidity = hum;
+    this.date = date;
+  }
+}
+
 
 export class Weather {
   temperature: number;
@@ -71,9 +84,10 @@ const getWeatherData = async (req: Request, res: Response): Promise<any | null> 
     }
 
     console.log('locationIQApiKey', locationIQApiKey)
-    console.log('user?.zipCode', user?.zipCode)
+    console.log('user', user)
+    console.log('use?.zipCode', user.zipCode)
 
-    const geoResponse = await fetch(`https://us1.locationiq.com/v1/search.php?key=${locationIQApiKey}&postalcode=${user?.zipCode}&format=json&countrycodes=us`);
+    const geoResponse = await fetch(`https://us1.locationiq.com/v1/search.php?key=${locationIQApiKey}&postalcode=${user.zipCode}&format=json&countrycodes=us`);
 
     if (!geoResponse.ok) {
       throw new Error('invalid API response from locationiq in weather api, check the network tab');
@@ -91,13 +105,29 @@ const getWeatherData = async (req: Request, res: Response): Promise<any | null> 
 
     const numberOfDays = 5;
     const dailyData: any[] = [];
-
     
+
+
+    console.log("geoData:" + geoData)
+
+
     for (let i = 0; i < numberOfDays; i++) {
       i = i;
       let j = (i * 8);
-      dailyData.push(allWeatherData.list[j]);
+
+
+      let temp = allWeatherData.list[j].main.temp;
+      let humidity = allWeatherData.list[j].main.temp;
+      let date = allWeatherData.list[j].dt_txt.split(' ')[0];
+
+
+      dailyData.push(new WeatherData(temp, humidity, date));
+      
     }
+
+
+
+
 
     return res.status(201).json(dailyData);
 
@@ -105,9 +135,6 @@ const getWeatherData = async (req: Request, res: Response): Promise<any | null> 
     console.error('An error occurred in weather api', err);
     return null;
   }
-
-  return res.status(201).json('');
-
 }
 
 
