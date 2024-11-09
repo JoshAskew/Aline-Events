@@ -74,23 +74,17 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
         const geoResponse = await fetch(`https://us1.locationiq.com/v1/search.php?key=${locationIQApiKey}&postalcode=${user?.zipCode}&format=json&countrycodes=us`);
 
         if (!geoResponse.ok) {
-            throw new Error('invalid API response from locationiq, check the network tab');
+            throw new Error('invalid API response from locationiq in ticketData.ts, check the network tab');
         }
 
         const geoData = await geoResponse.json() as IGeoData[];
 
         const cityName = geoData[0].display_name.split(',')[0];
-
-        console.log("cityName");
-        console.log(cityName);
-
-        console.log("ticketmasterApiKey");
-        console.log(ticketmasterApiKey);
-
+        
         const tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${ticketmasterApiKey}&city=${cityName}`);
 
         if (!tickResponse.ok) {
-            throw new Error('invalid API response from locationiq, check the network tab');
+            throw new Error('invalid API response from locationiq in ticketData.ts, check the network tab');
         }
 
         const ticketData: any = await tickResponse.json()
@@ -101,7 +95,7 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
         return res.status(201).json(simplifiedTicketData);
 
     } catch (err) {
-        console.error('An error occurred', err);
+        console.error('An error occurred in ticketData.ts', err);
         return null;
     }
 };
