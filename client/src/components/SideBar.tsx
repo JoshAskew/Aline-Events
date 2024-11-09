@@ -22,39 +22,11 @@ const WeatherSidebar = () => {
 
   const [ticketData, setTicketData] = useState<any[]>([]);
   const [_error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [_loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchEvents = async () => {
         setLoading(true);
-
-        try {
-            const response = await fetch("/api/ticketData", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${AuthService.getToken()}`
-                },
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json(); // Get the error response body
-                console.error("Failed to fetch ticketData", errorData);
-                setError("Failed to fetch events.");
-                return;
-            }
-
-            const fetchedticketData = await response.json();
-            console.log("User successfully fetched fetchedTicketData:", fetchedticketData);
-            setTicketData(fetchedticketData);
-            console.log(ticketData);
-
-        } catch (error) {
-            console.error("An error occurred while fetching events:", error);
-            setError("An error occurred while fetching events.");
-        } finally {
-            setLoading(false);
-        }
 
         try {
             const response = await fetch("/api/weatherData", {
@@ -83,8 +55,6 @@ const WeatherSidebar = () => {
         } finally {
             setLoading(false);
         }
-
-
 
     };
 
