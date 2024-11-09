@@ -55,7 +55,7 @@ export interface Event {
     };
     priceRanges: PriceRange[];
     info: string;
-    venue: Venue;
+    venue: string;
     imageUrl?: string;
     title?: string;
     description?: string;
