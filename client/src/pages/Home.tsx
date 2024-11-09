@@ -55,14 +55,14 @@ const Home: React.FC = () => {
                 //     "Content-Type": "application/json",
                 //     "Authorization": `Bearer ${AuthService.getToken()}`
                 // },
-            }).then((response)=>{
-                return response.json()
-            }).then((data)=>{
-                const fetchedTicketData = data;
-                console.log("Fetched Ticket Data:", fetchedTicketData);
-                setLoadingTickets(false)
-                setTicketData(fetchedTicketData);
-            })
+            // }).then((response)=>{
+            //     return response.json()
+            // }).then((data)=>{
+            //     const fetchedTicketData = data;
+            //     console.log("Fetched Ticket Data:", fetchedTicketData);
+            //     setLoadingTickets(false)
+            //     setTicketData(fetchedTicketData);
+            // })
 
         } catch (error) {
             console.error("An error occurred while fetching ticket data:", error);
@@ -101,7 +101,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         fetchTicketData();
-      //  fetchWeatherData();
+        fetchWeatherData();
     }, [loadingTickets]);
 
     return (
