@@ -7,7 +7,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 
 //save event into the events table and connect it to the specific user saving it via the userID foriegnKey
 export const saveEvent = async (req: Request, res: Response) => {
-  const { name, url, imageUrl, venue } = req.body;
+  const { name, url, imageUrl, venue, date } = req.body;
   const token = req.headers.authorization?.split(' ')[1]; // Extract the token from the Authorization header
 
   if (!token) {
@@ -27,7 +27,7 @@ export const saveEvent = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const saveEvent = await Event.create({ userId, name, url, imageUrl, venue });
+    const saveEvent = await Event.create({ userId, name, url, imageUrl, venue, date });
     res.status(201).json(saveEvent);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
