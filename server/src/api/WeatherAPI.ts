@@ -1,12 +1,48 @@
 import dotenv from 'dotenv';
 dotenv.config();
+import { Request, Response } from 'express';
+import { User } from '../models/user.js';
 
-interface Coordinates {
-  latitude: number;
-  longitude: number;
+const locationIQApiKey = "pk.914316b72b141711118acc9cdb36f8c1";
+
+interface JwtPayload {
+  id: number;
+  userName: string;
+  zipCode: string;
 }
 
-export class Weather  {
+interface Coordinates {
+  latitude: string;
+  longitude: string;
+}
+
+interface IGeoData {
+  place_id: number,
+  licence: string,
+  boundingbox: string[],
+  lat: string,
+  lon: string,
+  display_name: string,
+  class: string,
+  type: string,
+  importance: number
+}
+
+export class WeatherData {
+  temperature: number;
+  humidity: number;
+  date: string;
+
+
+  constructor(temp: number, hum: number, date: string) {
+    this.temperature = temp;
+    this.humidity = hum;
+    this.date = date;
+  }
+}
+
+
+export class Weather {
   temperature: number;
   humidity: number;
   windSpeed: number;
@@ -28,133 +64,78 @@ export class Weather  {
 }
 
 
-class WeatherService {
+const getWeatherData = async (req: Request, res: Response): Promise<any | null> => {
 
-  //[5-day weather forecast API](https://openweathermap.org/forecast5) 
-  //[Full-Stack Blog on how to use API keys](https://coding-boot-camp.github.io/full-stack/apis/how-to-use-api-keys).
+  const locationIQApiKey = "pk.914316b72b141711118acc9cdb36f8c1";
+  const weatherApiKey = "64d57280848a36eceeaef511f994475f";
+  try {
 
- 
-  private apiKey?: string;
-  cityName: string = "";
-
-  constructor(cityName: string = "") {
-  
-    this.apiKey = process.env.WEATHER_API_KEY || "YOUR_API_KEY";
-    this.cityName = cityName;
-  }
-
-  private async fetchLocationData(query: string): Promise<any> {
-    const response = await fetch(query);
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch location data.');
-    }
-    const data = await response.json();
-
-    const coordinates = [data[0].lat, data[0].lon];
-
-    return coordinates;
-  }
-
-  private destructureLocationData(locationData: any): Coordinates {
-    let myCord: Coordinates;
-    myCord = { latitude: locationData[0], longitude: locationData[0] };
-    return myCord
-  }
-
-  private buildGeocodeQuery(): string {
-    let query = `http://api.openweathermap.org/geo/1.0/direct?q=${this.cityName}&limit=5&appid=${this.apiKey}`;
-
-    return query;
-  }
-
-
-  private async fetchAndDestructureLocationData() {
-    let locationDataDestructured = await this.destructureLocationData(
-      await this.fetchLocationData(this.buildGeocodeQuery())
-    );
-
-    return locationDataDestructured;
-  }
- 
-  private buildForecastWeatherQuery(coordinates: Coordinates): string {
-    const query = `https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=${this.apiKey}`;
-
-
-    return query;
-  }
-
-
-  async fetchForecastWeatherData() {
-    const response = await fetch(
-      this.buildForecastWeatherQuery(
-        await this.fetchAndDestructureLocationData()
-      )
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch weather data.");
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const data = await response.json();
+    // type assertion Request doesn't know what user is we are telling typescript to overwrite
+    // req doesnt' know what user is and we are doing a type assertion saying we know what user is
+    const { id } = req.user as JwtPayload;
 
-    const dailyForecast = this.extractDailyData(data.list);
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-    return {
-      city: data.city,
-      list: dailyForecast,
-    };
-  }
+    console.log('locationIQApiKey', locationIQApiKey)
+    console.log('user', user)
+    console.log('use?.zipCode', user.zipCode)
 
-  private extractDailyData(dataPoints: any[]): any[] {
+    const geoResponse = await fetch(`https://us1.locationiq.com/v1/search.php?key=${locationIQApiKey}&postalcode=${user.zipCode}&format=json&countrycodes=us`);
+
+    if (!geoResponse.ok) {
+      throw new Error('invalid API response from locationiq in weather api, check the network tab');
+    }
+
+    const geoData = await geoResponse.json() as IGeoData[];
+
+    const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${geoData[0].lat}&lon=${geoData[0].lon}&appid=${weatherApiKey}`);
+
+    if (!weatherResponse.ok) {
+      throw new Error('invalid API response from openweathermap in weather api, check the network tab');
+    }
+
+    const allWeatherData = await weatherResponse.json();
+
     const numberOfDays = 5;
     const dailyData: any[] = [];
+    
+
+
+    console.log("geoData:" + geoData)
+
 
     for (let i = 0; i < numberOfDays; i++) {
-
       i = i;
-      let j = (i*8); 
-      dailyData.push(dataPoints[j]);
+      let j = (i * 8);
+
+
+      let temp = allWeatherData.list[j].main.temp;
+      let humidity = allWeatherData.list[j].main.temp;
+      let date = allWeatherData.list[j].dt_txt.split(' ')[0];
+
+
+      dailyData.push(new WeatherData(temp, humidity, date));
+      
     }
 
-    return dailyData;
+
+
+
+
+    return res.status(201).json(dailyData);
+
+  } catch (err) {
+    console.error('An error occurred in weather api', err);
+    return null;
   }
-
-   parseForecastDay(dayData: any, coordinates: Coordinates, cityName: string): Weather {
-    const temperature = dayData.main.temp;
-    const humidity = dayData.main.humidity;
-    const windSpeed = dayData.wind.speed;
-    const icon = dayData.weather[0].icon;
-    const words = dayData.dt_txt.split(" ");
-    const currentDate = words[0];
-
-    return new Weather(temperature, humidity, windSpeed, coordinates, cityName, icon, currentDate);
-
-  }
-
-  private parseForecastWeather(response: any, cityName: string): Weather[] {
-    const forecast: Weather[] = [];
-    const coordinates: Coordinates = {
-      latitude: response.city.coord.lat,
-      longitude: response.city.coord.lon,
-    };
-
-    response.list.forEach((dayData: any) => {
-      forecast.push(this.parseForecastDay(dayData, coordinates, cityName));
-    });
-
-    return forecast;
-  }
-
-  async getWeatherForCity(cityName: string): Promise<Weather[]> {
-    this.cityName = cityName;
-
-    const forecast = await this.fetchForecastWeatherData();
-    const forecastWeather = this.parseForecastWeather(forecast, cityName);
-
-    return forecastWeather;
-  }
-
 }
 
-export default new WeatherService();
+
+export default getWeatherData;

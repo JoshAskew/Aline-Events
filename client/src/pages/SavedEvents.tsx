@@ -3,6 +3,7 @@ import './Home.css'
 import Aline from "../images/aline.webp"
 import { Link } from "react-router-dom";
 import WeatherSidebar from "../components/SideBar";
+import { getSavedEvents, deleteEvent } from "../api/eventAPI";
 import {
     PopoverArrow,
     PopoverBody,
@@ -12,9 +13,46 @@ import {
     PopoverTrigger,
 } from "../components/ui/popover"
 import "./SavedEvents.css"
+import {useEffect, useState} from "react"; 
+import Auth from "../utils/auth";
+import ErrorPage from "./ErrorPage";
+import AlineTeal from "../images/alineteal.webp"
 //import EventCard from "../components/EventCard";
 
 const SavedEvents = () => {
+
+    const [events, setEvents] = useState<Event[]>([]);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const data =await getsavedEvents();
+                setEvents(data);
+            } catch (err) {
+                setError(true);
+            }
+        };
+
+        fetchEvents();
+    }, []);
+
+
+        const deleteIndvEvent = async (id: number) => {
+            try {
+            const data = await deleteEvent(id);
+            fetchEvents();
+            return data;
+        } catch (err) {
+            return Promise.reject(err);
+        }
+
+        if (error) {
+            return <ErrorPage />;
+        }
+    }
+
+
     return (
         <>
 
@@ -45,7 +83,7 @@ const SavedEvents = () => {
                     </PopoverBody>
                 </PopoverContent>
             </PopoverRoot>
-            <h1 className="header">Aline</h1>
+            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img>
             <div className="cards-container">
                 <Card.Root className="card" maxW="sm" overflow="hidden">
                     <Image

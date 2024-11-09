@@ -1,32 +1,85 @@
-
+import { useEffect, useState } from 'react';
 import { Button } from "../components/ui/button";
 import {
   DrawerActionTrigger,
+  DrawerRoot,
   DrawerBackdrop,
   DrawerBody,
   DrawerCloseTrigger,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerRoot,
   DrawerTitle,
   DrawerTrigger,
 } from "../components/ui/drawer";
-import { Box, Text, VStack, Heading } from "@chakra-ui/react";
+import { Box, Text, VStack, Heading, useBreakpointValue } from "@chakra-ui/react";
+import "./SideBar.css";
+import AuthService from "../utils/auth";
 
 const WeatherSidebar = () => {
+  // Use Chakra's useBreakpointValue to switch button style based on screen size
+  const buttonVariant = useBreakpointValue({ base: "dropdown", md: "outline" });
+
+ 
+
+  const [weatherData, setWeatherData] = useState<any[]>([]);
+  const [_error, setError] = useState<string | null>(null);
+  const [_loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+        setLoading(true);
+
+        try {
+            const response = await fetch("/api/weatherData", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${AuthService.getToken()}`
+                },
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json(); // Get the error response body
+                console.error("Failed to fetch ticketData", errorData);
+                setError("Failed to fetch events.");
+                return;
+            }
+
+            const fetchedWeatherData = await response.json();
+            console.log("User successfully fetched fetchedWeatherData:", fetchedWeatherData);
+            setWeatherData(fetchedWeatherData);
+            console.log(weatherData);
+
+        } catch (error) {
+            console.error("An error occurred while fetching weather:", error);
+            setError("An error occurred while fetching weather.");
+        } finally {
+            setLoading(false);
+        }
+
+    };
+
+    fetchWeather();
+}, []);
+
+
+
   return (
     <DrawerRoot>
       <DrawerBackdrop />
       <DrawerTrigger asChild>
-        <Button  variant="outline" size="sm"
-        position="absolute"
-        right={0}
-        top={20}
-        margin="20px"
-        cursor="pointer"
+        <Button
+          className="check-weather"
+         
+          size="sm"
+          position="absolute"
+          right={0}
+          top={20}
+          margin="20px"
+          cursor="pointer"
         >
-          Check Weather☀️
+          {buttonVariant === "dropdown" ? "☀️" : "Check Weather☀️"}
         </Button>
       </DrawerTrigger>
       <DrawerContent width="300px" maxWidth="100%">
@@ -34,7 +87,6 @@ const WeatherSidebar = () => {
           <DrawerTitle>Weather Information</DrawerTitle>
         </DrawerHeader>
         <DrawerBody>
-          
           <Box
             bg="gray.800"
             color="white"
@@ -50,10 +102,10 @@ const WeatherSidebar = () => {
                 Location: Minneapolis, MN
               </Text>
               <Box borderBottom="1px solid white" width="100%" />
-              <Text fontSize="lg">Temperature: 72°F</Text>
-              <Text fontSize="lg">Condition: Sunny</Text>
-              <Text fontSize="lg">Humidity: 55%</Text>
-              <Text fontSize="lg">Wind: 10 mph</Text>
+              <Text fontSize="lg">Temperature:  </Text>
+              <Text fontSize="lg">Condition: </Text>
+              <Text fontSize="lg">Humidity: </Text>
+              <Text fontSize="lg">Wind: </Text>
               <Box borderBottom="1px solid white" width="100%" />
               <Text fontSize="sm" color="gray.300" mt={2}>
                 Updated: Just now
@@ -88,7 +140,6 @@ const WeatherSidebar = () => {
               </Text>
             </VStack>
           </Box>
-
         </DrawerBody>
         <DrawerFooter>
           <DrawerActionTrigger asChild>

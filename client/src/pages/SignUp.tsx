@@ -3,7 +3,7 @@ import { Field } from "../components/ui/field"
 import './SignUp.css'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import aline from "../images/alinetextteal.webp"
+import AlineTeal from "../images/alineteal.webp"
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -86,7 +86,7 @@ const SignUp = () => {
 
   return (
     <>
-    <img src={aline} alt="Aline Header" style={{ height: '100px', display: 'block', margin: '0 auto' }} />
+    <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img>
       <h1 className="signup-header">Sign Up and Never Miss Out</h1>
       <div className="form-container">
         <form>

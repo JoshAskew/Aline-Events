@@ -2,11 +2,13 @@ import { Router } from 'express';
 import userRouter  from './user-routes.js';
 import eventsRouter  from './events-routes.js';
 import getTicketData from '../../api/ticketData.js';
-import { authenticateToken } from '../../middleware/auth.js';
+import getWeatherData from '../../api/WeatherAPI.js';
 
 const router = Router();
 
-router.get('/ticketData', authenticateToken, getTicketData);
+router.get('/ticketData', getTicketData);
+router.get('/weatherData', getWeatherData);
+
 router.use('/users', userRouter);
 router.use('/events', eventsRouter);
 

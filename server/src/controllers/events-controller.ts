@@ -1,18 +1,37 @@
 import { Request, Response } from 'express';
 import { User } from '../models/user';
 import { Event } from '../models/events';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 //import { UserEvent } from '../models/userEvent.ts';
 
 
 //save event into the events table and connect it to the specific user saving it via the userID foriegnKey
 export const saveEvent = async (req: Request, res: Response) => {
-  const { userId, name, url, type, images, dates, priceRanges, info, venue } = req.body;
+  const { name, url, imageUrl, venue, date } = req.body;
+  const token = req.headers.authorization?.split(' ')[1]; // Extract the token from the Authorization header
+
+  if (!token) {
+    return res.status(401).json({ message: 'Authorization token is missing' });
+  }
+
   try {
-    const saveEvent = await Event.create({  userId, name, url, type, images, dates, priceRanges, info, venue });
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload & { id: number }; // Decode the token and extract the user ID
+    const userId = decodedToken.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const saveEvent = await Event.create({ userId, name, url, imageUrl, venue, date });
     res.status(201).json(saveEvent);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
-  };
+  }
 };
 
 //Get all events saved to user profile
