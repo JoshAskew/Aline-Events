@@ -19,9 +19,7 @@ import './Home.css';
 const Home: React.FC = () => {
     const [_ticketData, setTicketData] = useState<any[]>([]);
     const [weatherData, setWeatherData] = useState<any | null>(null);
-    const [_ticketError, setTicketError] = useState<string | null>(null);
     const [_weatherError, setWeatherError] = useState<string | null>(null);
-    const [loadingTickets, setLoadingTickets] = useState<boolean>(true);
     const [loadingWeather, setLoadingWeather] = useState<boolean>(true);
     
   
@@ -135,10 +133,10 @@ const Home: React.FC = () => {
                     </PopoverBody>
                 </PopoverContent>
             </PopoverRoot>
-            {/* <p className='user'>Signed in as: {userName || "User"}</p>
-            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img> */}
+            <p className='user'>Signed in as: {userName || "User"}</p>
+            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img>
 
-            {/* {showContent ? (
+            {showContent ? (
                 <>
                     <div className="cards-container">
                         {loading ? (
@@ -155,7 +153,7 @@ const Home: React.FC = () => {
                 </>
             ) : (
                 <h1 className='welcome'>Welcome Back, {userName || "User"}!</h1>
-            )} */}
+            )}
         </>
     );
 };
