@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Button } from "../components/ui/button";
 import {
   DrawerActionTrigger,
@@ -13,10 +14,84 @@ import {
 } from "../components/ui/drawer";
 import { Box, Text, VStack, Heading, useBreakpointValue } from "@chakra-ui/react";
 import "./SideBar.css";
+import AuthService from "../utils/auth";
 
 const WeatherSidebar = () => {
   // Use Chakra's useBreakpointValue to switch button style based on screen size
   const buttonVariant = useBreakpointValue({ base: "dropdown", md: "outline" });
+
+  const [ticketData, setTicketData] = useState<any[]>([]);
+  const [_error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+        setLoading(true);
+
+        try {
+            const response = await fetch("/api/ticketData", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${AuthService.getToken()}`
+                },
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json(); // Get the error response body
+                console.error("Failed to fetch ticketData", errorData);
+                setError("Failed to fetch events.");
+                return;
+            }
+
+            const fetchedticketData = await response.json();
+            console.log("User successfully fetched fetchedTicketData:", fetchedticketData);
+            setTicketData(fetchedticketData);
+            console.log(ticketData);
+
+        } catch (error) {
+            console.error("An error occurred while fetching events:", error);
+            setError("An error occurred while fetching events.");
+        } finally {
+            setLoading(false);
+        }
+
+        try {
+            const response = await fetch("/api/weatherData", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${AuthService.getToken()}`
+                },
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json(); // Get the error response body
+                console.error("Failed to fetch ticketData", errorData);
+                setError("Failed to fetch events.");
+                return;
+            }
+
+            const fetchedticketData = await response.json();
+            console.log("User successfully fetched fetchedTicketData:", fetchedticketData);
+            setTicketData(fetchedticketData);
+            console.log(ticketData);
+
+        } catch (error) {
+            console.error("An error occurred while fetching events:", error);
+            setError("An error occurred while fetching events.");
+        } finally {
+            setLoading(false);
+        }
+
+
+
+    };
+
+    fetchEvents();
+}, []);
+
+
 
   return (
     <DrawerRoot>
