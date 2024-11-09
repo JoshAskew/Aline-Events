@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-//import { Button, Text, Spinner, VStack } from "@chakra-ui/react";
-import { Button, Text} from "@chakra-ui/react";
+import { Button, Text, Spinner, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-//import EventCard from '../components/EventCard';
+import EventCard from '../components/EventCard';
 import WeatherSidebar from "../components/SideBar";
 import AuthService from "../utils/auth";
-//import AlineTeal from "../images/alineteal.webp";
+import AlineTeal from "../images/alineteal.webp";
 import {
     PopoverArrow,
     PopoverBody,
@@ -17,7 +16,7 @@ import {
 import './Home.css';
 
 const Home: React.FC = () => {
-    const [_ticketData, setTicketData] = useState<any[]>([]);
+    const [ticketData, setTicketData] = useState<any[]>([]);
     const [weatherData, setWeatherData] = useState<any | null>(null);
     const [_weatherError, setWeatherError] = useState<string | null>(null);
     const [loadingWeather, setLoadingWeather] = useState<boolean>(true);
@@ -101,7 +100,7 @@ const Home: React.FC = () => {
         fetchEvents();
         fetchWeatherData();
     }, []);
-    
+
     // Fetch Weather Data
 
     return (
