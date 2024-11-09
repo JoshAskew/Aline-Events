@@ -8,7 +8,7 @@ interface EventAttributes {
     url: string;
     //type: string;
     imageUrl: { url: string }[];
-    //dates: { start: { localDate: string } };
+    date: string;
     // priceRanges: { min: string; max: string }[];
     //info: string;
     venue: { name: string };    
@@ -23,7 +23,7 @@ export class Event extends Model<EventAttributes, EventCreationAttributes> imple
     public url!: string;
     //public type!: string;
     public imageUrl!: { url: string }[];
-    //public dates!: { start: { localDate: string } };
+    public date!: string;
     //public priceRanges!: { min: string; max: string }[];
     //public info!: string;
     public venue!: { name: string };
@@ -60,10 +60,10 @@ export function EventFactory(sequelize: Sequelize): typeof Event {
                 type: DataTypes.JSON,
                 allowNull: false,
             },
-            // dates: {
-            //     type: DataTypes.JSON,
-            //     allowNull: false,
-            // },
+            date: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
             // priceRanges: {
             //     type: DataTypes.JSON,
             //     allowNull: false,
