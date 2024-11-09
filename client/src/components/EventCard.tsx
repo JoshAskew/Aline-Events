@@ -41,22 +41,25 @@ const EventCard: React.FC<EventCardProps> = ({ event, events, setEvents }) => {
   return (
     <Card.Root className="card" maxW="sm" overflow="hidden">
     <Image
-        src={Aline}
+         src={event.imageUrl || Aline}
     />
     <Card.Body gap="2">
         <Card.Title>{event.name}</Card.Title>
         <Card.Description>
-            {/* {event.venue} */}
+             Venue: {event.venue}
         </Card.Description>
         <Card.Description>
             {/* Click Here For Details and Tickets{event.url} */}
         </Card.Description>
         <Card.Description>
-            {/* {event.date} */}
+        Date: {event.date}
         </Card.Description>
-        <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-            {/* {event.price} */}
-        </Text>
+        <Text textStyle="lg" fontWeight="medium" letterSpacing="tight" mt="2">
+    Tickets and Pricing: 
+    <a href={event.url} target="_blank" rel="noopener noreferrer" style={{ color: 'teal', textDecoration:'underline', paddingLeft:'10px', fontWeight:'bold' }}>
+        Buy Now
+    </a>
+</Text>
       </Card.Body>
       <Card.Footer gap="2">
         <Button variant="solid" onClick={addToEventList} _loading={{opacity: 0.6}}>{saveable? 'Saving...' : 'Save Event'}</Button>

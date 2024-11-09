@@ -67,6 +67,7 @@ const Home: React.FC = () => {
 
         fetchEvents();
     }, []);
+   
 
     return (
         <>
