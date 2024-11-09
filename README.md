@@ -82,3 +82,5 @@ If you have any questions reguarding this application, feel free to reach out to
 - **Ticketmaster API** — for providing detailed event data, enabling the discovery and display of live entertainment options within the app.
 - **Render** — for a seamless and reliable deployment platform, making it easy to host, manage, and scale the application.
 - **Supabase** — for its scalable and developer-friendly database solution, supporting robust data storage and retrieval.
+
+Thanks!
