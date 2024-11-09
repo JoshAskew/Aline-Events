@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // import { searchTicketMaster } from '../api/API';
 import EventCard from '../components/EventCard';
 
-import { Button, Card, Image, Text } from "@chakra-ui/react"
+import { Button, Text } from "@chakra-ui/react"
 import './Home.css'
 import { Link } from "react-router-dom";
 import WeatherSidebar from "../components/SideBar";
@@ -23,41 +23,72 @@ import { Spinner, VStack } from "@chakra-ui/react"
 const Home: React.FC = () => {
 
     const [ticketData, setTicketData] = useState<any[]>([]);
-    const [error, setError] = useState<string | null>(null);
+    const [_error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     //take their zipcode that is stored in a database postgres db
-        useEffect(() => {
+    useEffect(() => {
         const fetchEvents = async () => {
             setLoading(true);
 
             try {
-            const response = await fetch("/api/ticketData", {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": `Bearer ${AuthService.getToken()}`
-                },
-              });
-        
-              if (!response.ok) {
-                const errorData = await response.json(); // Get the error response body
-                console.error("Failed to fetch ticketData", errorData);
-                setError("Failed to fetch events.");
-                return;
-              }
-        
-              const fetchedticketData = await response.json();
-              console.log("User successfully fetched fetchedTicketData:", fetchedticketData);
-              setTicketData(fetchedticketData);
-              console.log(ticketData);
+                const response = await fetch("/api/ticketData", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${AuthService.getToken()}`
+                    },
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json(); // Get the error response body
+                    console.error("Failed to fetch ticketData", errorData);
+                    setError("Failed to fetch events.");
+                    return;
+                }
+
+                const fetchedticketData = await response.json();
+                console.log("User successfully fetched fetchedTicketData:", fetchedticketData);
+                setTicketData(fetchedticketData);
+                console.log(ticketData);
 
             } catch (error) {
                 console.error("An error occurred while fetching events:", error);
                 setError("An error occurred while fetching events.");
-            }  finally {
+            } finally {
                 setLoading(false);
             }
+
+            try {
+                const response = await fetch("/api/weatherData", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${AuthService.getToken()}`
+                    },
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json(); // Get the error response body
+                    console.error("Failed to fetch ticketData", errorData);
+                    setError("Failed to fetch events.");
+                    return;
+                }
+
+                const fetchedticketData = await response.json();
+                console.log("User successfully fetched fetchedTicketData:", fetchedticketData);
+                setTicketData(fetchedticketData);
+                console.log(ticketData);
+
+            } catch (error) {
+                console.error("An error occurred while fetching events:", error);
+                setError("An error occurred while fetching events.");
+            } finally {
+                setLoading(false);
+            }
+
+
+
         };
 
         fetchEvents();
