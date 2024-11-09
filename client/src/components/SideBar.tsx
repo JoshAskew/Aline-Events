@@ -14,26 +14,32 @@ import {
 } from "../components/ui/drawer";
 import { Box, Text, VStack, Heading, useBreakpointValue } from "@chakra-ui/react";
 import "./SideBar.css";
-//import AuthService from "../utils/auth";
+import AuthService from "../utils/auth";
 
-const WeatherSidebar = (weatherData: any) => {
-  // Use Chakra's useBreakpointValue to switch button style based on screen size
+const WeatherSidebar = ({ weatherData }: any) => {
+
   const buttonVariant = useBreakpointValue({ base: "dropdown", md: "outline" });
 
  
-
- // const [weatherData, setWeatherData] = useState<any[]>([]);
   const [_error, _setError] = useState<string | null>(null);
   const [_loading, _setLoading] = useState<boolean>(true);
+  const [userZip, setUserZip] = useState<string | null>(null);
 
-  console.log("Here !!!!!!!!!!!!!!!!!!!!!!!!!!")
+  useEffect(() => {
+    const userProfile = AuthService.getProfile();
+    if (userProfile) {
+        setUserZip(userProfile.zipCode);
+    }
 
-
-  useEffect(()=>{
-    console.log("weatherData")
-    console.log(weatherData)
-  }, [])
-
+  }, [weatherData])
+  
+  if (!weatherData || weatherData.length === 0) {
+    return (
+      <Box>
+        <Text>No weather data available.</Text>
+      </Box>
+    );
+  }
 
   return (
     <DrawerRoot>
@@ -57,31 +63,7 @@ const WeatherSidebar = (weatherData: any) => {
           <DrawerTitle>Weather Information</DrawerTitle>
         </DrawerHeader>
         <DrawerBody>
-          <Box
-            bg="gray.800"
-            color="white"
-            borderRadius="md"
-            padding={6}
-            boxShadow="lg"
-          >
-            <Heading size="lg" mb={4} textAlign="center">
-              Current Weather
-            </Heading>
-            <VStack align="start">
-              <Text fontSize="xl" fontWeight="bold">
-                Location: Minneapolis, MN
-              </Text>
-              <Box borderBottom="1px solid white" width="100%" />
-              <Text fontSize="lg">Temperature:  </Text>
-              <Text fontSize="lg">Condition: </Text>
-              <Text fontSize="lg">Humidity: </Text>
-              <Text fontSize="lg">Wind: </Text>
-              <Box borderBottom="1px solid white" width="100%" />
-              <Text fontSize="sm" color="gray.300" mt={2}>
-                Updated: Just now
-              </Text>
-            </VStack>
-          </Box>
+          
           <Box
             bg="gray.800"
             color="white"
@@ -94,16 +76,19 @@ const WeatherSidebar = (weatherData: any) => {
             </Heading>
             <VStack align="start">
               <Text fontSize="xl" fontWeight="bold">
-                Location: Minneapolis, MN
+                Current Zip Code: <p className='zip'>{userZip}</p>
               </Text>
               <Box borderBottom="1px solid white" width="100%" />
-              <Text fontSize="lg">Monday</Text>
-              <Text fontSize="lg">Tuesday</Text>
-              <Text fontSize="lg">Wednesday</Text>
-              <Text fontSize="lg">Thursday</Text>
-              <Text fontSize="lg">Friday</Text>
-              <Text fontSize="lg">Saturday</Text>
-              <Text fontSize="lg">Sunday</Text>
+              <Text fontSize="xl" fontWeight="bold">Day: <p className='day'>{weatherData[0].date}</p></Text>
+              <Text>Temperature: <p className='temp'>{weatherData[0].temperature} °F </p></Text>
+              <Text fontSize="xl" fontWeight="bold">Day: <p className='day'>{weatherData[1].date}</p></Text>
+              <Text>Temperature: <p className='temp'>{weatherData[1].temperature} °F </p></Text>
+              <Text fontSize="xl" fontWeight="bold">Day: <p className='day'>{weatherData[2].date}</p></Text>
+              <Text>Temperature: <p className='temp'>{weatherData[2].temperature} °F </p></Text>
+              <Text fontSize="xl" fontWeight="bold">Day: <p className='day'>{weatherData[3].date}</p></Text>
+              <Text>Temperature: <p className='temp'>{weatherData[3].temperature} °F </p></Text>
+              <Text fontSize="xl" fontWeight="bold">Day: <p className='day'>{weatherData[4].date}</p></Text>
+              <Text>Temperature: <p className='temp'>{weatherData[4].temperature} °F </p></Text>
               <Box borderBottom="1px solid white" width="100%" />
               <Text fontSize="sm" color="gray.300" mt={2}>
                 Updated: Just now

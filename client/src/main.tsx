@@ -6,7 +6,7 @@ import App from './App.tsx';
 import Home from './pages/Home.tsx';
 import LandingPage from './pages/Landing.tsx';
 import Login from './pages/Login.tsx';
-//import SavedEvents from './pages/SavedEvents.tsx';
+import SavedEvents from './pages/SavedEvents.tsx';
 import SignUp from './pages/SignUp.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
 import React from 'react';
@@ -34,10 +34,10 @@ const router = createBrowserRouter([
         path: '/Login',
         element: <Login />
       },
-      // {
-      //   path: '/SavedEvents',
-      //   element: <SavedEvents />
-      // },
+       {
+         path: '/SavedEvents',
+         element: <SavedEvents />
+       },
       {
         path: '/AboutAline',
         element: <AboutAline />
