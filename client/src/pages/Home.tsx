@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { Event } from '../interfaces/Events';
-// import { searchTicketMaster } from '../api/API';
 import EventCard from '../components/EventCard';
-
 import { Button, Text } from "@chakra-ui/react"
 import './Home.css'
 import { Link } from "react-router-dom";
@@ -19,15 +16,21 @@ import {
 } from "../components/ui/popover"
 import { Spinner, VStack } from "@chakra-ui/react"
 
-
 const Home: React.FC = () => {
 
     const [ticketData, setTicketData] = useState<any[]>([]);
     const [_error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const [userName, setUserName] = useState<string | null>(null);
+    const [showContent, setShowContent] = useState<boolean>(false);
 
-    //take their zipcode that is stored in a database postgres db
+    // Take their zipcode that is stored in a database (PostgreSQL DB)
     useEffect(() => {
+        const userProfile = AuthService.getProfile();
+        if (userProfile) {
+            setUserName(userProfile.userName);
+        }
+
         const fetchEvents = async () => {
             setLoading(true);
 
@@ -48,17 +51,18 @@ const Home: React.FC = () => {
                 }
 
                 const fetchedticketData = await response.json();
-                console.log("User successfully fetched fetchedTicketData:", fetchedticketData);
+                console.log("User successfully fetched ticket data:", fetchedticketData);
                 setTicketData(fetchedticketData);
-                console.log(ticketData);
 
             } catch (error) {
                 console.error("An error occurred while fetching events:", error);
                 setError("An error occurred while fetching events.");
             } finally {
                 setLoading(false);
+                setTimeout(() => {
+                    setShowContent(true);
+                }, 5000);
             }
-
         };
 
         fetchEvents();
@@ -91,23 +95,29 @@ const Home: React.FC = () => {
                     </PopoverBody>
                 </PopoverContent>
             </PopoverRoot>
+            <p className='user'>Signed in as: {userName || "User"}</p>
             <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img>
 
-            <div className="cards-container">
-                {loading ? (
-                    <VStack colorPalette="teal" marginTop="20px">
-                        <Spinner color="colorPalette.600" />
-                        <Text color="colorPalette.600">Loading...</Text>
-                    </VStack>
-                ) : (
-                    ticketData && ticketData.slice(0, 6).map((event, index) => (
-                        <EventCard key={index} event={event} events={ticketData} setEvents={setTicketData} />
-                    ))
-                )}
-            </div>
+            {showContent ? (
+                <>
+                    <div className="cards-container">
+                        {loading ? (
+                            <VStack colorPalette="teal" marginTop="20px">
+                                <Spinner color="colorPalette.600" />
+                                <Text color="colorPalette.600">Getting Events..</Text>
+                            </VStack>
+                        ) : (
+                            ticketData && ticketData.slice(0, 6).map((event, index) => (
+                                <EventCard key={index} event={event} events={ticketData} setEvents={setTicketData} />
+                            ))
+                        )}
+                    </div>
+                </>
+            ) : (
+                <h1 className='welcome'>Welcome Back, {userName || "User"}!</h1>
+            )}
         </>
     );
-
 };
 
 export default Home;
