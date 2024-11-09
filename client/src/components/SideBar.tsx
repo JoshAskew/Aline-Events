@@ -20,12 +20,14 @@ const WeatherSidebar = () => {
   // Use Chakra's useBreakpointValue to switch button style based on screen size
   const buttonVariant = useBreakpointValue({ base: "dropdown", md: "outline" });
 
-  const [ticketData, setTicketData] = useState<any[]>([]);
+ 
+
+  const [weatherData, setWeatherData] = useState<any[]>([]);
   const [_error, setError] = useState<string | null>(null);
   const [_loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchWeather = async () => {
         setLoading(true);
 
         try {
@@ -44,21 +46,21 @@ const WeatherSidebar = () => {
                 return;
             }
 
-            const fetchedticketData = await response.json();
-            console.log("User successfully fetched fetchedTicketData:", fetchedticketData);
-            setTicketData(fetchedticketData);
-            console.log(ticketData);
+            const fetchedWeatherData = await response.json();
+            console.log("User successfully fetched fetchedWeatherData:", fetchedWeatherData);
+            setWeatherData(fetchedWeatherData);
+            console.log(weatherData);
 
         } catch (error) {
-            console.error("An error occurred while fetching events:", error);
-            setError("An error occurred while fetching events.");
+            console.error("An error occurred while fetching weather:", error);
+            setError("An error occurred while fetching weather.");
         } finally {
             setLoading(false);
         }
 
     };
 
-    fetchEvents();
+    fetchWeather();
 }, []);
 
 
@@ -100,10 +102,10 @@ const WeatherSidebar = () => {
                 Location: Minneapolis, MN
               </Text>
               <Box borderBottom="1px solid white" width="100%" />
-              <Text fontSize="lg">Temperature: 72°F</Text>
-              <Text fontSize="lg">Condition: Sunny</Text>
-              <Text fontSize="lg">Humidity: 55%</Text>
-              <Text fontSize="lg">Wind: 10 mph</Text>
+              <Text fontSize="lg">Temperature:  </Text>
+              <Text fontSize="lg">Condition: </Text>
+              <Text fontSize="lg">Humidity: </Text>
+              <Text fontSize="lg">Wind: </Text>
               <Box borderBottom="1px solid white" width="100%" />
               <Text fontSize="sm" color="gray.300" mt={2}>
                 Updated: Just now
