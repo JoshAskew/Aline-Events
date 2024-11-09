@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Text, Spinner, VStack } from "@chakra-ui/react";
+//import { Button, Text, Spinner, VStack } from "@chakra-ui/react";
+import { Button, Text, Spinner, VStack, Box} from "@chakra-ui/react";;;
 import { Link } from "react-router-dom";
 import EventCard from '../components/EventCard';
 import WeatherSidebar from "../components/SideBar";
@@ -13,31 +14,41 @@ import {
     PopoverTitle,
     PopoverTrigger,
 } from "../components/ui/popover";
+} from "../components/ui/popover";
 import './Home.css';
 
 const Home: React.FC = () => {
     const [ticketData, setTicketData] = useState<any[]>([]);
-    const [weatherData, setWeatherData] = useState<any | null>(null);
-    const [_weatherError, setWeatherError] = useState<string | null>(null);
-    const [loadingWeather, setLoadingWeather] = useState<boolean>(true);
-    
-  
     const [_error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [userName, setUserName] = useState<string | null>(null);
-    const [showContent, setShowContent] = useState<boolean>(false);
+    const [showWelcome, setShowWelcome] = useState<boolean>(false);
+    const [showHello, setHello] = useState<boolean>(false);
 
-
-    // Fetch Ticket Data
     useEffect(() => {
         const userProfile = AuthService.getProfile();
         if (userProfile) {
             setUserName(userProfile.userName);
         }
 
+        if (localStorage.getItem("firstLogin") === "true") {
+            setShowWelcome(true);
+            localStorage.setItem("firstLogin", "false");
+            setTimeout(() => {
+                setShowWelcome(false);
+            }, 4000);
+        }
+
+        if (localStorage.getItem("firstSignUp") === "true") {
+            setHello(true);
+            localStorage.setItem("firstSignUp", "false");
+            setTimeout(() => {
+                setHello(false);
+            }, 5000);
+        }
+
         const fetchEvents = async () => {
             setLoading(true);
-
             try {
                 const response = await fetch("/api/ticketData", {
                     method: "GET",
@@ -48,54 +59,36 @@ const Home: React.FC = () => {
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json(); // Get the error response body
+                    const errorData = await response.json();
                     console.error("Failed to fetch ticketData", errorData);
                     setError("Failed to fetch events.");
                     return;
                 }
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Failed to fetch ticketData", errorData);
+                setTicketError("Failed to fetch ticket data.");
+                return;
+            }
+        };
 
-                const fetchedticketData = await response.json();
-                console.log("User successfully fetched ticket data:", fetchedticketData);
-                setTicketData(fetchedticketData);
-
+                const fetchedTicketData = await response.json();
+                console.log("User successfully fetched ticket data:", fetchedTicketData);
+                setTicketData(fetchedTicketData);
             } catch (error) {
                 console.error("An error occurred while fetching events:", error);
                 setError("An error occurred while fetching events.");
             } finally {
                 setLoading(false);
-                setTimeout(() => {
-                    setShowContent(true);
-                }, 5000);
             }
         };
 
-        const fetchWeatherData = async () => {
-            setLoadingWeather(true);
-            try {
-                const response = await fetch("/api/weatherData", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${AuthService.getToken()}`
-                    },
-                });
-    
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    console.error("Failed to fetch weatherData", errorData);
-                    setWeatherError("Failed to fetch weather data.");
-                    return;
-                }
-    
-                const fetchedWeatherData = await response.json();
-                console.log("Fetched Weather Data:", fetchedWeatherData);
-                setWeatherData(fetchedWeatherData);
-    
-            } catch (error) {
-                console.error("An error occurred while fetching weather data:", error);
-                setWeatherError("An error occurred while fetching weather data.");
-            }
-        };
+        fetchEvents();
+    }, []);
+            const fetchedTicketData = await response.json();
+            console.log("Fetched Ticket Data:", fetchedTicketData);
+            setLoadingTickets(false)
+            setTicketData(fetchedTicketData);
 
         fetchEvents();
         fetchWeatherData();
@@ -113,7 +106,7 @@ const Home: React.FC = () => {
             </Link>
             <PopoverRoot>
                 <PopoverTrigger asChild>
-                    <Button className="logout" size="sm" variant="outline" >
+                    <Button className="logout" size="sm" variant="outline">
                         Logout
                     </Button>
                 </PopoverTrigger>
