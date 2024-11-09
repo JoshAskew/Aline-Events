@@ -52,7 +52,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, events, setEvents }) => {
             {/* Click Here For Details and Tickets{event.url} */}
         </Card.Description>
         <Card.Description>
-        Date: {event.date}
+        Event Date: {event.date}
         </Card.Description>
         <Text textStyle="lg" fontWeight="medium" letterSpacing="tight" mt="2">
     Tickets and Pricing: 
