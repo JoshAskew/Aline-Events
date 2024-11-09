@@ -40,7 +40,7 @@ interface ITicketData {
     test?: boolean,
     url?: string,
     locale?: string,
-    date?:IEventDate,
+    dates?: ITicketDates,
     images?: ITicketImage[],
     _embedded?: {
         venues: {
@@ -55,6 +55,12 @@ interface ITicketImage {
     width: number,
     height: number,
     fallback: boolean
+}
+
+interface ITicketDates {
+    start?:{
+        localDate: string;
+    }
 }
 
 export class Tickets {
@@ -112,13 +118,11 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
         const simplifiedTicketData = eventsData.map(event => {
             console.log(event); 
             const venueName = event._embedded?.venues?.[0]?.name || 'Unknown Venue';
-            const startDate = event.date?.localDate;   // Accessing start date
-            const startTime = event.date?.localTime;   // Accessing start time
-            const formattedDate = `${startDate} ${startTime ? `at ${startTime}` : ''}`;
+            const date = event.dates?.start?.localDate || "Unknown Dates";
             const imageUrl = event.images?.[0]?.url || '';  // Get the first image URL if available
             const eventUrl = event.url || '';
             console.log("Event URL:", event.url);
-    return new Tickets(event.name, event.id, venueName, formattedDate, imageUrl, eventUrl);
+    return new Tickets(event.name, event.id, venueName, date, imageUrl, eventUrl);
         });
 
         return res.status(201).json(simplifiedTicketData);
