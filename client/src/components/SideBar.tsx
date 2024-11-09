@@ -14,55 +14,25 @@ import {
 } from "../components/ui/drawer";
 import { Box, Text, VStack, Heading, useBreakpointValue } from "@chakra-ui/react";
 import "./SideBar.css";
-import AuthService from "../utils/auth";
+//import AuthService from "../utils/auth";
 
-const WeatherSidebar = () => {
+const WeatherSidebar = (weatherData: any) => {
   // Use Chakra's useBreakpointValue to switch button style based on screen size
   const buttonVariant = useBreakpointValue({ base: "dropdown", md: "outline" });
 
  
 
-  const [weatherData, setWeatherData] = useState<any[]>([]);
-  const [_error, setError] = useState<string | null>(null);
-  const [_loading, setLoading] = useState<boolean>(true);
+ // const [weatherData, setWeatherData] = useState<any[]>([]);
+  const [_error, _setError] = useState<string | null>(null);
+  const [_loading, _setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchWeather = async () => {
-        setLoading(true);
+  console.log("Here !!!!!!!!!!!!!!!!!!!!!!!!!!")
 
-        try {
-            const response = await fetch("/api/weatherData", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${AuthService.getToken()}`
-                },
-            });
 
-            if (!response.ok) {
-                const errorData = await response.json(); // Get the error response body
-                console.error("Failed to fetch ticketData", errorData);
-                setError("Failed to fetch events.");
-                return;
-            }
-
-            const fetchedWeatherData = await response.json();
-            console.log("User successfully fetched fetchedWeatherData:", fetchedWeatherData);
-            setWeatherData(fetchedWeatherData);
-            console.log(weatherData);
-
-        } catch (error) {
-            console.error("An error occurred while fetching weather:", error);
-            setError("An error occurred while fetching weather.");
-        } finally {
-            setLoading(false);
-        }
-
-    };
-
-    fetchWeather();
-}, []);
-
+  useEffect(()=>{
+    console.log("weatherData")
+    console.log(weatherData)
+  }, [])
 
 
   return (

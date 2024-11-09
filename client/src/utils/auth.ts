@@ -11,6 +11,7 @@ class AuthService {
 
   loggedIn() {
     const token = this.getToken();
+
     return !!token && !this.isTokenExpired(token);
   }
 
@@ -42,6 +43,10 @@ class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+
+    
+    
+
     window.location.assign('/');
   }
 }
