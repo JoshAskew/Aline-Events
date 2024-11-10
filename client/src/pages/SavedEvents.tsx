@@ -5,7 +5,6 @@ import { Heading, Stack, Table } from "@chakra-ui/react"
 import { CloseButton } from "../components/ui/close-button"
 import { useNavigate } from 'react-router-dom';
 import { deleteEvent } from '../api/eventAPI';
-import { List } from "@chakra-ui/react"
 import { EmptyState } from "../components/ui/empty-state"
 import { HiColorSwatch } from "react-icons/hi"
 
@@ -25,7 +24,7 @@ type Props = {
     token: string;
 };
 
-const SavedEvents: React.FC<Props> = ({ token }) => {
+const SavedEvents: React.FC<Props> = () => {
     const [savedEvents, setSavedEvents] = useState<Event[]>([]);
 
     useEffect(() => {
@@ -51,7 +50,7 @@ const SavedEvents: React.FC<Props> = ({ token }) => {
             }
         };
         fetchSavedEvents();
-    }, [token]);
+    }, []);
 
     const handleDelete = async (eventId: string) => {
 
