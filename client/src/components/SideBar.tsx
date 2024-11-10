@@ -46,7 +46,11 @@ const WeatherSidebar = ({ weatherData }: any) => {
         return '0 4px 10px rgba(255, 165, 0, 0.6)';
       case 'light rain':
         return '0 4px 10px rgba(79, 173, 255, 0.76)';
-      case 'scattered clouds':
+        case 'rain':
+        return '0 4px 10px rgba(0, 19, 255, 1)';
+      case 'overcast clouds':
+        return '0 4px 10px rgba(131, 131, 131, 0.93)';
+        case 'scattered clouds':
         return '0 4px 10px rgba(169, 169, 169, 0.6)';
         case 'few clouds':
         return '0 4px 10px rgba(169, 169, 169, 0.3)';
