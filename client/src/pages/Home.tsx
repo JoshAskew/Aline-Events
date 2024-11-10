@@ -38,9 +38,13 @@ const Home: React.FC = () => {
     const [showHello, setHello] = useState<boolean>(false);  // For new user sign-up
     const [showWelcome, setShowWelcome] = useState<boolean>(false);  // For returning user login
     const [showContent, setShowContent] = useState<boolean>(false);  // To control content visibility
+    const [radius, setRadius] = useState<number>(50);
 
     // Fetch Ticket Data
     useEffect(() => {
+
+        
+
         const userProfile = AuthService.getProfile();
         if (userProfile) {
             setUserName(userProfile.userName);
@@ -66,11 +70,12 @@ const Home: React.FC = () => {
             setLoading(true);
             try {
                 const response = await fetch("/api/ticketData", {
-                    method: "GET",
+                    method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${AuthService.getToken()}`
                     },
+                    body: JSON.stringify({radius}),
                 });
 
                 if (!response.ok) {
@@ -125,7 +130,7 @@ const Home: React.FC = () => {
 
         fetchEvents();
         fetchWeatherData();
-    }, []);
+    }, [radius]);
 
     // Once both event and weather data are fetched, show the content
     useEffect(() => {
@@ -152,10 +157,12 @@ const Home: React.FC = () => {
         formState: { errors },
       } = useForm<FormValues>({
         resolver: zodResolver(formSchema),
-        defaultValues: { value: [40] },
+        defaultValues: { value: [radius] },
       })
     
-      const onSubmit = handleSubmit((data) => console.log(data))
+      const onSubmit = handleSubmit((data) => {setRadius(data.value[0]) })
+     
+
 
     return (
         <>
