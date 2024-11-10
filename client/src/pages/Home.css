@@ -86,9 +86,42 @@
 .slider {
     padding: 40px;
     padding-top: 80px;
+    height: 300px;
+    position: relative;
 }
 
 .radius-button {
     background-color: teal;
     color: white;
+}
+
+/* Ensure that the slider and logo don't overlap on small screens */
+@media (max-width: 480px) {
+    /* Adjust padding to create more space */
+    .slider {
+        padding: 20px; /* Reduce padding to fit content */
+        padding-top: 40px; /* Adjust top padding for better spacing */
+    }
+
+    /* Adjust the logo styling for mobile screens */
+    .header {
+        font-size: 28px; /* Make the header smaller */
+    }
+
+    /* Adjust the image size of the logo */
+    .aline-logo {
+        height: 100px; /* Reduce lgoo size
+        margin-top: 20px; /* Add space above the logo */
+    }
+
+    
+    .cards-container {
+        padding: 0 10px; /* Add padding on the sides*/
+    }
+
+    
+    .radius-button {
+        font-size: 14px; /* button text smaller */
+        padding: 10px 20px; /* Reduce padding */
+    }
 }
