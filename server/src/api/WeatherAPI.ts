@@ -30,14 +30,16 @@ interface IGeoData {
 
 export class WeatherData {
   temperature: number;
-  humidity: number;
+  condition: string;
   date: string;
+  icon: string;
 
 
-  constructor(temp: number, hum: number, date: string) {
+  constructor(temp: number, condition: string, date: string, icon: string) {
     this.temperature = temp;
-    this.humidity = hum;
+    this.condition = condition;
     this.date = date;
+    this.icon = icon;
   }
 }
 
@@ -83,10 +85,6 @@ const getWeatherData = async (req: Request, res: Response): Promise<any | null> 
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log('locationIQApiKey', locationIQApiKey)
-    console.log('user', user)
-    console.log('use?.zipCode', user.zipCode)
-
     const geoResponse = await fetch(`https://us1.locationiq.com/v1/search.php?key=${locationIQApiKey}&postalcode=${user.zipCode}&format=json&countrycodes=us`);
 
     if (!geoResponse.ok) {
@@ -107,27 +105,28 @@ const getWeatherData = async (req: Request, res: Response): Promise<any | null> 
     const dailyData: any[] = [];
     
 
+   
+    console.log("Weather data:", allWeatherData.list[0].weather[0].description);
 
-    console.log("geoData:" + geoData)
 
+    function kelvinToFahrenheit(kelvin: number) {
+      return Math.round((kelvin - 273.15) * (9 / 5) + 32); // Rounding to nearest integer
+    }
 
     for (let i = 0; i < numberOfDays; i++) {
       i = i;
       let j = (i * 8);
 
-
-      let temp = allWeatherData.list[j].main.temp;
-      let humidity = allWeatherData.list[j].main.temp;
+      let ktemp: number = allWeatherData.list[j].main.temp;
+      let temp = kelvinToFahrenheit(ktemp)
       let date = allWeatherData.list[j].dt_txt.split(' ')[0];
+      let conditions = allWeatherData.list[j].weather[0].description;
+      let iconhex = allWeatherData.list[j].weather[0].icon;
+      let iconURL = `https://openweathermap.org/img/w/${iconhex}.png`
 
-
-      dailyData.push(new WeatherData(temp, humidity, date));
+      dailyData.push(new WeatherData(temp, conditions, date, iconURL));
       
     }
-
-
-
-
 
     return res.status(201).json(dailyData);
 

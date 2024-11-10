@@ -1,114 +1,117 @@
-// import { Button, Card, Image, Text } from "@chakra-ui/react"
-// import './Home.css'
-// import Aline from "../images/aline.webp"
-// import { Link } from "react-router-dom";
-// import WeatherSidebar from "../components/SideBar";
-// import { getSavedEvents, deleteEvent } from "../api/eventAPI";
-// import {
-//     PopoverArrow,
-//     PopoverBody,
-//     PopoverContent,
-//     PopoverRoot,
-//     PopoverTitle,
-//     PopoverTrigger,
-// } from "../components/ui/popover"
-// import "./SavedEvents.css"
-// import {useEffect, useState} from "react"; 
-// import Auth from "../utils/auth";
-// import ErrorPage from "./ErrorPage";
-// import AlineTeal from "../images/alineteal.webp"
-// //import EventCard from "../components/EventCard";
-
-// const SavedEvents = () => {
-
-//     const [events, setEvents] = useState<Event[]>([]);
-//     const [error, setError] = useState(false);
-
-//     useEffect(() => {
-//         const fetchEvents = async () => {
-//             try {
-//                 const data =await getsavedEvents();
-//                 setEvents(data);
-//             } catch (err) {
-//                 setError(true);
-//             }
-//         };
-
-//         fetchEvents();
-//     }, []);
+import React, { useEffect, useState } from 'react';
+import AuthService from "../utils/auth";
+import './SavedEvents.css';
+import { Heading, Stack, Table } from "@chakra-ui/react"
+import { CloseButton } from "../components/ui/close-button"
+import { useNavigate } from 'react-router-dom';
+import { deleteEvent } from '../api/eventAPI';
+import { EmptyState } from "../components/ui/empty-state"
+import { HiColorSwatch } from "react-icons/hi"
 
 
-//         const deleteIndvEvent = async (id: number) => {
-//             try {
-//             const data = await deleteEvent(id);
-//             fetchEvents();
-//             return data;
-//         } catch (err) {
-//             return Promise.reject(err);
-//         }
+//create a saved events page which will check a users JWT token for their id, authenticate it, then if it is valid, fetch each event from the events database which has the proper id in its userId column
+//then display each event in a card format
+type Event = {
+    id: string;
+    name: string;
+    url: string;
+    imageUrl: string;
+    venue: string;
+    date: string;
+}
 
-//         if (error) {
-//             return <ErrorPage />;
-//         }
-//     }
+type Props = {
+    token: string;
+};
 
+const SavedEvents: React.FC<Props> = () => {
+    const [savedEvents, setSavedEvents] = useState<Event[]>([]);
 
-//     return (
-//         <>
+    useEffect(() => {
+        const fetchSavedEvents = async () => {
+            try {
+                const response = await fetch("/api/events/saved", {
+                    method: "GET",
+                    headers: {
+                        'Authorization': `Bearer ${AuthService.getToken()}`
+                    }
+                });
 
-//             <WeatherSidebar />
-//             <PopoverRoot>
-//                 <Link to="../Home">
-//                 <Button className="back-button" size="sm" variant="subtle" >
-//                     Back To Events
-//                 </Button>
-//                 </Link>
-//                 <PopoverTrigger asChild> 
-//                     <Button className="logout" size="sm" variant="outline" >
-//                         Logout
-//                     </Button>
-//                 </PopoverTrigger>
-//                 <PopoverContent>
-//                     <PopoverArrow />
-//                     <PopoverBody>
-//                         <PopoverTitle fontWeight="bold">Are you sure you want to logout?</PopoverTitle>
-//                         <Text my="4">
-//                             These prices are not guaranteed to persist.
-//                         </Text>
-//                         <Link to="../Login">
-//                             <Button className="logout" size="sm" variant="outline">
-//                                 Yes, Log Me Out
-//                             </Button>
-//                         </Link>
-//                     </PopoverBody>
-//                 </PopoverContent>
-//             </PopoverRoot>
-//             <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img>
-//             <div className="cards-container">
-//                 <Card.Root className="card" maxW="sm" overflow="hidden">
-//                     <Image
-//                         src={Aline}
-//                     />
-//                     <Card.Body gap="2">
-//                         <Card.Title>Event Title</Card.Title>
-//                         <Card.Description>
-//                             This is the type of the event.
-//                         </Card.Description>
-//                         <Card.Description>
-//                             Start Date-End Date
-//                         </Card.Description>
-//                         <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-//                             $450-$1000
-//                         </Text>
-//                     </Card.Body>
-//                     <Card.Footer gap="2">
-//                         <Button variant="solid">Save Event</Button>
-//                         <Button variant="ghost">Skip Event</Button>
-//                     </Card.Footer>
-//                 </Card.Root>
-//             </div>
-//         </>
-//     );
-// };
+                if (!response.ok) {
+                    console.error("Failed to fetch saved events");
+                    return;
+                }
 
-// export default SavedEvents;
+                const data = await response.json();
+                console.log(data);
+                setSavedEvents(data);
+            } catch (error) {
+                console.error("Failed to fetch saved events", error);
+            }
+        };
+        fetchSavedEvents();
+    }, []);
+
+    const handleDelete = async (eventId: string) => {
+
+        try {
+            const response = await deleteEvent(Number(eventId));
+            if (response.message === 'Event deleted') {
+                setSavedEvents(savedEvents.filter((event) => event.id !== eventId));
+            } else {
+                console.error('Failed to delete event');
+            }
+        } catch (error) {
+            console.error('Failed to delete event', error);
+        }
+    };
+
+    const navigate = useNavigate();
+
+  const handleBack = () => {
+  navigate(-1);  
+  };
+
+    return (
+        <div className='table-wrapper'>
+        <button className="back-button" onClick={handleBack}>Back To Events</button>
+        <Stack width="full" gap="5">
+        <Heading size="xl">My Saved Events</Heading>
+        {savedEvents.length > 0 ? (
+        <Table.Root size="sm" variant="outline" striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeader className='table-headers'>Buy</Table.ColumnHeader>
+              <Table.ColumnHeader className='table-headers'>Event</Table.ColumnHeader>
+              <Table.ColumnHeader className='table-headers'>Date</Table.ColumnHeader>
+              <Table.ColumnHeader className='table-headers'>Venue</Table.ColumnHeader>
+              <Table.ColumnHeader className='table-headers'>Remove Event</Table.ColumnHeader>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+          {savedEvents.map((event) => (
+            
+              <Table.Row key={event.id}>
+                 <Table.Cell className='event-date'><a className='buy-now' href={event.url} target='_blank'>Buy Now</a></Table.Cell>
+                <Table.Cell className='event-headers'>{event.name} <img src={event.imageUrl} alt={event.name} style={{ width: '100px'}} /></Table.Cell>
+                <Table.Cell className='event-date'>{event.date}</Table.Cell>
+                <Table.Cell className='event-venue' >{event.venue}</Table.Cell>
+                <Table.Cell > <CloseButton onClick={() => handleDelete(event.id)} className='delete-button' variant="solid" /></Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Root>
+        ) : (
+            <EmptyState className='empty-state-container'
+            icon={<HiColorSwatch />}
+            title="No events currently saved"
+            description="Save some events and come check them out here!">
+          </EmptyState>
+        )}
+      </Stack>
+        </div>
+      );
+
+};
+
+export default SavedEvents;

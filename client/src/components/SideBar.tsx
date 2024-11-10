@@ -16,54 +16,29 @@ import { Box, Text, VStack, Heading, useBreakpointValue } from "@chakra-ui/react
 import "./SideBar.css";
 import AuthService from "../utils/auth";
 
-const WeatherSidebar = () => {
-  // Use Chakra's useBreakpointValue to switch button style based on screen size
+const WeatherSidebar = ({ weatherData }: any) => {
+
   const buttonVariant = useBreakpointValue({ base: "dropdown", md: "outline" });
 
- 
-
-  const [weatherData, setWeatherData] = useState<any[]>([]);
-  const [_error, setError] = useState<string | null>(null);
-  const [_loading, setLoading] = useState<boolean>(true);
+  const [_error, _setError] = useState<string | null>(null);
+  const [_loading, _setLoading] = useState<boolean>(true);
+  const [userZip, setUserZip] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchWeather = async () => {
-        setLoading(true);
+    const userProfile = AuthService.getProfile();
+    if (userProfile) {
+        setUserZip(userProfile.zipCode);
+    }
 
-        try {
-            const response = await fetch("/api/weatherData", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${AuthService.getToken()}`
-                },
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json(); // Get the error response body
-                console.error("Failed to fetch ticketData", errorData);
-                setError("Failed to fetch events.");
-                return;
-            }
-
-            const fetchedWeatherData = await response.json();
-            console.log("User successfully fetched fetchedWeatherData:", fetchedWeatherData);
-            setWeatherData(fetchedWeatherData);
-            console.log(weatherData);
-
-        } catch (error) {
-            console.error("An error occurred while fetching weather:", error);
-            setError("An error occurred while fetching weather.");
-        } finally {
-            setLoading(false);
-        }
-
-    };
-
-    fetchWeather();
-}, []);
-
-
+  }, [weatherData])
+  
+  if (!weatherData || weatherData.length === 0) {
+    return (
+      <Box>
+        <Text>No weather data available.</Text>
+      </Box>
+    );
+  }
 
   return (
     <DrawerRoot>
@@ -71,7 +46,6 @@ const WeatherSidebar = () => {
       <DrawerTrigger asChild>
         <Button
           className="check-weather"
-         
           size="sm"
           position="absolute"
           right={0}
@@ -95,45 +69,30 @@ const WeatherSidebar = () => {
             boxShadow="lg"
           >
             <Heading size="lg" mb={4} textAlign="center">
-              Current Weather
-            </Heading>
-            <VStack align="start">
-              <Text fontSize="xl" fontWeight="bold">
-                Location: Minneapolis, MN
-              </Text>
-              <Box borderBottom="1px solid white" width="100%" />
-              <Text fontSize="lg">Temperature:  </Text>
-              <Text fontSize="lg">Condition: </Text>
-              <Text fontSize="lg">Humidity: </Text>
-              <Text fontSize="lg">Wind: </Text>
-              <Box borderBottom="1px solid white" width="100%" />
-              <Text fontSize="sm" color="gray.300" mt={2}>
-                Updated: Just now
-              </Text>
-            </VStack>
-          </Box>
-          <Box
-            bg="gray.800"
-            color="white"
-            borderRadius="md"
-            padding={6}
-            boxShadow="lg"
-          >
-            <Heading size="lg" mb={4} textAlign="center">
               Forecasted Weather
             </Heading>
             <VStack align="start">
               <Text fontSize="xl" fontWeight="bold">
-                Location: Minneapolis, MN
+                Current Zip Code: <p className='zip'>{userZip}</p>
               </Text>
               <Box borderBottom="1px solid white" width="100%" />
-              <Text fontSize="lg">Monday</Text>
-              <Text fontSize="lg">Tuesday</Text>
-              <Text fontSize="lg">Wednesday</Text>
-              <Text fontSize="lg">Thursday</Text>
-              <Text fontSize="lg">Friday</Text>
-              <Text fontSize="lg">Saturday</Text>
-              <Text fontSize="lg">Sunday</Text>
+              
+              {weatherData.map((dayData: any, index: number) => (
+                <Box
+                  key={index}
+                  bg="gray.700"
+                  borderRadius="md"
+                  padding={4}
+                  marginBottom={4}
+                  boxShadow="md"
+                >
+                  <Text fontSize="lg" fontWeight="bold">Date: <p className='day'>{dayData.date}</p></Text>
+                  <Text>Temperature: <p className='temp'>{dayData.temperature} °F </p></Text>
+                  <Text>Conditions: <p className='temp'>{dayData.condition} </p></Text>
+                  <img src={dayData.icon} alt={`weather icon for ${dayData.date}`} />
+                </Box>
+              ))}
+
               <Box borderBottom="1px solid white" width="100%" />
               <Text fontSize="sm" color="gray.300" mt={2}>
                 Updated: Just now

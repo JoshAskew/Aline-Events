@@ -49,6 +49,14 @@ This application is accessible in two ways:
 **Here, you can see what the Sign Up page looks like:**
 <img src='./client/src/images/SignUp.png'>
 
+**Here, you can see what the Home page looks like:**
+<img src='./client/src/images/HomePage.png'>
+
+**Here, you can see what the Saved Events page looks like:**
+<img src='./client/src/images/SavedPage.png'>
+
+**Here, you can see on the right hand side what the weather forcast drawer looks like:**
+<img src='./client/src/images/Weather.png'>
 
 ## License
 This project is licensed under the MIT license.

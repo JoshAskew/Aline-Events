@@ -26,6 +26,7 @@
 
 .card {
     margin: 20px;
+    min-height: 600px;
 }
 
 .saved-button {
@@ -68,4 +69,26 @@
     padding-left: 10px;
     color: teal;
     font-family: "Source Sans 3", serif;
+}
+
+.logout {
+    background-color: rgb(211, 211, 211);
+    color: rgb(31, 31, 31);
+    margin-top: 25px;
+    margin-left: 20px;
+}
+
+.logout:hover {
+    background-color: rgb(170, 29, 29);
+    color: rgb(182, 178, 178);
+}
+
+.slider {
+    padding: 40px;
+    padding-top: 80px;
+}
+
+.radius-button {
+    background-color: teal;
+    color: white;
 }
