@@ -34,17 +34,10 @@ const router = createBrowserRouter([
         path: '/Login',
         element: <Login />
       },
-<<<<<<< HEAD
       {
         path: '/SavedEvents',
         element: <SavedEvents />
       },
-=======
-       {
-         path: '/SavedEvents',
-         element: <SavedEvents />
-       },
->>>>>>> e5212549dc817096343d0a32d792a5baccf7ed75
       {
         path: '/AboutAline',
         element: <AboutAline />

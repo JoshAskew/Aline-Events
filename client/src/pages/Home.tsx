@@ -20,12 +20,8 @@ const Home: React.FC = () => {
     const [weatherData, setWeatherData] = useState<any | null>(null);
     const [_weatherError, setWeatherError] = useState<string | null>(null);
     const [loadingWeather, setLoadingWeather] = useState<boolean>(true);
-<<<<<<< HEAD
 
 
-=======
-  
->>>>>>> e5212549dc817096343d0a32d792a5baccf7ed75
     const [_error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [userName, setUserName] = useState<string | null>(null);
@@ -121,15 +117,12 @@ const Home: React.FC = () => {
         fetchWeatherData();
     }, []);
 
-<<<<<<< HEAD
-=======
     // Once both event and weather data are fetched, show the content
     useEffect(() => {
         if (!loading && !loadingWeather) {
             setShowContent(true);
         }
     }, [loading, loadingWeather]);
->>>>>>> e5212549dc817096343d0a32d792a5baccf7ed75
 
     return (
         <>
