@@ -20,7 +20,8 @@ const Home: React.FC = () => {
     const [weatherData, setWeatherData] = useState<any | null>(null);
     const [_weatherError, setWeatherError] = useState<string | null>(null);
     const [loadingWeather, setLoadingWeather] = useState<boolean>(true);
-  
+
+
     const [_error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [userName, setUserName] = useState<string | null>(null);
@@ -81,6 +82,7 @@ const Home: React.FC = () => {
             }
         };
 
+        // Fetch Weather Data
         const fetchWeatherData = async () => {
             setLoadingWeather(true);
             try {

@@ -1,114 +1,80 @@
-import { Button, Card, Image, Text } from "@chakra-ui/react"
-import './Home.css'
-import Aline from "../images/aline.webp"
-import { Link } from "react-router-dom";
-import WeatherSidebar from "../components/SideBar";
-import { getSavedEvents, deleteEvent } from "../api/eventAPI";
-import {
-    PopoverArrow,
-    PopoverBody,
-    PopoverContent,
-    PopoverRoot,
-    PopoverTitle,
-    PopoverTrigger,
-} from "../components/ui/popover"
-import "./SavedEvents.css"
-import {useEffect, useState} from "react"; 
-import Auth from "../utils/auth";
-import ErrorPage from "./ErrorPage";
-import AlineTeal from "../images/alineteal.webp"
-//import EventCard from "../components/EventCard";
+import React, { useEffect, useState } from 'react';
+// import { Button, Text, Spinner, VStack } from "@chakra-ui/react";
+// import { Link } from "react-router-dom";
+// import EventCard from '../components/EventCard';
+// import WeatherSidebar from "../components/SideBar";
+import AuthService from "../utils/auth";
+// import AlineTeal from "../images/alineteal.webp";
+// import {
+//     PopoverArrow,
+//     PopoverBody,
+//     PopoverContent,
+//     PopoverRoot,
+//     PopoverTitle,
+//     PopoverTrigger,
+// } from "../components/ui/popover";
+import './Home.css';
 
-const SavedEvents = () => {
+//create a saved events page which will check a users JWT token for their id, authenticate it, then if it is valid, fetch each event from the events database which has the proper id in its userId column
+//then display each event in a card format
+type Event = {
+    id: string;
+    name: string;
+    url: string;
+    imageUrl: string;
+    venue: string;
+    date: string;
+}
 
-    const [events, setEvents] = useState<Event[]>([]);
-    const [error, setError] = useState(false);
+type Props = {
+    token: string;
+};
+
+const SavedEvents: React.FC<Props> = ({ token }) => {
+    const [savedEvents, setSavedEvents] = useState<Event[]>([]);
 
     useEffect(() => {
-        const fetchEvents = async () => {
+        const fetchSavedEvents = async () => {
             try {
-                const data =await getsavedEvents();
-                setEvents(data);
-            } catch (err) {
-                setError(true);
+                const response = await fetch("/api/events/saved", {
+                    method: "GET",
+                    headers: {
+                        'Authorization': `Bearer ${AuthService.getToken()}`
+                    }
+                });
+
+                if (!response.ok) {
+                    console.error("Failed to fetch saved events");
+                    return;
+                }
+
+                const data = await response.json();
+                console.log(data);
+                setSavedEvents(data);
+            } catch (error) {
+                console.error("Failed to fetch saved events", error);
             }
         };
-
-        fetchEvents();
-    }, []);
-
-
-        const deleteIndvEvent = async (id: number) => {
-            try {
-            const data = await deleteEvent(id);
-            fetchEvents();
-            return data;
-        } catch (err) {
-            return Promise.reject(err);
-        }
-
-        if (error) {
-            return <ErrorPage />;
-        }
-    }
-
+        fetchSavedEvents();
+    }, [token]);
 
     return (
-        <>
+        <div>
+          <h1>Saved Events</h1>
+          <ul>
+            {savedEvents.map((event) => (
+              <li key={event.id}>
+                <h2>{event.name}</h2>
+                <p>Date: {event.date}</p>
+                <p>Venue: {event.venue}</p>
+                <a href={event.url}>Event Link</a>
+                <img src={event.imageUrl} alt={event.name} style={{ width: '150px' }} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
 
-            <WeatherSidebar />
-            <PopoverRoot>
-                <Link to="../Home">
-                <Button className="back-button" size="sm" variant="subtle" >
-                    Back To Events
-                </Button>
-                </Link>
-                <PopoverTrigger asChild> 
-                    <Button className="logout" size="sm" variant="outline" >
-                        Logout
-                    </Button>
-                </PopoverTrigger>
-                <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverBody>
-                        <PopoverTitle fontWeight="bold">Are you sure you want to logout?</PopoverTitle>
-                        <Text my="4">
-                            These prices are not guaranteed to persist.
-                        </Text>
-                        <Link to="../Login">
-                            <Button className="logout" size="sm" variant="outline">
-                                Yes, Log Me Out
-                            </Button>
-                        </Link>
-                    </PopoverBody>
-                </PopoverContent>
-            </PopoverRoot>
-            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img>
-            <div className="cards-container">
-                <Card.Root className="card" maxW="sm" overflow="hidden">
-                    <Image
-                        src={Aline}
-                    />
-                    <Card.Body gap="2">
-                        <Card.Title>Event Title</Card.Title>
-                        <Card.Description>
-                            This is the type of the event.
-                        </Card.Description>
-                        <Card.Description>
-                            Start Date-End Date
-                        </Card.Description>
-                        <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-                            $450-$1000
-                        </Text>
-                    </Card.Body>
-                    <Card.Footer gap="2">
-                        <Button variant="solid">Save Event</Button>
-                        <Button variant="ghost">Skip Event</Button>
-                    </Card.Footer>
-                </Card.Root>
-            </div>
-        </>
-    );
 };
 
 export default SavedEvents;

@@ -34,10 +34,10 @@ const router = createBrowserRouter([
         path: '/Login',
         element: <Login />
       },
-       {
-         path: '/SavedEvents',
-         element: <SavedEvents />
-       },
+      {
+        path: '/SavedEvents',
+        element: <SavedEvents />
+      },
       {
         path: '/AboutAline',
         element: <AboutAline />
