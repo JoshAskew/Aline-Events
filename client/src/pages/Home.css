@@ -82,3 +82,13 @@
     background-color: rgb(170, 29, 29);
     color: rgb(182, 178, 178);
 }
+
+.slider {
+    padding: 40px;
+    padding-top: 80px;
+}
+
+.radius-button {
+    background-color: teal;
+    color: white;
+}

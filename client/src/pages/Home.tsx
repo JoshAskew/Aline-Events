@@ -15,6 +15,16 @@ import {
 } from "../components/ui/popover";
 import './Home.css';
 
+
+
+import { Stack } from "@chakra-ui/react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Field } from "../components/ui/field"
+import { Slider } from "../components/ui/slider"
+import { Controller, useForm } from "react-hook-form"
+import { z } from "zod"
+
+
 const Home: React.FC = () => {
     const [ticketData, setTicketData] = useState<any[]>([]);
     const [weatherData, setWeatherData] = useState<any | null>(null);
@@ -124,6 +134,29 @@ const Home: React.FC = () => {
         }
     }, [loading, loadingWeather]);
 
+
+
+    const formSchema = z.object({
+        value: z.array(
+          z
+            .number({ message: "Radius is required" })
+            .min(50, { message: "Radius must be greater than 50" }),
+        ),
+      })
+      
+      type FormValues = z.infer<typeof formSchema>
+
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+      } = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        defaultValues: { value: [40] },
+      })
+    
+      const onSubmit = handleSubmit((data) => console.log(data))
+
     return (
         <>
             {/* Display Welcome messages */}
@@ -162,7 +195,47 @@ const Home: React.FC = () => {
             </PopoverRoot>
             
             <div className='user'>Signed in as: {userName || "User"}</div>
-            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }} />
+
+            <form onSubmit={onSubmit}>
+      <Stack className='slider' align="flex-start" gap="4" maxW="300px">
+        <Controller
+          name="value"
+          control={control}
+          render={({ field }) => (
+            <Field
+              label={`Search Radius(mi): ${field.value[0]}`}
+              invalid={!!errors.value?.length}
+              errorText={errors.value?.[0]?.message}
+            >
+              <Slider
+                width="full"
+                min={50}
+                max={500}
+                colorPalette= 'teal'
+                step= {25}
+                onFocusChange={({ focusedIndex }) => {
+                  if (focusedIndex !== -1) return
+                  field.onBlur()
+                }}
+                name={field.name}
+                value={field.value}
+                onValueChange={({ value }) => {
+                  field.onChange(value)
+                }}
+              />
+            </Field>
+          )}
+        />
+
+        <Button className= "radius-button" size="sm" type="submit">
+          Select Radius
+        </Button>
+      </Stack>
+    </form>
+
+
+
+            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto', marginTop:'-160px' }} />
 
             {showContent ? (
                 <div className="cards-container">
