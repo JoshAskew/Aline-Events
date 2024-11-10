@@ -13,7 +13,12 @@ import AuthService from "../utils/auth";
 //     PopoverTitle,
 //     PopoverTrigger,
 // } from "../components/ui/popover";
-import './Home.css';
+import './SavedEvents.css';
+import { Heading, Stack, Table } from "@chakra-ui/react"
+import { CloseButton } from "../components/ui/close-button"
+import { Button } from "../components/ui/button"
+import { useNavigate } from 'react-router-dom';
+
 
 //create a saved events page which will check a users JWT token for their id, authenticate it, then if it is valid, fetch each event from the events database which has the proper id in its userId column
 //then display each event in a card format
@@ -58,20 +63,41 @@ const SavedEvents: React.FC<Props> = ({ token }) => {
         fetchSavedEvents();
     }, [token]);
 
+    const navigate = useNavigate();
+
+  const handleBack = () => {
+  navigate(-1);  
+  };
+
     return (
-        <div>
-          <h1>Saved Events</h1>
-          <ul>
-            {savedEvents.map((event) => (
-              <li key={event.id}>
-                <h2>{event.name}</h2>
-                <p>Date: {event.date}</p>
-                <p>Venue: {event.venue}</p>
-                <a href={event.url}>Event Link</a>
-                <img src={event.imageUrl} alt={event.name} style={{ width: '150px' }} />
-              </li>
+        <div className='table-wrapper'>
+        <button className="back-button" onClick={handleBack}>Back To Events</button>
+        <Stack width="full" gap="5">
+        <Heading size="xl">My Saved Events</Heading>
+        <Table.Root size="sm" variant="outline" striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeader className='table-headers'>Buy</Table.ColumnHeader>
+              <Table.ColumnHeader className='table-headers'>Event</Table.ColumnHeader>
+              <Table.ColumnHeader className='table-headers'>Date</Table.ColumnHeader>
+              <Table.ColumnHeader className='table-headers'>Venue</Table.ColumnHeader>
+              <Table.ColumnHeader className='table-headers'>Remove Event</Table.ColumnHeader>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+          {savedEvents.map((event) => (
+            
+              <Table.Row key={event.id}>
+                 <Table.Cell className='event-date'><a className='buy-now' href={event.url} target='_blank'>Buy Now</a></Table.Cell>
+                <Table.Cell className='event-headers'>{event.name} <img src={event.imageUrl} alt={event.name} style={{ width: '100px'}} /></Table.Cell>
+                <Table.Cell className='event-date'>{event.date}</Table.Cell>
+                <Table.Cell className='event-venue' >{event.venue}</Table.Cell>
+                <Table.Cell > <CloseButton className='delete-button' variant="solid" /></Table.Cell>
+              </Table.Row>
             ))}
-          </ul>
+          </Table.Body>
+        </Table.Root>
+      </Stack>
         </div>
       );
 
