@@ -3,9 +3,9 @@ import { ApiMessage } from '../interfaces/ApiMessage';
 import Auth from '../utils/auth';
 
 //get events saved to user profile
-export const getSavedEvents = async (userId: number): Promise<Event[]> => {
+export const getSavedEvents = async (): Promise<Event[]> => {
     try {
-        const response = await fetch(`/api/events/saved/${userId}`, 
+        const response = await fetch(`/api/events/saved`, 
             {
                 headers: {
                     'Content-Type': 'application/json',
