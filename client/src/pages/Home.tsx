@@ -20,13 +20,18 @@ const Home: React.FC = () => {
     const [weatherData, setWeatherData] = useState<any | null>(null);
     const [_weatherError, setWeatherError] = useState<string | null>(null);
     const [loadingWeather, setLoadingWeather] = useState<boolean>(true);
+<<<<<<< HEAD
 
 
+=======
+  
+>>>>>>> e5212549dc817096343d0a32d792a5baccf7ed75
     const [_error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [userName, setUserName] = useState<string | null>(null);
-    const [showContent, setShowContent] = useState<boolean>(false);
-
+    const [showHello, setHello] = useState<boolean>(false);  // For new user sign-up
+    const [showWelcome, setShowWelcome] = useState<boolean>(false);  // For returning user login
+    const [showContent, setShowContent] = useState<boolean>(false);  // To control content visibility
 
     // Fetch Ticket Data
     useEffect(() => {
@@ -35,9 +40,24 @@ const Home: React.FC = () => {
             setUserName(userProfile.userName);
         }
 
+        if (localStorage.getItem("firstLogin") === "true") {
+            setShowWelcome(true);
+            localStorage.setItem("firstLogin", "false");
+            setTimeout(() => {
+                setShowWelcome(false);
+            }, 5000);  // Show message for 5 seconds
+        }
+
+        if (localStorage.getItem("firstSignUp") === "true") {
+            setHello(true);
+            localStorage.setItem("firstSignUp", "false");
+            setTimeout(() => {
+                setHello(false);
+            }, 5000);  // Show message for 5 seconds
+        }
+
         const fetchEvents = async () => {
             setLoading(true);
-
             try {
                 const response = await fetch("/api/ticketData", {
                     method: "GET",
@@ -63,9 +83,6 @@ const Home: React.FC = () => {
                 setError("An error occurred while fetching events.");
             } finally {
                 setLoading(false);
-                setTimeout(() => {
-                    setShowContent(true);
-                }, 5000);
             }
         };
 
@@ -95,6 +112,8 @@ const Home: React.FC = () => {
             } catch (error) {
                 console.error("An error occurred while fetching weather data:", error);
                 setWeatherError("An error occurred while fetching weather data.");
+            } finally {
+                setLoadingWeather(false);
             }
         };
 
@@ -102,12 +121,28 @@ const Home: React.FC = () => {
         fetchWeatherData();
     }, []);
 
+<<<<<<< HEAD
+=======
+    // Once both event and weather data are fetched, show the content
+    useEffect(() => {
+        if (!loading && !loadingWeather) {
+            setShowContent(true);
+        }
+    }, [loading, loadingWeather]);
+>>>>>>> e5212549dc817096343d0a32d792a5baccf7ed75
 
     return (
         <>
-            {
-                loadingWeather ? (<WeatherSidebar weatherData={weatherData}/>): null
-            }
+            {/* Display Welcome messages */}
+            {showWelcome && (
+                <h1 className='welcome'>Welcome Back, {userName || "User"}!</h1>
+            )}
+            {showHello && (
+                <h1 className='welcome'>Welcome to Aline Events, {userName || "User"}!</h1>
+            )}
+
+            {weatherData && <WeatherSidebar weatherData={weatherData} />}
+
             <Link to="/SavedEvents">
                 <Button className="saved-button" size="sm" variant="outline">Saved Events</Button>
             </Link>
@@ -125,33 +160,35 @@ const Home: React.FC = () => {
                             These prices are not guaranteed to persist.
                         </Text>
                         <Link to="../Login">
-                            <Button onClick={()=>AuthService.logout()} className="logout" size="sm" variant="outline">
+                            <Button onClick={() => AuthService.logout()} className="logout" size="sm" variant="outline">
                                 Yes, Log Me Out
                             </Button>
                         </Link>
                     </PopoverBody>
                 </PopoverContent>
             </PopoverRoot>
-            <p className='user'>Signed in as: {userName || "User"}</p>
-            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }}></img>
+            
+            <div className='user'>Signed in as: {userName || "User"}</div>
+            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }} />
 
             {showContent ? (
-                <>
-                    <div className="cards-container">
-                        {loading ? (
-                            <VStack colorPalette="teal" marginTop="20px">
-                                <Spinner color="colorPalette.600" />
-                                <Text color="colorPalette.600">Getting Events..</Text>
-                            </VStack>
-                        ) : (
-                            ticketData && ticketData.slice(0, 6).map((event, index) => (
-                                <EventCard key={index} event={event} events={ticketData} setEvents={setTicketData} />
-                            ))
-                        )}
-                    </div>
-                </>
+                <div className="cards-container">
+                    {loading ? (
+                        <VStack colorPalette="teal" marginTop="20px">
+                            <Spinner color="colorPalette.600" />
+                            <Text color="colorPalette.600">Getting Events..</Text>
+                        </VStack>
+                    ) : (
+                        ticketData && ticketData.slice(0, 6).map((event, index) => (
+                            <EventCard key={index} event={event} events={ticketData} setEvents={setTicketData} />
+                        ))
+                    )}
+                </div>
             ) : (
-                <h1 className='welcome'>Welcome Back, {userName || "User"}!</h1>
+                <VStack colorPalette="teal" marginTop="20px">
+                    <Spinner color="colorPalette.600" />
+                    <Text color="colorPalette.600">Loading Content...</Text>
+                </VStack>
             )}
         </>
     );
