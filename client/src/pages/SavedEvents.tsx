@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from 'react';
-// import { Button, Text, Spinner, VStack } from "@chakra-ui/react";
-// import { Link } from "react-router-dom";
-// import EventCard from '../components/EventCard';
-// import WeatherSidebar from "../components/SideBar";
 import AuthService from "../utils/auth";
-// import AlineTeal from "../images/alineteal.webp";
-// import {
-//     PopoverArrow,
-//     PopoverBody,
-//     PopoverContent,
-//     PopoverRoot,
-//     PopoverTitle,
-//     PopoverTrigger,
-// } from "../components/ui/popover";
 import './SavedEvents.css';
 import { Heading, Stack, Table } from "@chakra-ui/react"
 import { CloseButton } from "../components/ui/close-button"
-import { Button } from "../components/ui/button"
 import { useNavigate } from 'react-router-dom';
+import { deleteEvent } from '../api/eventAPI';
+import { List } from "@chakra-ui/react"
+import { EmptyState } from "../components/ui/empty-state"
+import { HiColorSwatch } from "react-icons/hi"
 
 
 //create a saved events page which will check a users JWT token for their id, authenticate it, then if it is valid, fetch each event from the events database which has the proper id in its userId column
@@ -63,6 +53,20 @@ const SavedEvents: React.FC<Props> = ({ token }) => {
         fetchSavedEvents();
     }, [token]);
 
+    const handleDelete = async (eventId: string) => {
+
+        try {
+            const response = await deleteEvent(Number(eventId));
+            if (response.message === 'Event deleted') {
+                setSavedEvents(savedEvents.filter((event) => event.id !== eventId));
+            } else {
+                console.error('Failed to delete event');
+            }
+        } catch (error) {
+            console.error('Failed to delete event', error);
+        }
+    };
+
     const navigate = useNavigate();
 
   const handleBack = () => {
@@ -74,6 +78,7 @@ const SavedEvents: React.FC<Props> = ({ token }) => {
         <button className="back-button" onClick={handleBack}>Back To Events</button>
         <Stack width="full" gap="5">
         <Heading size="xl">My Saved Events</Heading>
+        {savedEvents.length > 0 ? (
         <Table.Root size="sm" variant="outline" striped>
           <Table.Header>
             <Table.Row>
@@ -92,11 +97,18 @@ const SavedEvents: React.FC<Props> = ({ token }) => {
                 <Table.Cell className='event-headers'>{event.name} <img src={event.imageUrl} alt={event.name} style={{ width: '100px'}} /></Table.Cell>
                 <Table.Cell className='event-date'>{event.date}</Table.Cell>
                 <Table.Cell className='event-venue' >{event.venue}</Table.Cell>
-                <Table.Cell > <CloseButton className='delete-button' variant="solid" /></Table.Cell>
+                <Table.Cell > <CloseButton onClick={() => handleDelete(event.id)} className='delete-button' variant="solid" /></Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
         </Table.Root>
+        ) : (
+            <EmptyState className='empty-state-container'
+            icon={<HiColorSwatch />}
+            title="No events currently saved"
+            description="Save some events and come check them out here!">
+          </EmptyState>
+        )}
       </Stack>
         </div>
       );
