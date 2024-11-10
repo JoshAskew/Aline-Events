@@ -24,3 +24,7 @@
 .back-button3:hover {
     background-color: rgb(139, 0, 0);
 }
+
+.required {
+    color: red;
+}
