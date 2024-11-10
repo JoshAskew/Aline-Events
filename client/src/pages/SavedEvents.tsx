@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AuthService from "../utils/auth";
 import './SavedEvents.css';
-import { Heading, Stack, Table } from "@chakra-ui/react"
+import { Heading, Stack, Table, Box } from "@chakra-ui/react"
 import { CloseButton } from "../components/ui/close-button"
 import { useNavigate } from 'react-router-dom';
 import { deleteEvent } from '../api/eventAPI';
@@ -76,31 +76,33 @@ const SavedEvents: React.FC<Props> = () => {
         <div className='table-wrapper'>
         <button className="back-button" onClick={handleBack}>Back To Events</button>
         <Stack width="full" gap="5">
-        <Heading size="xl">My Saved Events</Heading>
+        <Heading size="xl" className="saved-events-header">My Saved Events</Heading>
         {savedEvents.length > 0 ? (
-        <Table.Root size="sm" variant="outline" striped>
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeader className='table-headers'>Buy</Table.ColumnHeader>
-              <Table.ColumnHeader className='table-headers'>Event</Table.ColumnHeader>
-              <Table.ColumnHeader className='table-headers'>Date</Table.ColumnHeader>
-              <Table.ColumnHeader className='table-headers'>Venue</Table.ColumnHeader>
-              <Table.ColumnHeader className='table-headers'>Remove Event</Table.ColumnHeader>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-          {savedEvents.map((event) => (
-            
-              <Table.Row key={event.id}>
-                 <Table.Cell className='event-date'><a className='buy-now' href={event.url} target='_blank'>Buy Now</a></Table.Cell>
-                <Table.Cell className='event-headers'>{event.name} <img src={event.imageUrl} alt={event.name} style={{ width: '100px'}} /></Table.Cell>
-                <Table.Cell className='event-date'>{event.date}</Table.Cell>
-                <Table.Cell className='event-venue' >{event.venue}</Table.Cell>
-                <Table.Cell > <CloseButton onClick={() => handleDelete(event.id)} className='delete-button' variant="solid" /></Table.Cell>
+        <Box overflowX="auto">
+          <Table.Root size="sm" variant="outline" striped>
+            <Table.Header>
+              <Table.Row>
+                <Table.ColumnHeader className='table-headers'>Buy</Table.ColumnHeader>
+                <Table.ColumnHeader className='table-headers'>Event</Table.ColumnHeader>
+                <Table.ColumnHeader className='table-headers'>Date</Table.ColumnHeader>
+                <Table.ColumnHeader className='table-headers venue-column'>Venue</Table.ColumnHeader>
+                <Table.ColumnHeader className='table-headers'>Remove Event</Table.ColumnHeader>
               </Table.Row>
-            ))}
-          </Table.Body>
-        </Table.Root>
+            </Table.Header>
+            <Table.Body>
+            {savedEvents.map((event) => (
+              
+                <Table.Row key={event.id}>
+                  <Table.Cell className='event-date'><a className='buy-now' href={event.url} target='_blank'>Buy Now</a></Table.Cell>
+                  <Table.Cell className='event-headers'>{event.name} <img src={event.imageUrl} alt={event.name} style={{ width: '100px'}} /></Table.Cell>
+                  <Table.Cell className='event-date'>{event.date}</Table.Cell>
+                  <Table.Cell className='event-venue venue-column' >{event.venue}</Table.Cell>
+                  <Table.Cell > <CloseButton onClick={() => handleDelete(event.id)} className='delete-button' variant="solid" /></Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table.Root>
+        </Box>
         ) : (
             <EmptyState className='empty-state-container'
             icon={<HiColorSwatch />}
