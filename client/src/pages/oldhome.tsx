@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Text, Spinner, VStack } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import EventCard from '../components/EventCard';
+import { Button, Text, Spinner, VStack, Box } from "@chakra-ui/react";
+import './Home.css';
+import { Link } from "react-router-dom";
 import WeatherSidebar from "../components/SideBar";
 import AuthService from "../utils/auth";
 import AlineTeal from "../images/alineteal.webp";
@@ -13,22 +14,15 @@ import {
     PopoverTitle,
     PopoverTrigger,
 } from "../components/ui/popover";
-import './Home.css';
 
 const Home: React.FC = () => {
     const [ticketData, setTicketData] = useState<any[]>([]);
-    const [weatherData, setWeatherData] = useState<any | null>(null);
-    const [_weatherError, setWeatherError] = useState<string | null>(null);
-    const [loadingWeather, setLoadingWeather] = useState<boolean>(true);
-  
     const [_error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [userName, setUserName] = useState<string | null>(null);
-    const [showHello, setHello] = useState<boolean>(false);  // For new user sign-up
-    const [showWelcome, setShowWelcome] = useState<boolean>(false);  // For returning user login
-    const [showContent, setShowContent] = useState<boolean>(false);  // To control content visibility
+    const [showWelcome, setShowWelcome] = useState<boolean>(false);
+    const [showHello, setHello] = useState<boolean>(false);
 
-    // Fetch Ticket Data
     useEffect(() => {
         const userProfile = AuthService.getProfile();
         if (userProfile) {
@@ -40,7 +34,7 @@ const Home: React.FC = () => {
             localStorage.setItem("firstLogin", "false");
             setTimeout(() => {
                 setShowWelcome(false);
-            }, 5000);  // Show message for 5 seconds
+            }, 4000);
         }
 
         if (localStorage.getItem("firstSignUp") === "true") {
@@ -48,7 +42,7 @@ const Home: React.FC = () => {
             localStorage.setItem("firstSignUp", "false");
             setTimeout(() => {
                 setHello(false);
-            }, 5000);  // Show message for 5 seconds
+            }, 5000);
         }
 
         const fetchEvents = async () => {
@@ -63,16 +57,15 @@ const Home: React.FC = () => {
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json(); // Get the error response body
+                    const errorData = await response.json();
                     console.error("Failed to fetch ticketData", errorData);
                     setError("Failed to fetch events.");
                     return;
                 }
 
-                const fetchedticketData = await response.json();
-                console.log("User successfully fetched ticket data:", fetchedticketData);
-                setTicketData(fetchedticketData);
-
+                const fetchedTicketData = await response.json();
+                console.log("User successfully fetched ticket data:", fetchedTicketData);
+                setTicketData(fetchedTicketData);
             } catch (error) {
                 console.error("An error occurred while fetching events:", error);
                 setError("An error occurred while fetching events.");
@@ -81,65 +74,18 @@ const Home: React.FC = () => {
             }
         };
 
-        const fetchWeatherData = async () => {
-            setLoadingWeather(true);
-            try {
-                const response = await fetch("/api/weatherData", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${AuthService.getToken()}`
-                    },
-                });
-    
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    console.error("Failed to fetch weatherData", errorData);
-                    setWeatherError("Failed to fetch weather data.");
-                    return;
-                }
-    
-                const fetchedWeatherData = await response.json();
-                console.log("Fetched Weather Data:", fetchedWeatherData);
-                setWeatherData(fetchedWeatherData);
-    
-            } catch (error) {
-                console.error("An error occurred while fetching weather data:", error);
-                setWeatherError("An error occurred while fetching weather data.");
-            } finally {
-                setLoadingWeather(false);
-            }
-        };
-
         fetchEvents();
-        fetchWeatherData();
     }, []);
-
-    // Once both event and weather data are fetched, show the content
-    useEffect(() => {
-        if (!loading && !loadingWeather) {
-            setShowContent(true);
-        }
-    }, [loading, loadingWeather]);
 
     return (
         <>
-            {/* Display Welcome messages */}
-            {showWelcome && (
-                <h1 className='welcome'>Welcome Back, {userName || "User"}!</h1>
-            )}
-            {showHello && (
-                <h1 className='welcome'>Welcome to Aline Events, {userName || "User"}!</h1>
-            )}
-
-            {weatherData && <WeatherSidebar weatherData={weatherData} />}
-
+            <WeatherSidebar />
             <Link to="/SavedEvents">
                 <Button className="saved-button" size="sm" variant="outline">Saved Events</Button>
             </Link>
             <PopoverRoot>
                 <PopoverTrigger asChild>
-                    <Button className="logout" size="sm" variant="outline" >
+                    <Button className="logout" size="sm" variant="outline">
                         Logout
                     </Button>
                 </PopoverTrigger>
@@ -151,23 +97,25 @@ const Home: React.FC = () => {
                             These prices are not guaranteed to persist.
                         </Text>
                         <Link to="../Login">
-                            <Button onClick={() => AuthService.logout()} className="logout" size="sm" variant="outline">
+                            <Button className="logout" size="sm" variant="outline">
                                 Yes, Log Me Out
                             </Button>
                         </Link>
                     </PopoverBody>
                 </PopoverContent>
             </PopoverRoot>
-            
-            <div className='user'>Signed in as: {userName || "User"}</div>
+            <p className='user'>Signed in as: {userName || "User"}</p>
             <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }} />
 
-            {showContent ? (
+            {showHello ? (
+                <h1 className='hello-message'>Hello, {userName || "New User"}! Welcome to Aline Events!</h1>
+
+            ) : (
                 <div className="cards-container">
                     {loading ? (
                         <VStack colorPalette="teal" marginTop="20px">
                             <Spinner color="colorPalette.600" />
-                            <Text color="colorPalette.600">Getting Events..</Text>
+                            <Text color="colorPalette.600">Getting Events...</Text>
                         </VStack>
                     ) : (
                         ticketData && ticketData.slice(0, 6).map((event, index) => (
@@ -175,11 +123,23 @@ const Home: React.FC = () => {
                         ))
                     )}
                 </div>
+            )}
+
+            {showWelcome ? (
+                <h1 className='welcome'>Welcome Back, {userName || "User"}!</h1>
             ) : (
-                <VStack colorPalette="teal" marginTop="20px">
-                    <Spinner color="colorPalette.600" />
-                    <Text color="colorPalette.600">Loading Content...</Text>
-                </VStack>
+                <div className="cards-container">
+                    {loading ? (
+                        <VStack colorPalette="teal" marginTop="20px">
+                            <Spinner color="colorPalette.600" />
+                            <Text color="colorPalette.600">Getting Events...</Text>
+                        </VStack>
+                    ) : (
+                        ticketData && ticketData.slice(0, 6).map((event, index) => (
+                            <EventCard key={index} event={event} events={ticketData} setEvents={setTicketData} />
+                        ))
+                    )}
+                </div>
             )}
         </>
     );
