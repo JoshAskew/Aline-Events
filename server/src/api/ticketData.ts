@@ -86,16 +86,7 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
     const {radius} = req.body;
 
 
-    console.log("req.body")
-
-    console.log(req.body)
-
-     console.log("My radius !!!!!!!!!!!!!!!!!!!!!!!!!")
-    
-    console.log(radius)
-    
-
-    try {
+     try {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" });
         }
@@ -119,8 +110,8 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
 
         let tickResponse;
 
-        if(user.radius){
-            tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${ticketmasterApiKey}&city=${cityName}&radius=user.radius`);
+        if(radius){
+            tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${ticketmasterApiKey}&city=${cityName}&radius=${radius}`);
         }else {
             console.log("asdfads")
             tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${ticketmasterApiKey}&city=${cityName}&radius=50`);
@@ -143,9 +134,6 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
             const eventUrl = event.url || '';
     return new Tickets(event.name, event.id, venueName, date, imageUrl, eventUrl);
         });
-
-
-       
 
         return res.status(201).json(simplifiedTicketData);
 

@@ -9,7 +9,7 @@ import Login from './pages/Login.tsx';
 import SavedEvents from './pages/SavedEvents.tsx';
 import SignUp from './pages/SignUp.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
-import React from 'react';
+//import React from 'react';
 import AboutAline from './pages/AboutAline.tsx'
 
 const router = createBrowserRouter([
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <LandingPage />
-      }, 
+      },
       {
         path: '/Home',
         element: <Home />
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/SavedEvents',
-        element: <SavedEvents token=''/>
+        element: <SavedEvents token='' />
       },
       {
         path: '/AboutAline',
@@ -50,10 +50,10 @@ const rootElement = document.getElementById("root");
 
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
-    <Provider> 
-    <RouterProvider router={router} />
-  </Provider>
-  </React.StrictMode>,
-  );  
+
+    <Provider>
+      <RouterProvider router={router} />
+    </Provider>
+
+  );
 }
