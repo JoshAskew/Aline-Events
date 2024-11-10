@@ -40,6 +40,25 @@ const WeatherSidebar = ({ weatherData }: any) => {
     );
   }
 
+  const getBoxShadowColor = (condition:string): string => {
+    switch (condition.toLowerCase()) {
+      case 'clear sky':
+        return '0 4px 10px rgba(255, 165, 0, 0.6)';
+      case 'light rain':
+        return '0 4px 10px rgba(79, 173, 255, 0.76)';
+      case 'scattered clouds':
+        return '0 4px 10px rgba(169, 169, 169, 0.6)';
+        case 'few clouds':
+        return '0 4px 10px rgba(169, 169, 169, 0.3)';
+      case 'snowy':
+        return '0 4px 10px rgba(255, 255, 255, 0.7)';
+      case 'broken clouds':
+      return '0 4px 10px rgba(162, 154, 106, 0.54)';
+      default:
+        return '0 4px 10px rgba(0, 0, 0, 0.54)';
+    }
+  };
+
   return (
     <DrawerRoot>
       <DrawerBackdrop />
@@ -62,7 +81,7 @@ const WeatherSidebar = ({ weatherData }: any) => {
         </DrawerHeader>
         <DrawerBody>
           <Box
-            bg="gray.800"
+            bg="grey.800"
             color="white"
             borderRadius="md"
             padding={6}
@@ -73,7 +92,7 @@ const WeatherSidebar = ({ weatherData }: any) => {
             </Heading>
             <VStack align="start">
               <Text fontSize="xl" fontWeight="bold">
-                Current Zip Code: <p className='zip'>{userZip}</p>
+                Current Zip Code: <span className='zip'>{userZip}</span>
               </Text>
               <Box borderBottom="1px solid white" width="100%" />
               
@@ -84,11 +103,11 @@ const WeatherSidebar = ({ weatherData }: any) => {
                   borderRadius="md"
                   padding={4}
                   marginBottom={4}
-                  boxShadow="md"
+                  boxShadow={getBoxShadowColor(dayData.condition)}
                 >
-                  <Text fontSize="lg" fontWeight="bold">Date: <p className='day'>{dayData.date}</p></Text>
-                  <Text>Temperature: <p className='temp'>{dayData.temperature} °F </p></Text>
-                  <Text>Conditions: <p className='temp'>{dayData.condition} </p></Text>
+                  <Text fontSize="lg" fontWeight="bold">Date: <span className='day'>{dayData.date}</span></Text>
+                  <Text>Temperature: <span className='temp'>{dayData.temperature} °F </span></Text>
+                  <Text>Conditions: <span className='temp'>{dayData.condition} </span></Text>
                   <img src={dayData.icon} alt={`weather icon for ${dayData.date}`} />
                 </Box>
               ))}

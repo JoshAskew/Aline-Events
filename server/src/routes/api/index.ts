@@ -6,7 +6,8 @@ import getWeatherData from '../../api/WeatherAPI.js';
 
 const router = Router();
 
-router.get('/ticketData', getTicketData);
+
+router.post('/ticketData', getTicketData);
 router.get('/weatherData', getWeatherData);
 
 router.use('/users', userRouter);
