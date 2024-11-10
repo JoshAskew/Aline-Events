@@ -65,3 +65,9 @@
 .back-button:hover {
     cursor: pointer;
 }
+
+.empty-event-container {
+    font-family: "Source Sans 3", serif;
+    color: teal;
+    text-align: center;
+}

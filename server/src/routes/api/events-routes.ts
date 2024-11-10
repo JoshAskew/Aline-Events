@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post('/save', saveEvent);
 router.get('/saved', getSavedEvents);
-router.delete('/delete/id', deleteEvent);
+router.delete('/delete/:id', deleteEvent);
 
 export default router;
