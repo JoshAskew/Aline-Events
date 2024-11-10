@@ -1,5 +1,5 @@
 import './AboutAline.css'
-import {} from "@chakra-ui/react"
+import {Box} from "@chakra-ui/react"
 import { useNavigate } from 'react-router-dom';
 
 
@@ -12,8 +12,16 @@ const AboutAline = () => {
   };
 
   return (
-
-  <section className="about-aline">
+    <Box bg="black" className="dark"
+    display="flex" 
+    flexDirection="column" 
+    alignItems="center" 
+    justifyContent="center" 
+    minHeight="100vh" 
+    bgGradient="linear(to-r, gray.50, teal.100)"
+    p={4}
+>
+  <section className="about-aline dark">
     <button className="back-button2" onClick={handleBack}>Back</button>
 
       <h1 className="header">About Aline</h1>
@@ -73,6 +81,7 @@ const AboutAline = () => {
       Feel free to get in touch with us directly for the latest updates and information about Aline.
       Together, let's achieve greatness!</p>
 </section>
+</Box>
   );
 };
   

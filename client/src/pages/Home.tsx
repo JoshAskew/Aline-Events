@@ -14,7 +14,7 @@ import {
     PopoverTrigger,
 } from "../components/ui/popover";
 import './Home.css';
-
+import { Box } from '@chakra-ui/react';
 
 
 import { Stack } from "@chakra-ui/react"
@@ -166,6 +166,11 @@ const Home: React.FC = () => {
 
     return (
         <>
+         <Box bg="black" className="dark"
+            minHeight="100vh" 
+            bgGradient="linear(to-r, gray.50, teal.100)"
+            p={4}
+        >
             {/* Display Welcome messages */}
             {showWelcome && (
                 <h1 className='welcome'>Welcome Back, {userName || "User"}!</h1>
@@ -263,6 +268,7 @@ const Home: React.FC = () => {
                     <Text color="colorPalette.600">Loading Content...</Text>
                 </VStack>
             )}
+            </Box>
         </>
     );
 };

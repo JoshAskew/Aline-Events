@@ -73,6 +73,11 @@ const SavedEvents: React.FC<Props> = () => {
   };
 
     return (
+      <Box bg="black" className="dark"
+      minHeight="100vh" 
+      bgGradient="linear(to-r, gray.50, teal.100)"
+      p={4}
+  >
         <div className='table-wrapper'>
         <button className="back-button" onClick={handleBack}>Back To Events</button>
         <Stack width="full" gap="5">
@@ -112,6 +117,7 @@ const SavedEvents: React.FC<Props> = () => {
         )}
       </Stack>
         </div>
+        </Box>
       );
 
 };
