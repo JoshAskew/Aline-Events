@@ -16,7 +16,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   public userName!: string;
   public password!: string;
   public zipCode!: string;
-  public radius!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

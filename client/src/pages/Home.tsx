@@ -29,8 +29,12 @@ const Home: React.FC = () => {
     const [showWelcome, setShowWelcome] = useState<boolean>(false);  // For returning user login
     const [showContent, setShowContent] = useState<boolean>(false);  // To control content visibility
 
+
     // Fetch Ticket Data
     useEffect(() => {
+
+        
+
         const userProfile = AuthService.getProfile();
         if (userProfile) {
             setUserName(userProfile.userName);
@@ -61,6 +65,7 @@ const Home: React.FC = () => {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${AuthService.getToken()}`
                     },
+                  //  body: JSON.stringify(radius),
                 });
 
                 if (!response.ok) {
@@ -113,6 +118,36 @@ const Home: React.FC = () => {
             }
         };
 
+
+        const postRadius = async () => {
+
+            
+            try {
+                const response = await fetch("/api/weatherData", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify("50"),
+                });
+    
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("Failed to post radius", errorData);
+                    setWeatherError("Failed to post radius");
+                    return;
+                }
+    
+            } catch (error) {
+                console.error("An error occurred while posting radius:", error);
+                setWeatherError("An error occurred while posting radius.");
+            } finally {
+                setLoadingWeather(false);
+            }
+        };
+
+
+        postRadius();
         fetchEvents();
         fetchWeatherData();
     }, []);

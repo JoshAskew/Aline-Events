@@ -83,6 +83,18 @@ export class Tickets {
 
 const getTicketData = async (req: Request, res: Response): Promise<any | null> => {
     
+    const {radius} = req.body;
+
+
+    console.log("req.body")
+
+    console.log(req.body)
+
+     console.log("My radius !!!!!!!!!!!!!!!!!!!!!!!!!")
+    
+    console.log(radius)
+    
+
     try {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" });
