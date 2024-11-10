@@ -65,6 +65,7 @@ export const deleteEvent = async (id: number): Promise<ApiMessage> => {
         if (!response.ok) {
             throw new Error('Invalid API response');
         }
+        
         return data;
     } catch (error) {
         console.log('Error deleting event:', error);

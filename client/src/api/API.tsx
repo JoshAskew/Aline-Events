@@ -4,15 +4,15 @@ const searchTicketMaster = async (): Promise<Event[]> => {
 
   try {
   
-    
+
     //console.log(import.meta.env);
 
 
     //https://app.ticketmaster.com/discovery/v2/events.json?city=minneapolis&source=universe&countryCode=US&apikey=${import.meta.env.VITE_GITHUB_TOKEN}
 
     const response = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?city=minneapolis&source=universe&countryCode=US&apikey=${import.meta.env.VITE_GITHUB_TOKEN}`,);
-    
-    
+
+
     const data = await response.json();
 
     console.log('data:');
