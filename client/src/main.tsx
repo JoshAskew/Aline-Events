@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/SavedEvents',
-        element: <SavedEvents />
+        element: <SavedEvents token=''/>
       },
       {
         path: '/AboutAline',
