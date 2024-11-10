@@ -58,6 +58,7 @@ const SignUp = () => {
       console.log("User successfully signed up:", result);
 
       localStorage.setItem("token", result.token);
+      localStorage.setItem("firstSignUp", "true");
 
       navigate('/home');
 

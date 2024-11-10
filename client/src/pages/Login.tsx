@@ -31,6 +31,7 @@ const Login = () => {
       const data = await login(loginData);
       setErrorMessage('');
       Auth.login(data.token);
+      localStorage.setItem("firstLogin", "true");
       console.log(data.token);
       //console.log(token);
     } catch (err) {
