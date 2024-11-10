@@ -105,8 +105,17 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
         const geoData = await geoResponse.json() as IGeoData[];
         const cityName = geoData[0].display_name.split(',')[0];
 
+        let tickResponse;
+
+        if(user.radius){
+            tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${ticketmasterApiKey}&city=${cityName}&radius=user.radius`);
+        }else {
+            console.log("asdfads")
+            tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${ticketmasterApiKey}&city=${cityName}&radius=50`);
+        }
+
         // Fetch events from Ticketmaster API based on the city name
-        const tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${ticketmasterApiKey}&city=${cityName}`);
+        
         if (!tickResponse.ok) {
             throw new Error('Invalid API response from Ticketmaster');
         }
@@ -116,14 +125,15 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
 
         // Map over the events and create simplified ticket data
         const simplifiedTicketData = eventsData.map(event => {
-            console.log(event); 
             const venueName = event._embedded?.venues?.[0]?.name || 'Unknown Venue';
             const date = event.dates?.start?.localDate || "Unknown Dates";
             const imageUrl = event.images?.[0]?.url || '';  // Get the first image URL if available
             const eventUrl = event.url || '';
-            console.log("Event URL:", event.url);
     return new Tickets(event.name, event.id, venueName, date, imageUrl, eventUrl);
         });
+
+
+       
 
         return res.status(201).json(simplifiedTicketData);
 
