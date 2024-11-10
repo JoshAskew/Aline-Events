@@ -6,9 +6,9 @@ function App() {
   return (
     <div className='container'>
 
-      <main>
+      <main className='dark'>
       
-        <Outlet />
+        <Outlet  />
    
       </main>
 
