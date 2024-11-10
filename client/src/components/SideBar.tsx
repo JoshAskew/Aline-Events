@@ -20,7 +20,6 @@ const WeatherSidebar = ({ weatherData }: any) => {
 
   const buttonVariant = useBreakpointValue({ base: "dropdown", md: "outline" });
 
- 
   const [_error, _setError] = useState<string | null>(null);
   const [_loading, _setLoading] = useState<boolean>(true);
   const [userZip, setUserZip] = useState<string | null>(null);
@@ -47,7 +46,6 @@ const WeatherSidebar = ({ weatherData }: any) => {
       <DrawerTrigger asChild>
         <Button
           className="check-weather"
-         
           size="sm"
           position="absolute"
           right={0}
@@ -63,7 +61,6 @@ const WeatherSidebar = ({ weatherData }: any) => {
           <DrawerTitle>Weather Information</DrawerTitle>
         </DrawerHeader>
         <DrawerBody>
-          
           <Box
             bg="gray.800"
             color="white"
@@ -79,16 +76,23 @@ const WeatherSidebar = ({ weatherData }: any) => {
                 Current Zip Code: <p className='zip'>{userZip}</p>
               </Text>
               <Box borderBottom="1px solid white" width="100%" />
-              <Text fontSize="xl" fontWeight="bold">Day: <p className='day'>{weatherData[0].date}</p></Text>
-              <Text>Temperature: <p className='temp'>{weatherData[0].temperature} °F </p></Text>
-              <Text fontSize="xl" fontWeight="bold">Day: <p className='day'>{weatherData[1].date}</p></Text>
-              <Text>Temperature: <p className='temp'>{weatherData[1].temperature} °F </p></Text>
-              <Text fontSize="xl" fontWeight="bold">Day: <p className='day'>{weatherData[2].date}</p></Text>
-              <Text>Temperature: <p className='temp'>{weatherData[2].temperature} °F </p></Text>
-              <Text fontSize="xl" fontWeight="bold">Day: <p className='day'>{weatherData[3].date}</p></Text>
-              <Text>Temperature: <p className='temp'>{weatherData[3].temperature} °F </p></Text>
-              <Text fontSize="xl" fontWeight="bold">Day: <p className='day'>{weatherData[4].date}</p></Text>
-              <Text>Temperature: <p className='temp'>{weatherData[4].temperature} °F </p></Text>
+              
+              {weatherData.map((dayData: any, index: number) => (
+                <Box
+                  key={index}
+                  bg="gray.700"
+                  borderRadius="md"
+                  padding={4}
+                  marginBottom={4}
+                  boxShadow="md"
+                >
+                  <Text fontSize="lg" fontWeight="bold">Date: <p className='day'>{dayData.date}</p></Text>
+                  <Text>Temperature: <p className='temp'>{dayData.temperature} °F </p></Text>
+                  <Text>Conditions: <p className='temp'>{dayData.condition} </p></Text>
+                  <img src={dayData.icon} alt={`weather icon for ${dayData.date}`} />
+                </Box>
+              ))}
+
               <Box borderBottom="1px solid white" width="100%" />
               <Text fontSize="sm" color="gray.300" mt={2}>
                 Updated: Just now
