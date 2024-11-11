@@ -46,7 +46,7 @@ const Home: React.FC = () => {
     // Fetch Ticket Data
     useEffect(() => {
 
-        
+
 
         const userProfile = AuthService.getProfile();
         if (userProfile) {
@@ -78,7 +78,7 @@ const Home: React.FC = () => {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${AuthService.getToken()}`
                     },
-                    body: JSON.stringify({radius}),
+                    body: JSON.stringify({ radius }),
                 });
 
                 if (!response.ok) {
@@ -110,17 +110,17 @@ const Home: React.FC = () => {
                         "Authorization": `Bearer ${AuthService.getToken()}`
                     },
                 });
-    
+
                 if (!response.ok) {
                     const errorData = await response.json();
                     console.error("Failed to fetch weatherData", errorData);
                     setWeatherError("Failed to fetch weather data.");
                     return;
                 }
-    
+
                 const fetchedWeatherData = await response.json();
                 setWeatherData(fetchedWeatherData);
-    
+
             } catch (error) {
                 console.error("An error occurred while fetching weather data:", error);
                 setWeatherError("An error occurred while fetching weather data.");
@@ -144,19 +144,19 @@ const Home: React.FC = () => {
 
     const formSchema = z.object({
         value: z.array(
-          z
-            .number({ message: "Radius is required" })
-            .min(50, { message: "Radius must be greater than 50" }),
+            z
+                .number({ message: "Radius is required" })
+                .min(50, { message: "Radius must be greater than 50" }),
         ),
-      })
-      
-      type FormValues = z.infer<typeof formSchema>
+    })
+
+    type FormValues = z.infer<typeof formSchema>
 
     const {
         control,
         handleSubmit,
         formState: { errors },
-      } = useForm<FormValues>({
+    } = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: { value: [radius] },
       })
@@ -165,135 +165,135 @@ const Home: React.FC = () => {
      
     return (
         <>
-         <Box bg="black" className="dark"
-            minHeight="100vh" 
-            bgGradient="linear(to-r, gray.50, teal.100)"
-            p={4}
-        >
-            {/* Display Welcome messages */}
-            {showWelcome && (
-                <h1 className='welcome'>Welcome Back, {userName || "User"}!</h1>
-            )}
-            {showHello && (
-                <h1 className='welcome'>Welcome to Aline Events, {userName || "User"}!</h1>
-            )}
-
-            {weatherData && <WeatherSidebar weatherData={weatherData} />}
-
-            <Link to="/SavedEvents">
-                <Button className="saved-button" size="sm" variant="outline">Saved Events</Button>
-            </Link>
-            <PopoverRoot>
-                <PopoverTrigger asChild>
-                    <Button className="logout" size="sm" variant="outline" >
-                        Logout
-                    </Button>
-                </PopoverTrigger>
-                <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverBody>
-                        <PopoverTitle fontWeight="bold">Are you sure you want to logout?</PopoverTitle>
-                        <Text my="4">
-                            These prices are not guaranteed to persist.
-                        </Text>
-                        <Link to="../Login">
-                            <Button onClick={() => AuthService.logout()} className="logout" size="sm" variant="outline">
-                                Yes, Log Me Out
-                            </Button>
-                        </Link>
-                    </PopoverBody>
-                </PopoverContent>
-            </PopoverRoot>
-            
-            <div className='user'>Signed in as: {userName || "User"}</div>
-
-            <Collapsible.Root>
-    <Collapsible.Trigger className='collapse' paddingY="3">Click To Edit Location Details</Collapsible.Trigger>
-    <Collapsible.Content>
-      <Box padding="4" borderWidth="1px">
-      <Editable.Root defaultValue="Edit Zip Code">
-      <Editable.Preview />
-      <Editable.Input />
-      <Editable.Control>
-        <Editable.EditTrigger asChild>
-          <IconButton variant="ghost" size="xs">
-            <LuPencilLine />
-          </IconButton>
-        </Editable.EditTrigger>
-        <Editable.CancelTrigger asChild>
-          <IconButton variant="outline" size="xs">
-            <LuX />
-          </IconButton>
-        </Editable.CancelTrigger>
-        <Editable.SubmitTrigger asChild>
-          <IconButton variant="outline" size="xs">
-            <LuCheck />
-          </IconButton>
-        </Editable.SubmitTrigger>
-      </Editable.Control>
-    </Editable.Root>
-
-            <form onSubmit={onSubmit}>
-      <Stack className='slider' align="flex-start" gap="4" maxW="300px">
-        <Controller
-          name="value"
-          control={control}
-          render={({ field }) => (
-            <Field
-              label={`Search Radius(mi): ${field.value[0]}`}
-              invalid={!!errors.value?.length}
-              errorText={errors.value?.[0]?.message}
+            <Box bg="black" className="dark"
+                minHeight="100vh"
+                bgGradient="linear(to-r, gray.50, teal.100)"
+                p={4}
             >
-              <Slider
-                width="full"
-                min={50}
-                max={500}
-                colorPalette= 'teal'
-                step= {25}
-                onFocusChange={({ focusedIndex }) => {
-                  if (focusedIndex !== -1) return
-                  field.onBlur()
-                }}
-                name={field.name}
-                value={field.value}
-                onValueChange={({ value }) => {
-                  field.onChange(value)
-                }}
-              />
-            </Field>
-          )}
-        />
+                {/* Display Welcome messages */}
+                {showWelcome && (
+                    <h1 className='welcome'>Welcome Back, {userName || "User"}!</h1>
+                )}
+                {showHello && (
+                    <h1 className='welcome'>Welcome to Aline Events, {userName || "User"}!</h1>
+                )}
 
-        <Button className= "radius-button" size="sm" type="submit">
-          Select Radius
-        </Button>
-      </Stack>
-    </form>
-      </Box>
-    </Collapsible.Content>
-  </Collapsible.Root>
+                {weatherData && <WeatherSidebar weatherData={weatherData} />}
 
-            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }} />
+                <Link to="/SavedEvents">
+                    <Button className="saved-button" size="sm" variant="outline">Saved Events</Button>
+                </Link>
+                <PopoverRoot>
+                    <PopoverTrigger asChild>
+                        <Button className="logout" size="sm" variant="outline" >
+                            Logout
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverBody>
+                            <PopoverTitle fontWeight="bold">Are you sure you want to logout?</PopoverTitle>
+                            <Text my="4">
+                                These prices are not guaranteed to persist.
+                            </Text>
+                            <Link to="../Login">
+                                <Button onClick={() => AuthService.logout()} className="logout" size="sm" variant="outline">
+                                    Yes, Log Me Out
+                                </Button>
+                            </Link>
+                        </PopoverBody>
+                    </PopoverContent>
+                </PopoverRoot>
 
-            {showContent ? (
-                <div className="cards-container">
-                    {loading ? (
-                        <VStack colorPalette="teal" marginTop="20px">
-                            <Spinner color="colorPalette.600" />
-                            <Text color="colorPalette.600">Getting Events..</Text>
-                        </VStack>
-                    ) : (
-                        ticketData && ticketData.slice(0, 6).map((event, index) => (
-                            <EventCard key={index} event={event} events={ticketData} setEvents={setTicketData} />
-                        ))
-                    )}
-                </div>
-            ) : (
-                <VStack colorPalette="teal" marginTop="20px">
-                    <Spinner color="colorPalette.600" />
-                    <Text color="colorPalette.600">Loading Content...</Text>
-                </VStack>
-            )}
+                <div className='user'>Signed in as: {userName || "User"}</div>
+
+                <Collapsible.Root>
+                    <Collapsible.Trigger className='collapse' paddingY="3">Click To Edit Location Details</Collapsible.Trigger>
+                    <Collapsible.Content>
+                        <Box padding="4" borderWidth="1px">
+                            <Editable.Root defaultValue="Edit Zip Code">
+                                <Editable.Preview />
+                                <Editable.Input />
+                                <Editable.Control>
+                                    <Editable.EditTrigger asChild>
+                                        <IconButton variant="ghost" size="xs">
+                                            <LuPencilLine />
+                                        </IconButton>
+                                    </Editable.EditTrigger>
+                                    <Editable.CancelTrigger asChild>
+                                        <IconButton variant="outline" size="xs">
+                                            <LuX />
+                                        </IconButton>
+                                    </Editable.CancelTrigger>
+                                    <Editable.SubmitTrigger asChild>
+                                        <IconButton variant="outline" size="xs">
+                                            <LuCheck />
+                                        </IconButton>
+                                    </Editable.SubmitTrigger>
+                                </Editable.Control>
+                            </Editable.Root>
+
+                            <form onSubmit={onSubmit}>
+                                <Stack className='slider' align="flex-start" gap="4" maxW="300px">
+                                    <Controller
+                                        name="value"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Field
+                                                label={`Search Radius(mi): ${field.value[0]}`}
+                                                invalid={!!errors.value?.length}
+                                                errorText={errors.value?.[0]?.message}
+                                            >
+                                                <Slider
+                                                    width="full"
+                                                    min={50}
+                                                    max={500}
+                                                    colorPalette='teal'
+                                                    step={25}
+                                                    onFocusChange={({ focusedIndex }) => {
+                                                        if (focusedIndex !== -1) return
+                                                        field.onBlur()
+                                                    }}
+                                                    name={field.name}
+                                                    value={field.value}
+                                                    onValueChange={({ value }) => {
+                                                        field.onChange(value)
+                                                    }}
+                                                />
+                                            </Field>
+                                        )}
+                                    />
+
+                                    <Button className="radius-button" size="sm" type="submit">
+                                        Select Radius
+                                    </Button>
+                                </Stack>
+                            </form>
+                        </Box>
+                    </Collapsible.Content>
+                </Collapsible.Root>
+
+                <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }} />
+
+                {showContent ? (
+                    <div className="cards-container">
+                        {loading ? (
+                            <VStack colorPalette="teal" marginTop="20px">
+                                <Spinner color="colorPalette.600" />
+                                <Text color="colorPalette.600">Getting Events..</Text>
+                            </VStack>
+                        ) : (
+                            ticketData && ticketData.slice(0, 6).map((event, index) => (
+                                <EventCard key={index} event={event} events={ticketData} setEvents={setTicketData} />
+                            ))
+                        )}
+                    </div>
+                ) : (
+                    <VStack colorPalette="teal" marginTop="20px">
+                        <Spinner color="colorPalette.600" />
+                        <Text color="colorPalette.600">Loading Content...</Text>
+                    </VStack>
+                )}
             </Box>
         </>
     );

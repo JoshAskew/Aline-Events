@@ -147,8 +147,8 @@
 
     /* Adjust the image size of the logo */
     .aline-logo {
-        height: 100px; /* Reduce lgoo size
-        margin-top: 20px; /* Add space above the logo */
+        height: 100px; 
+        margin-top: 20px; 
     }
 
     
@@ -160,5 +160,10 @@
     .radius-button {
         font-size: 14px; /* button text smaller */
         padding: 10px 20px; /* Reduce padding */
+    }
+
+    .user {
+        display: block;
+        margin-left: 15px;
     }
 }
