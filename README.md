@@ -3,6 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
+Aline is an application that allows a user to search for events in a given area. The user can save specific events for future reference, check ticket availability and pricing, and chose to skip events.
 
 ## Table of Contents
 * [Installation](#installation)
@@ -25,11 +26,34 @@
     cd your-repo-name
 3. **Install Dependencies**: 
     Make sure you have Node.js installed on your machine. If you haven't installed it yet, you can download it [here](https://nodejs.org/en).
+   **These are the current dependencies for reference**:<br>
+ "devDependencies": {<br>
+    "@types/cors": "^2.8.17",<br>
+    "@types/pg": "^8.11.10",<br>
+    "@types/react": "^18.3.12",<br>
+    "concurrently": "^8.2.2",<br>
+    "nodemon": "^3.1.3",<br>
+    "wait-on": "^7.2.0"<br>
+  },<br>
+  "dependencies": {<br>
+    "@chakra-ui/react": "^3.1.1",<br>
+    "@emotion/react": "^11.13.3",<br>
+    "@emotion/styled": "^11.13.0",<br>
+    "@hookform/resolvers": "^3.9.1",<br>
+    "cors": "^2.8.5",<br>
+    "express": "^4.21.1",<br>
+    "framer-motion": "^11.11.11",<br>
+    "next-themes": "^0.4.3",<br>
+    "ngeohash": "^0.6.3",<br>
+    "node-fetch": "^3.3.2",<br>
+    "react-icons": "^5.3.0",<br>
+    "zod": "^3.23.8"<br>
+  }<br>
 
     Then, install the required packages using npm:
     ```bash
     npm install
-4. **Run the Application**: 
+5. **Run the Application**: 
     You can now run the application by executing the following command:
     ```bash
     npm run start:dev
@@ -84,11 +108,13 @@ If you have any questions reguarding this application, feel free to reach out to
 
 ## Credits and Acknnowledgements
 - **University of Minnesota** — for providing foundational resources, guidance, and support throughout the development of this project.
-- **Node.js** — for its powerful runtime environment that allowed for efficient and scalable JavaScript development on the server side.
+- **[Node.js](https://nodejs.org/en)** — for its powerful runtime environment that allowed for efficient and scalable JavaScript development on the server side.
 - **Vite** — for its fast and flexible build tool, which greatly enhanced our development workflow with rapid bundling and efficient hot reloading.
-- **OpenWeather API** — for supplying real-time and forecasted weather data, enriching the application’s event insights with relevant local weather conditions.
-- **Ticketmaster API** — for providing detailed event data, enabling the discovery and display of live entertainment options within the app.
+- **[OpenWeather API](https://openweathermap.org/api)** — for supplying real-time and forecasted weather data, enriching the application’s event insights with relevant local weather conditions.
+- **[Ticketmaster API](https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/)** — for providing detailed event data, enabling the discovery and display of live entertainment options within the app.
+- **[LocationIQ API](https://locationiq.com/)**- - for allowing us to take a zip code and convert it to Lat and Lon.
 - **Render** — for a seamless and reliable deployment platform, making it easy to host, manage, and scale the application.
 - **Supabase** — for its scalable and developer-friendly database solution, supporting robust data storage and retrieval.
+- **[Chakra UI](https://www.chakra-ui.com/docs/components/concepts/overview)** - for its in depth and comprehensive component library.
 
 Thanks!
