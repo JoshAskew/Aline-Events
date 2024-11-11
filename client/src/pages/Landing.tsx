@@ -6,7 +6,7 @@ import "./Landing.css";
 const LandingPage = () => {
     return (
         <div className="landing-wrapper">
-        <Box 
+        <Box bg="black" className="dark"
             display="flex" 
             flexDirection="column" 
             alignItems="center" 

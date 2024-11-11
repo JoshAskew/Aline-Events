@@ -4,6 +4,7 @@ import './SignUp.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AlineTeal from "../images/alineteal.webp";
+import { Box } from "@chakra-ui/react";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -76,6 +77,15 @@ const SignUp = () => {
 
   return (
     <>
+     <Box bg="black" className="dark"
+            display="flex" 
+            flexDirection="column" 
+            alignItems="center" 
+            justifyContent="center" 
+            minHeight="100vh" 
+            bgGradient="linear(to-r, gray.50, teal.100)"
+            p={4}
+        >
       <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }} />
       <h1 className="signup-header">Sign Up and Never Miss Out</h1>
       <div className="form-container">
@@ -120,6 +130,7 @@ const SignUp = () => {
           </Fieldset.Root>
         </form>
       </div>
+      </Box>
     </>
   );
 };
