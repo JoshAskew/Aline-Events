@@ -40,8 +40,6 @@ export const createUser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    console.log("signup process.env.JWT_SECRET_KEY")
-    console.log(process.env.JWT_SECRET_KEY)
 
    //User.create calls model/user -> before create hook and User creates entry into database 
     const user = await User.create(req.body);
