@@ -27,11 +27,11 @@ const WeatherSidebar = ({ weatherData }: any) => {
   useEffect(() => {
     const userProfile = AuthService.getProfile();
     if (userProfile) {
-        setUserZip(userProfile.zipCode);
+      setUserZip(userProfile.zipCode);
     }
 
   }, [weatherData])
-  
+
   if (!weatherData || weatherData.length === 0) {
     return (
       <Box>
@@ -40,24 +40,30 @@ const WeatherSidebar = ({ weatherData }: any) => {
     );
   }
 
-  const getBoxShadowColor = (condition:string): string => {
+  const getBoxShadowColor = (condition: string): string => {
     switch (condition.toLowerCase()) {
       case 'clear sky':
         return '0 4px 10px rgba(255, 165, 0, 0.6)';
       case 'light rain':
         return '0 4px 10px rgba(79, 173, 255, 0.76)';
-        case 'rain':
+      case 'moderate rain':
+        return '0 4px 10px rgba(35, 35, 232, 1)';
+      case 'rain':
         return '0 4px 10px rgba(0, 19, 255, 1)';
       case 'overcast clouds':
         return '0 4px 10px rgba(131, 131, 131, 0.93)';
-        case 'scattered clouds':
+      case 'scattered clouds':
         return '0 4px 10px rgba(169, 169, 169, 0.6)';
-        case 'few clouds':
+      case 'few clouds':
         return '0 4px 10px rgba(169, 169, 169, 0.3)';
-      case 'snowy':
+      case 'light snow':
+        return '0 4px 10px rgba(255, 255, 255, 0.9)';
+      case 'snow':
         return '0 4px 10px rgba(255, 255, 255, 0.7)';
+      case 'heavy snowy':
+        return '0 4px 10px rgba(0, 0, 255, 1)';
       case 'broken clouds':
-      return '0 4px 10px rgba(162, 154, 106, 0.54)';
+        return '0 4px 10px rgba(162, 154, 106, 0.54)';
       default:
         return '0 4px 10px rgba(0, 0, 0, 0.54)';
     }
@@ -90,6 +96,7 @@ const WeatherSidebar = ({ weatherData }: any) => {
             borderRadius="md"
             padding={6}
             boxShadow="lg"
+
           >
             <Heading size="lg" mb={4} textAlign="center">
               Forecasted Weather
@@ -99,7 +106,7 @@ const WeatherSidebar = ({ weatherData }: any) => {
                 Current Zip Code: <span className='zip'>{userZip}</span>
               </Text>
               <Box borderBottom="1px solid white" width="100%" />
-              
+
               {weatherData.map((dayData: any, index: number) => (
                 <Box
                   key={index}
@@ -108,6 +115,7 @@ const WeatherSidebar = ({ weatherData }: any) => {
                   padding={4}
                   marginBottom={4}
                   boxShadow={getBoxShadowColor(dayData.condition)}
+                  minWidth={'193px'}
                 >
                   <Text fontSize="lg" fontWeight="bold">Date: <span className='day'>{dayData.date}</span></Text>
                   <Text>Temperature: <span className='temp'>{dayData.temperature} °F </span></Text>

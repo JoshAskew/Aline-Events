@@ -2,8 +2,10 @@ import fetch from 'node-fetch';
 import { Request, Response } from 'express';
 import { User } from '../models/user.js';
 
-const locationIQApiKey = "pk.914316b72b141711118acc9cdb36f8c1";
-const ticketmasterApiKey = "qVrcMA3jPZk9BICBALGl4ZZ9ltr0zQEe";
+import dotenv from 'dotenv';
+dotenv.config();
+
+var geohash = require('ngeohash');
 
 interface JwtPayload {
     id: number;
@@ -15,8 +17,8 @@ interface IGeoData {
     place_id: number,
     licence: string,
     boundingbox: string[],
-    lat: string,
-    lon: string,
+    lat: number,
+    lon: number,
     display_name: string,
     class: string,
     type: string,
@@ -29,9 +31,9 @@ interface IEventDate {
     localTime: string;
     dateTime: string;
     status: {
-      code: string;
+        code: string;
     };
-  }
+}
 
 interface ITicketData {
     name: string,
@@ -58,7 +60,7 @@ interface ITicketImage {
 }
 
 interface ITicketDates {
-    start?:{
+    start?: {
         localDate: string;
     }
 }
@@ -69,24 +71,23 @@ export class Tickets {
     venue: string;
     date: string;
     imageUrl: string;
-    url:string;
+    url: string;
 
-    constructor(name: string, id: string, venue: string, date:string, imageUrl:string, url:string) {
+    constructor(name: string, id: string, venue: string, date: string, imageUrl: string, url: string) {
         this.name = name;
         this.id = id;
         this.venue = venue;
-        this.date =date;
-        this.imageUrl=imageUrl;
-        this.url=url;
+        this.date = date;
+        this.imageUrl = imageUrl;
+        this.url = url;
     }
 }
 
 const getTicketData = async (req: Request, res: Response): Promise<any | null> => {
-    
-    const {radius} = req.body;
 
+    const { radius } = req.body;
 
-     try {
+    try {
         if (!req.user) {
             return res.status(401).json({ message: "Unauthorized" });
         }
@@ -100,28 +101,21 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
         }
 
         // Fetch geolocation data based on the user's zip code
-        const geoResponse = await fetch(`https://us1.locationiq.com/v1/search.php?key=${locationIQApiKey}&postalcode=${user?.zipCode}&format=json&countrycodes=us`);
+        const geoResponse = await fetch(`https://us1.locationiq.com/v1/search.php?key=${process.env.locationIQApiKey}&postalcode=${user.zipCode}&format=json&countrycodes=us`);
+
         if (!geoResponse.ok) {
             throw new Error('Invalid API response from LocationIQ');
         }
 
         const geoData = await geoResponse.json() as IGeoData[];
-        const cityName = geoData[0].display_name.split(',')[0];
 
-        let tickResponse;
+        const geoHash = geohash.encode(geoData[0].lat, geoData[0].lon);
 
-        if(radius){
-            tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${ticketmasterApiKey}&city=${cityName}&radius=${radius}`);
-        }else {
-            console.log("asdfads")
-            tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${ticketmasterApiKey}&city=${cityName}&radius=50`);
-        }
+        const tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${process.env.ticketmasterApiKey}&geoPoint=${geoHash}&radius=${radius}&unit=miles`)
 
-        // Fetch events from Ticketmaster API based on the city name
-        
         if (!tickResponse.ok) {
             throw new Error('Invalid API response from Ticketmaster');
-        }
+        } 
 
         const ticketData: any = await tickResponse.json();
         const eventsData = ticketData['_embedded'].events as ITicketData[];
@@ -132,7 +126,7 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
             const date = event.dates?.start?.localDate || "Unknown Dates";
             const imageUrl = event.images?.[0]?.url || '';  // Get the first image URL if available
             const eventUrl = event.url || '';
-    return new Tickets(event.name, event.id, venueName, date, imageUrl, eventUrl);
+            return new Tickets(event.name, event.id, venueName, date, imageUrl, eventUrl);
         });
 
         return res.status(201).json(simplifiedTicketData);
@@ -144,3 +138,5 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
 };
 
 export default getTicketData;
+
+

@@ -85,7 +85,6 @@
 
 .slider {
     padding: 40px;
-    padding-top: 80px;
     height: 300px;
     position: relative;
 }
@@ -94,6 +93,44 @@
     background-color: teal;
     color: white;
 }
+
+.css-1jq15tx {
+    margin-left:35px;
+    display: block;
+    padding-top: 10px;
+}
+
+.css-ddg38 {
+    padding: 40px 40px;
+}
+
+.collapse {
+    margin: 40px;
+    cursor: pointer;
+    color: teal;
+    border-radius: 20px;
+}
+
+.collapse:hover {
+   color: rgb(174, 174, 47);
+}
+
+.css-1mckma8 {
+    border-width: 1px;
+    max-width: 300px;
+    max-height: 300px;
+    position: absolute;
+    z-index: 1;
+    background-color: rgb(22, 22, 22);
+    border-radius: 10px;
+    font-family:"Source Sans 3", serif; ;
+}
+
+.css-z8obd9 {
+    max-width: 200px;
+    margin-bottom: 10px;
+}
+
 
 /* Ensure that the slider and logo don't overlap on small screens */
 @media (max-width: 480px) {
@@ -110,8 +147,8 @@
 
     /* Adjust the image size of the logo */
     .aline-logo {
-        height: 100px; /* Reduce lgoo size
-        margin-top: 20px; /* Add space above the logo */
+        height: 100px; 
+        margin-top: 20px; 
     }
 
     
@@ -123,5 +160,10 @@
     .radius-button {
         font-size: 14px; /* button text smaller */
         padding: 10px 20px; /* Reduce padding */
+    }
+
+    .user {
+        display: block;
+        margin-left: 15px;
     }
 }
