@@ -37,6 +37,18 @@ const SignUp = () => {
       return;
     }
 
+    const isValidPass = /^.{8,}$/.test(user.password);
+    if (!isValidPass) {
+    setErrorMessage('Password must be 8 characters');
+    return;
+  }
+
+    const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(user.zipCode);
+    if (!isValidZip) {
+    setErrorMessage('Please enter a valid zip code.');
+    return;
+  }
+
     setErrorMessage(''); // Reset error message if all validations pass
 
     try {

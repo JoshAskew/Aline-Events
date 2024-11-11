@@ -2,15 +2,12 @@ import React from 'react';
 import { Card, Image, Text, Button } from "@chakra-ui/react";
 import { Event } from '../interfaces/Events.tsx';
 import {saveEvent} from '../api/eventAPI.tsx';
-import Aline from '../images/aline.webp';
+import Aline from '../images/alineteal.webp';
 
 interface EventCardProps {
   event: Event;
   events: Event[];
-  //Dispatch in lieu of useState
   setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
-  //addToEventList: () => void | undefined;  - from initial code
-  //removeFromEvents: () => void | undefined; - from initial code
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event, events, setEvents }) => {

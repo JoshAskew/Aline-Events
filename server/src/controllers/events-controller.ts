@@ -90,23 +90,3 @@ export const deleteEvent = async (req: Request, res: Response) => {
   }
 
 };
-
-// //Delete event from user profile
-// export const deleteEvent = async (req: Request, res: Response) => {
-//   const { userId, eventId } = req.body;
-
-//   try {
-//     const user = await User.findByPk(userId);
-//     const event = await Event.findByPk(eventId);
-
-//     if (!user || !event) {
-//       res.status(404).json({ message: 'User or event not found' });
-//       return;
-//     }
-
-//     await UserEvent.destroy({ where: { userId, eventId } });
-//     res.json({ message: 'Event deleted from user profile' });
-//   } catch (error: any) {
-//     res.status(500).json({ message: error.message });
-//   }
-// }

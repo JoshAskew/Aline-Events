@@ -77,7 +77,7 @@ const AboutAline = () => {
 </div>
 
 <h2>Get in Touch</h2>
-    <p className="p1">We're here to provide any <a className='contact' href=''>assistance or support</a> you may need.
+    <p className="p1">We're here to provide any <a className='contact' href='https://github.com/JoshAskew/Aline-Events/blob/main/README.md' target='_blank'>assistance or support</a> you may need.
       Feel free to get in touch with us directly for the latest updates and information about Aline.
       Together, let's achieve greatness!</p>
 </section>
