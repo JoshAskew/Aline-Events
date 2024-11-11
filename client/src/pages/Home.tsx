@@ -15,7 +15,7 @@ import {
 } from "../components/ui/popover";
 import './Home.css';
 import { Box } from '@chakra-ui/react';
-
+import { Collapsible } from "@chakra-ui/react"
 
 import { Stack } from "@chakra-ui/react"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -23,6 +23,9 @@ import { Field } from "../components/ui/field"
 import { Slider } from "../components/ui/slider"
 import { Controller, useForm } from "react-hook-form"
 import { z } from "zod"
+import { Editable, IconButton } from "@chakra-ui/react"
+import { LuCheck, LuPencilLine, LuX } from "react-icons/lu"
+
 
 
 const Home: React.FC = () => {
@@ -208,6 +211,32 @@ const Home: React.FC = () => {
             
             <div className='user'>Signed in as: {userName || "User"}</div>
 
+            <Collapsible.Root>
+    <Collapsible.Trigger className='collapse' paddingY="3">Click To Edit Location Details</Collapsible.Trigger>
+    <Collapsible.Content>
+      <Box padding="4" borderWidth="1px">
+      <Editable.Root defaultValue="Click to change your Zip">
+      <Editable.Preview />
+      <Editable.Input />
+      <Editable.Control>
+        <Editable.EditTrigger asChild>
+          <IconButton variant="ghost" size="xs">
+            <LuPencilLine />
+          </IconButton>
+        </Editable.EditTrigger>
+        <Editable.CancelTrigger asChild>
+          <IconButton variant="outline" size="xs">
+            <LuX />
+          </IconButton>
+        </Editable.CancelTrigger>
+        <Editable.SubmitTrigger asChild>
+          <IconButton variant="outline" size="xs">
+            <LuCheck />
+          </IconButton>
+        </Editable.SubmitTrigger>
+      </Editable.Control>
+    </Editable.Root>
+
             <form onSubmit={onSubmit}>
       <Stack className='slider' align="flex-start" gap="4" maxW="300px">
         <Controller
@@ -244,10 +273,11 @@ const Home: React.FC = () => {
         </Button>
       </Stack>
     </form>
+      </Box>
+    </Collapsible.Content>
+  </Collapsible.Root>
 
-
-
-            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto', marginTop:'-160px' }} />
+            <img src={AlineTeal} alt="Aline Header" style={{ height: '200px', display: 'block', margin: '0 auto' }} />
 
             {showContent ? (
                 <div className="cards-container">
