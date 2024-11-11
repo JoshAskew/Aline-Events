@@ -111,12 +111,7 @@ const getTicketData = async (req: Request, res: Response): Promise<any | null> =
 
         const geoHash = geohash.encode(geoData[0].lat, geoData[0].lon);
 
-
-
         const tickResponse = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${process.env.ticketmasterApiKey}&geoPoint=${geoHash}&radius=${radius}&unit=miles`)
-
-        console.log("tickResponse")
-        console.log(tickResponse)
 
         if (!tickResponse.ok) {
             throw new Error('Invalid API response from Ticketmaster');

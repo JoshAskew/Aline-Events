@@ -3,8 +3,6 @@ dotenv.config();
 import { Request, Response } from 'express';
 import { User } from '../models/user.js';
 
-const locationIQApiKey = "pk.914316b72b141711118acc9cdb36f8c1";
-
 interface JwtPayload {
   id: number;
   userName: string;
@@ -68,8 +66,7 @@ export class Weather {
 
 const getWeatherData = async (req: Request, res: Response): Promise<any | null> => {
 
-  const locationIQApiKey = "pk.914316b72b141711118acc9cdb36f8c1";
-  const weatherApiKey = "64d57280848a36eceeaef511f994475f";
+
   try {
 
     if (!req.user) {
@@ -85,7 +82,7 @@ const getWeatherData = async (req: Request, res: Response): Promise<any | null> 
       return res.status(404).json({ message: "User not found" });
     }
 
-    const geoResponse = await fetch(`https://us1.locationiq.com/v1/search.php?key=${locationIQApiKey}&postalcode=${user.zipCode}&format=json&countrycodes=us`);
+    const geoResponse = await fetch(`https://us1.locationiq.com/v1/search.php?key=${process.env.locationIQApiKey}&postalcode=${user.zipCode}&format=json&countrycodes=us`);
 
     if (!geoResponse.ok) {
       throw new Error('invalid API response from locationiq in weather api, check the network tab');
@@ -93,7 +90,7 @@ const getWeatherData = async (req: Request, res: Response): Promise<any | null> 
 
     const geoData = await geoResponse.json() as IGeoData[];
 
-    const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${geoData[0].lat}&lon=${geoData[0].lon}&appid=${weatherApiKey}`);
+    const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${geoData[0].lat}&lon=${geoData[0].lon}&appid=${process.env.WEATHER_API_KEY}`);
 
     if (!weatherResponse.ok) {
       throw new Error('invalid API response from openweathermap in weather api, check the network tab');
@@ -105,8 +102,6 @@ const getWeatherData = async (req: Request, res: Response): Promise<any | null> 
     const dailyData: any[] = [];
     
 
-   
-    console.log("Weather data:", allWeatherData.list[0].weather[0].description);
 
 
     function kelvinToFahrenheit(kelvin: number) {

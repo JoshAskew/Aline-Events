@@ -55,7 +55,6 @@ const SignUp = () => {
       }
 
       const result = await response.json();
-      console.log("User successfully signed up:", result);
 
       localStorage.setItem("token", result.token);
       localStorage.setItem("firstSignUp", "true");
