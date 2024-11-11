@@ -108,7 +108,11 @@
     margin: 40px;
     cursor: pointer;
     color: teal;
+    border-radius: 20px;
+}
 
+.collapse:hover {
+   color: rgb(174, 174, 47);
 }
 
 .css-1mckma8 {
@@ -126,6 +130,7 @@
     max-width: 200px;
     margin-bottom: 10px;
 }
+
 
 /* Ensure that the slider and logo don't overlap on small screens */
 @media (max-width: 480px) {
