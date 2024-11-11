@@ -89,7 +89,6 @@ const Home: React.FC = () => {
                 }
 
                 const fetchedticketData = await response.json();
-                console.log("User successfully fetched ticket data:", fetchedticketData);
                 setTicketData(fetchedticketData);
 
             } catch (error) {
@@ -120,7 +119,6 @@ const Home: React.FC = () => {
                 }
 
                 const fetchedWeatherData = await response.json();
-                console.log("Fetched Weather Data:", fetchedWeatherData);
                 setWeatherData(fetchedWeatherData);
 
             } catch (error) {
@@ -161,12 +159,10 @@ const Home: React.FC = () => {
     } = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: { value: [radius] },
-    })
-
-    const onSubmit = handleSubmit((data) => { setRadius(data.value[0]) })
-
-
-
+      })
+    
+      const onSubmit = handleSubmit((data) => {setRadius(data.value[0]) })
+     
     return (
         <>
             <Box bg="black" className="dark"
