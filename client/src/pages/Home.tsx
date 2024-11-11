@@ -215,7 +215,7 @@ const Home: React.FC = () => {
     <Collapsible.Trigger className='collapse' paddingY="3">Click To Edit Location Details</Collapsible.Trigger>
     <Collapsible.Content>
       <Box padding="4" borderWidth="1px">
-      <Editable.Root defaultValue="Click to change your Zip">
+      <Editable.Root defaultValue="Edit Zip Code">
       <Editable.Preview />
       <Editable.Input />
       <Editable.Control>
