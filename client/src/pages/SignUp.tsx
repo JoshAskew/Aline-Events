@@ -61,6 +61,7 @@ const SignUp = () => {
 
       navigate('/home');
     } catch (error) {
+      setErrorMessage("User Name already exists. Please try again.");
       console.error("Error: User failed to sign up");
     }
   };
