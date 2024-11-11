@@ -166,4 +166,14 @@
         display: block;
         margin-left: 15px;
     }
+
+    .welcome {
+        font-size: 40px;
+        text-align: center;
+        font-family: "Source Sans 3", serif;
+        color: teal;
+        margin-top: 90px;
+        animation: fadeInOut 4s ease-in-out forwards;
+        text-decoration: underline;
+    }
 }

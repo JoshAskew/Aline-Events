@@ -23,8 +23,8 @@ import { Field } from "../components/ui/field"
 import { Slider } from "../components/ui/slider"
 import { Controller, useForm } from "react-hook-form"
 import { z } from "zod"
-import { Editable, IconButton } from "@chakra-ui/react"
-import { LuCheck, LuPencilLine, LuX } from "react-icons/lu"
+//import { Editable, IconButton } from "@chakra-ui/react"
+//import { LuCheck, LuPencilLine, LuX } from "react-icons/lu"
 
 
 
@@ -196,11 +196,9 @@ const Home: React.FC = () => {
                             <Text my="4">
                                 These prices are not guaranteed to persist.
                             </Text>
-                            <Link to="../Login">
                                 <Button onClick={() => AuthService.logout()} className="logout" size="sm" variant="outline">
                                     Yes, Log Me Out
                                 </Button>
-                            </Link>
                         </PopoverBody>
                     </PopoverContent>
                 </PopoverRoot>
@@ -211,7 +209,7 @@ const Home: React.FC = () => {
                     <Collapsible.Trigger className='collapse' paddingY="3">Click To Edit Location Details</Collapsible.Trigger>
                     <Collapsible.Content>
                         <Box padding="4" borderWidth="1px">
-                            <Editable.Root defaultValue="Edit Zip Code">
+                            {/* <Editable.Root defaultValue="Edit Zip Code">
                                 <Editable.Preview />
                                 <Editable.Input />
                                 <Editable.Control>
@@ -231,7 +229,7 @@ const Home: React.FC = () => {
                                         </IconButton>
                                     </Editable.SubmitTrigger>
                                 </Editable.Control>
-                            </Editable.Root>
+                            </Editable.Root> */}
 
                             <form onSubmit={onSubmit}>
                                 <Stack className='slider' align="flex-start" gap="4" maxW="300px">
